@@ -215,10 +215,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = GX9HM4N3W6;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = GX9HM4N3W6;
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -504,6 +506,7 @@
 			baseConfigurationReference = FDF198C8418197D73FBF716A /* Pods-A1IOSLib_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GX9HM4N3W6;
 				INFOPLIST_FILE = A1IOSLib/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -520,6 +523,7 @@
 			baseConfigurationReference = 9775822E1DA875245C45A617 /* Pods-A1IOSLib_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GX9HM4N3W6;
 				INFOPLIST_FILE = A1IOSLib/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -535,6 +539,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 492BA7261E0E3F4915166EDC /* Pods-A1IOSLib_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = GX9HM4N3W6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -557,6 +562,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C8C5782CB0EFFE9F90D5E176 /* Pods-A1IOSLib_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = GX9HM4N3W6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
