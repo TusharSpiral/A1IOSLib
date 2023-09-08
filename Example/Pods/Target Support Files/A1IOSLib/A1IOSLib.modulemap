@@ -1,0 +1,6 @@
+framework module A1IOSLib {
+  umbrella header "A1IOSLib-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -6,37 +6,25 @@
 # To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
 #
 
-Pod::Spec.new do |s|
-  s.name             = 'A1IOSLib'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of A1IOSLib.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
-
-  s.homepage         = 'https://github.com/TusharSpiral/A1IOSLib'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'TusharSpiral' => 'TusharSpiral@github.com' }
-  s.source           = { :git => 'https://github.com/TusharSpiral/A1IOSLib.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
-  s.ios.deployment_target = '10.0'
-
-  s.source_files = 'A1IOSLib/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'A1IOSLib' => ['A1IOSLib/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+Pod::Spec.new do |spec|
+  spec.name         = "A1IOSLib"
+  spec.version      = "1.0.0"
+  spec.summary      = "Private common A1IOSLib."
+  spec.description  = "Private common SDK to personal use A1IOSLib."
+  spec.homepage         = 'https://github.com/TusharSpiral/A1IOSLib'
+  spec.license          = { :type => 'MIT', :file => 'LICENSE' }
+  spec.author           = { "TusharSpiral" => "97023392+TusharSpiral@users.noreply.github.com" }
+  spec.source           = { :git => 'https://TusharSpiral@github.com/TusharSpiral/A1IOSLib.git', :tag => spec.version.to_s }
+  spec.platform     = :ios, "14.0"
+    spec.swift_version = '5.0'
+  spec.static_framework = true
+  spec.ios.deployment_target  = '14.0'
+  spec.source_files  = "A1IOSLib/**/*.{swift}"
+  spec.dependency 'Alamofire'
+  spec.dependency 'Purchasely', '~> 3.7.1'
+  spec.dependency 'FirebaseAnalytics'
+  spec.dependency 'Firebase'
+  spec.dependency 'Mixpanel-swift'
+  spec.dependency 'FBSDKCoreKit'
+  spec.dependency 'YandexMobileMetrica'
 end
