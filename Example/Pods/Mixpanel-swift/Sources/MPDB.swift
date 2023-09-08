@@ -17,7 +17,8 @@ class MPDB {
     let apiToken: String
     
     init(token: String) {
-        apiToken = token
+        // token can be instanceName which can be any string so we strip all non-alhpanumeric characters to prevent SQL errors
+        apiToken = String(token.unicodeScalars.filter({ CharacterSet.alphanumerics.contains($0) }))
         open()
     }
     
@@ -59,7 +60,24 @@ class MPDB {
                 close()
             } else {
                 Logger.info(message: "Successfully opened connection to database at path: \(dbPath)")
-                createTables()
+                if let db = connection {
+                    let pragmaString = "PRAGMA journal_mode=WAL;"
+                    var pragmaStatement: OpaquePointer?
+                    if sqlite3_prepare_v2(db, pragmaString, -1, &pragmaStatement, nil) == SQLITE_OK {
+                        if sqlite3_step(pragmaStatement) == SQLITE_ROW {
+                            let res = String(cString: sqlite3_column_text(pragmaStatement, 0))
+                            Logger.info(message: "SQLite journal mode set to \(res)")
+                        } else {
+                            logSqlError(message: "Failed to enable journal_mode=WAL")
+                        }
+                    } else {
+                        logSqlError(message: "PRAGMA journal_mode=WAL statement could not be prepared")
+                    }
+                    sqlite3_finalize(pragmaStatement)
+                } else {
+                    reconnect()
+                }
+                createTablesAndIndexes()
             }
         }
     }
@@ -107,10 +125,34 @@ class MPDB {
         }
     }
     
-    private func createTables() {
+    private func createIndexFor(_ persistenceType: PersistenceType) {
+        if let db = connection {
+            let tableName = tableNameFor(persistenceType)
+            let indexName = "idx_\(persistenceType)_time"
+            let createIndexString = "CREATE INDEX IF NOT EXISTS \(indexName) ON \(tableName) (time);"
+            var createIndexStatement: OpaquePointer?
+            if sqlite3_prepare_v2(db, createIndexString, -1, &createIndexStatement, nil) == SQLITE_OK {
+                if sqlite3_step(createIndexStatement) == SQLITE_DONE {
+                    Logger.info(message: "\(indexName) index created")
+                } else {
+                    logSqlError(message: "\(indexName) index creation failed")
+                }
+            } else {
+                logSqlError(message: "CREATE statement for index \(indexName) could not be prepared")
+            }
+            sqlite3_finalize(createIndexStatement)
+        } else {
+            reconnect()
+        }
+    }
+    
+    private func createTablesAndIndexes() {
         createTableFor(PersistenceType.events)
+        createIndexFor(PersistenceType.events)
         createTableFor(PersistenceType.people)
+        createIndexFor(PersistenceType.people)
         createTableFor(PersistenceType.groups)
+        createIndexFor(PersistenceType.groups)
     }
     
     func insertRow(_ persistenceType: PersistenceType, data: Data, flag: Bool = false) {
@@ -149,7 +191,7 @@ class MPDB {
             var deleteStatement: OpaquePointer?
             if sqlite3_prepare_v2(db, deleteString, -1, &deleteStatement, nil) == SQLITE_OK {
                 if sqlite3_step(deleteStatement) == SQLITE_DONE {
-                    Logger.info(message: "Succesfully deleted rows from table \(tableName)")
+                    Logger.info(message: "Successfully deleted rows from table \(tableName)")
                 } else {
                     logSqlError(message: "Failed to delete rows from table \(tableName)")
                     recreate()
@@ -181,7 +223,7 @@ class MPDB {
             var updateStatement: OpaquePointer?
             if sqlite3_prepare_v2(db, updateString, -1, &updateStatement, nil) == SQLITE_OK {
                 if sqlite3_step(updateStatement) == SQLITE_DONE {
-                    Logger.info(message: "Succesfully update rows from table \(tableName)")
+                    Logger.info(message: "Successfully updated rows from table \(tableName)")
                 } else {
                     logSqlError(message: "Failed to update rows from table \(tableName)")
                     recreate()
