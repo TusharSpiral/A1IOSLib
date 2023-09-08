@@ -8,12 +8,12 @@ PODS:
     - Purchasely (~> 3.7.1)
     - YandexMobileMetrica
   - Alamofire (5.8.0)
-  - FBAEMKit (12.3.2):
-    - FBSDKCoreKit_Basics (= 12.3.2)
-  - FBSDKCoreKit (12.3.2):
-    - FBAEMKit (= 12.3.2)
-    - FBSDKCoreKit_Basics (= 12.3.2)
-  - FBSDKCoreKit_Basics (12.3.2)
+  - FBAEMKit (16.1.3):
+    - FBSDKCoreKit_Basics (= 16.1.3)
+  - FBSDKCoreKit (16.1.3):
+    - FBAEMKit (= 16.1.3)
+    - FBSDKCoreKit_Basics (= 16.1.3)
+  - FBSDKCoreKit_Basics (16.1.3)
   - Firebase (10.14.0):
     - Firebase/Core (= 10.14.0)
   - Firebase/Core (10.14.0):
@@ -89,9 +89,9 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.11.5):
     - GoogleUtilities/Logger
-  - Mixpanel-swift (4.0.2):
-    - Mixpanel-swift/Complete (= 4.0.2)
-  - Mixpanel-swift/Complete (4.0.2)
+  - Mixpanel-swift (4.1.4):
+    - Mixpanel-swift/Complete (= 4.1.4)
+  - Mixpanel-swift/Complete (4.1.4)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -109,10 +109,11 @@ PODS:
     - YandexMobileMetrica/Static/Core
 
 DEPENDENCIES:
-  - A1IOSLib (from `../`)
+  - A1IOSLib
 
 SPEC REPOS:
   trunk:
+    - A1IOSLib
     - Alamofire
     - FBAEMKit
     - FBSDKCoreKit
@@ -130,16 +131,12 @@ SPEC REPOS:
     - Purchasely
     - YandexMobileMetrica
 
-EXTERNAL SOURCES:
-  A1IOSLib:
-    :path: "../"
-
 SPEC CHECKSUMS:
   A1IOSLib: 98d7113bc04162c304ff638a8954f89121561e4a
   Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
-  FBAEMKit: 955ca52eba8219c20f90774e8c6ff8bc7b3192a3
-  FBSDKCoreKit: 678f64eda3f0ff25c189c2ebbfe87b1d96a85a6d
-  FBSDKCoreKit_Basics: 6bee7c1f0932432901781203fa5e587ec5099148
+  FBAEMKit: af2972f39bb0f3f7c45998f435b007833c32ffb2
+  FBSDKCoreKit: 19e2e18b3be578d7a51fed8fdd8c152bef0b9511
+  FBSDKCoreKit_Basics: dd9826ce3c9fd9f8cdf8dbbd0ef0a53e6c0c9e7e
   Firebase: 6c1bf3f534bc422d52af2e41fe0d50bf08b6b773
   FirebaseAnalytics: 5c6d58814afa4db82cf7fdbc02b0b0e2fa3d43ff
   FirebaseCore: 6fc17ac9f03509d51c131298aacb3ee5698b4f02
@@ -147,12 +144,12 @@ SPEC CHECKSUMS:
   FirebaseInstallations: f672b1eda64e6381c21d424a2f680a943fd83f3b
   GoogleAppMeasurement: 7fee012a868315d418f365fbc8d394d8e020e749
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
-  Mixpanel-swift: 91fc28834402720682f4cce760e95571fbb388c3
+  Mixpanel-swift: 4991762c97c3535ce4e67c395a93e40ab7b666f7
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   Purchasely: f4b46f04897bc11764a1da6176268f0bae3e61e4
   YandexMobileMetrica: f5368ee93f286c793d73b58da00929babfc897c1
 
-PODFILE CHECKSUM: aaffff02a7630e509d0518264cc2a0adbd5f4451
+PODFILE CHECKSUM: 891d685d6061501e754ee89fac853d34c953872c
 
 COCOAPODS: 1.12.1
