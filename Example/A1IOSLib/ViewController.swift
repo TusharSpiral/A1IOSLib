@@ -21,7 +21,10 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    @IBAction func btnHSBeaconTapped(_ sender: Any) {
+        HSBeaconManager.open(id: "08c6e40e-271f-4a8f-b74d-5b9d73ce3251")
+    }
+    
 }
 
 extension ViewController: PurchaselyManagerDelegate {
