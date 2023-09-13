@@ -21,7 +21,7 @@ class EventHandler: NSObject {
     static var shared = EventHandler()
     
     func configureEventHandler() {
-        EventManager.shared.configureEventManager(appMetricaKey: "", mixPanelKey: "")
+        EventManager.shared.configureEventManager(appMetricaKey: "Key") // appMetrica and mixpanel is optional now
     }
     
     func logEvent(title: EventTitle, key: String, value: String) {

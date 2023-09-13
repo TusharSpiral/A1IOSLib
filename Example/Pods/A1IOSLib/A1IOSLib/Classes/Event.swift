@@ -30,25 +30,41 @@ public enum PurchaselyKey: String {
 public class EventManager: NSObject {
     let proOpenFromKey = "pro_opened_from"
     public static var shared = EventManager()
+    private var mixPanelKey = ""
+    private var appMetricaKey = ""
     
-    public func configureEventManager(appMetricaKey: String, mixPanelKey: String) {
+    public func configureEventManager(appMetricaKey: String = "", mixPanelKey: String = "") {
+        self.appMetricaKey = appMetricaKey
+        self.mixPanelKey = mixPanelKey
         FirebaseApp.configure()
-        let configuration = YMMYandexMetricaConfiguration.init(apiKey: appMetricaKey)
-        YMMYandexMetrica.activate(with: configuration!)
-        Mixpanel.initialize(token: mixPanelKey, trackAutomaticEvents: true)
+        if !appMetricaKey.isEmpty {
+            let configuration = YMMYandexMetricaConfiguration.init(apiKey: appMetricaKey)
+            YMMYandexMetrica.activate(with: configuration!)
+        }
+        if !mixPanelKey.isEmpty {
+            Mixpanel.initialize(token: mixPanelKey, trackAutomaticEvents: true)
+        }
         logEvent(title: PurchaselyKey.event_app_first_open.rawValue)
     }
 
     public func logEvent(title: String, key: String, value: String) {
-        YMMYandexMetrica.reportEvent(title, parameters: [key : value])
-        Mixpanel.mainInstance().track(event: title, properties: [key : value])
+        if !appMetricaKey.isEmpty {
+            YMMYandexMetrica.reportEvent(title, parameters: [key : value])
+        }
+        if !mixPanelKey.isEmpty {
+            Mixpanel.mainInstance().track(event: title, properties: [key : value])
+        }
         Analytics.logEvent(title, parameters: [key: value])
         AppEvents.shared.logEvent(AppEvents.Name(title), parameters: [AppEvents.ParameterName(key): value])
     }
 
     public func logEvent(title: String, params: [String: String]? = nil) {
-        YMMYandexMetrica.reportEvent(title, parameters: params)
-        Mixpanel.mainInstance().track(event: title, properties: params)
+        if !appMetricaKey.isEmpty {
+            YMMYandexMetrica.reportEvent(title, parameters: params)
+        }
+        if !mixPanelKey.isEmpty {
+            Mixpanel.mainInstance().track(event: title, properties: params)
+        }
         Analytics.logEvent(title, parameters: params)
         if let myparams = params {
             let appEventsParams = myparams.map { key, value in
@@ -62,8 +78,12 @@ public class EventManager: NSObject {
     }
     
     public func logProOpenedEvent(title: String, from: String) {
-        YMMYandexMetrica.reportEvent(title, parameters: [proOpenFromKey: from])
-        Mixpanel.mainInstance().track(event: title, properties: [proOpenFromKey: from])
+        if !appMetricaKey.isEmpty {
+            YMMYandexMetrica.reportEvent(title, parameters: [proOpenFromKey: from])
+        }
+        if !mixPanelKey.isEmpty {
+            Mixpanel.mainInstance().track(event: title, properties: [proOpenFromKey: from])
+        }
         Analytics.logEvent(title, parameters: [proOpenFromKey: from])
         AppEvents.shared.logEvent(AppEvents.Name(title), parameters: [AppEvents.ParameterName(proOpenFromKey): from])
     }
