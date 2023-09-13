@@ -21,7 +21,7 @@ class EventHandler: NSObject {
     static var shared = EventHandler()
     
     func configureEventHandler() {
-        EventManager.shared.configureEventManager(appMetricaKey: "Key") // appMetrica and mixpanel is optional now
+        EventManager.shared.configureEventManager(appMetricaKey: "Key", facebook: false) // appMetrica and mixpanel is optional now. // Firebase and facebook is true by default if you dont want to use simply pass false
     }
     
     func logEvent(title: EventTitle, key: String, value: String) {

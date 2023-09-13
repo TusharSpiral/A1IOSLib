@@ -32,11 +32,15 @@ public class EventManager: NSObject {
     public static var shared = EventManager()
     private var mixPanelKey = ""
     private var appMetricaKey = ""
+    private var firebase = true
+    private var facebook = true
     
-    public func configureEventManager(appMetricaKey: String = "", mixPanelKey: String = "") {
+    public func configureEventManager(appMetricaKey: String = "", mixPanelKey: String = "", firebase: Bool = true, facebook: Bool = true) {
         self.appMetricaKey = appMetricaKey
         self.mixPanelKey = mixPanelKey
-        FirebaseApp.configure()
+        if firebase {
+            FirebaseApp.configure()
+        }
         if !appMetricaKey.isEmpty {
             let configuration = YMMYandexMetricaConfiguration.init(apiKey: appMetricaKey)
             YMMYandexMetrica.activate(with: configuration!)
@@ -54,8 +58,12 @@ public class EventManager: NSObject {
         if !mixPanelKey.isEmpty {
             Mixpanel.mainInstance().track(event: title, properties: [key : value])
         }
-        Analytics.logEvent(title, parameters: [key: value])
-        AppEvents.shared.logEvent(AppEvents.Name(title), parameters: [AppEvents.ParameterName(key): value])
+        if firebase {
+            Analytics.logEvent(title, parameters: [key: value])
+        }
+        if facebook {
+            AppEvents.shared.logEvent(AppEvents.Name(title), parameters: [AppEvents.ParameterName(key): value])
+        }
     }
 
     public func logEvent(title: String, params: [String: String]? = nil) {
@@ -65,15 +73,19 @@ public class EventManager: NSObject {
         if !mixPanelKey.isEmpty {
             Mixpanel.mainInstance().track(event: title, properties: params)
         }
-        Analytics.logEvent(title, parameters: params)
-        if let myparams = params {
-            let appEventsParams = myparams.map { key, value in
-                (AppEvents.ParameterName(key), value)
+        if firebase {
+            Analytics.logEvent(title, parameters: params)
+        }
+        if facebook {
+            if let myparams = params {
+                let appEventsParams = myparams.map { key, value in
+                    (AppEvents.ParameterName(key), value)
+                }
+                let parameters = Dictionary(uniqueKeysWithValues: appEventsParams)
+                AppEvents.shared.logEvent(AppEvents.Name(title), parameters: parameters)
+            } else {
+                AppEvents.shared.logEvent(AppEvents.Name(title), parameters: nil)
             }
-            let parameters = Dictionary(uniqueKeysWithValues: appEventsParams)
-            AppEvents.shared.logEvent(AppEvents.Name(title), parameters: parameters)
-        } else {
-            AppEvents.shared.logEvent(AppEvents.Name(title), parameters: nil)
         }
     }
     
@@ -84,19 +96,26 @@ public class EventManager: NSObject {
         if !mixPanelKey.isEmpty {
             Mixpanel.mainInstance().track(event: title, properties: [proOpenFromKey: from])
         }
-        Analytics.logEvent(title, parameters: [proOpenFromKey: from])
-        AppEvents.shared.logEvent(AppEvents.Name(title), parameters: [AppEvents.ParameterName(proOpenFromKey): from])
+        if firebase {
+            Analytics.logEvent(title, parameters: [proOpenFromKey: from])
+        }
+        if facebook {
+            AppEvents.shared.logEvent(AppEvents.Name(title), parameters: [AppEvents.ParameterName(proOpenFromKey): from])
+        }
     }
 
     public func logFacebookEvent(name: String, params: [String: String]) {
-        let appEventsParams = params.map { key, value in
-            (AppEvents.ParameterName(key), value)
+        if facebook {
+            let appEventsParams = params.map { key, value in
+                (AppEvents.ParameterName(key), value)
+            }
+            let parameters = Dictionary(uniqueKeysWithValues: appEventsParams)
+            AppEvents.shared.logEvent(AppEvents.Name(name), parameters: parameters)
         }
-        let parameters = Dictionary(uniqueKeysWithValues: appEventsParams)
-        AppEvents.shared.logEvent(AppEvents.Name(name), parameters: parameters)
-
         //Add same events for google as well
-        Analytics.logEvent(name, parameters: params)
+        if firebase {
+            Analytics.logEvent(name, parameters: params)
+        }
     }
 
 }
