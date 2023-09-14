@@ -1,5 +1,5 @@
 PODS:
-  - A1IOSLib (1.0.4):
+  - A1IOSLib (1.0.5):
     - Alamofire
     - Beacon
     - FBSDKCoreKit
@@ -135,7 +135,7 @@ SPEC REPOS:
     - YandexMobileMetrica
 
 SPEC CHECKSUMS:
-  A1IOSLib: 92c740471f7cafccc31e95ea57be43609b7816be
+  A1IOSLib: 3f2a8ed6cee6fe72989eddf3e67484231aa528b5
   Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
   Beacon: 7943152bd415e1db3b943579afb11a2b4c923785
   FBAEMKit: af2972f39bb0f3f7c45998f435b007833c32ffb2

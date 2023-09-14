@@ -38,6 +38,8 @@ public class EventManager: NSObject {
     public func configureEventManager(appMetricaKey: String = "", mixPanelKey: String = "", firebase: Bool = true, facebook: Bool = true) {
         self.appMetricaKey = appMetricaKey
         self.mixPanelKey = mixPanelKey
+        self.firebase = firebase
+        self.facebook = facebook
         if firebase {
             FirebaseApp.configure()
         }
