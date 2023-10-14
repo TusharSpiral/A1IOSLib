@@ -11,6 +11,7 @@ import A1IOSLib
 
 enum EventTitle: String {
     case testing
+    case homeViewDidLoad
 }
 
 enum Content: String {
