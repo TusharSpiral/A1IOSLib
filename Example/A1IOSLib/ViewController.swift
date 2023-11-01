@@ -13,6 +13,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        EventHandler.shared.logEvent(title: .testing)
         PurchaselyManager.shared.showFreeTrial(from: self, placement: "", delegate: self)
         // Do any additional setup after loading the view, typically from a nib.
     }
