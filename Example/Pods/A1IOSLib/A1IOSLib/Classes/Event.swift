@@ -120,4 +120,18 @@ public class EventManager: NSObject {
         }
     }
 
+    public func logEvent(title: String, keys: [String] = [], values: [String] = []) {
+        var params = setParam(keys: keys, values: values)
+        logEvent(title: title, params: params)
+    }
+    
+    private func setParam(keys: [String], values: [String]) -> [String: String] {
+        var params: [String: String] = [:]
+        for (index, key) in keys.enumerated() {
+            params.updateValue(values[index], forKey: key)
+        }
+        return params
+    }
+
+    
 }

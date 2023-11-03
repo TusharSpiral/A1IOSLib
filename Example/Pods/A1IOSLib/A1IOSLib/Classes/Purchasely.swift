@@ -36,6 +36,7 @@ public class PurchaselyManager: NSObject {
     var purchaselyViewController: UIViewController?
     var fromController: UIViewController?
     var products: [PLYProduct]?
+    var currentPlacement: String?
 
     public func configurePurchasely(key: String, completionHandler: @escaping (Int, Error?) -> Void) {
         handlerAction()
@@ -87,22 +88,24 @@ public class PurchaselyManager: NSObject {
     }
 
     public func showFreeTrial(from: UIViewController, placement: String, content: String = "", delegate: PurchaselyManagerDelegate) {
+        currentPlacement = ""
         guard isReachable else {
             delegate.alertAction(text: Localization.internetError)
             return
         }
+        self.currentPlacement = placement
         self.delegate = delegate
         delegate.loader(isShown: true)
         Purchasely.fetchPresentation(for: placement, contentId: content, fetchCompletion: { [weak self] result, error in
             self?.delegate?.loader(isShown: false)
             if error == nil, let vc = result?.controller {
-                EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchasely_load_started.rawValue)
+                EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchasely_load_started.rawValue, keys: ["provider", "placement"], values: ["purchasely", self?.currentPlacement ?? ""])
                 vc.modalPresentationStyle = .fullScreen
                 self?.purchaselyViewController = vc
-                EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchasely_show_requested.rawValue)
+                EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchasely_show_requested.rawValue, keys: ["provider", "placement"], values: ["purchasely", self?.currentPlacement ?? ""])
                 from.present(vc, animated: true, completion: nil)
                 if vc.isBeingPresented {
-                    EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchasely_screen_shown.rawValue)
+                    EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchasely_screen_shown.rawValue, keys: ["Placement_Name"], values: [placement])
                 }
             }
         })
@@ -116,11 +119,11 @@ public class PurchaselyManager: NSObject {
             case .purchased:
                 print("User purchased: \(plan?.name ?? "No plan")")
                 self.updateControllers()
-                EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchase_acknowledged.rawValue, key: "plan_type", value: plan?.name ?? "No plan")
+                EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchase_acknowledged.rawValue, keys: ["Placement_Name", "Plans"], values: [self.currentPlacement ?? "", plan?.name ?? ""])
             case .restored:
                 print("User restored: \(plan?.name ?? "No plan")")
                 self.updateControllers()
-                EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchase_acknowledged.rawValue)
+                EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchase_acknowledged.rawValue, keys: ["Placement_Name", "Plans"], values: [self.currentPlacement ?? "", plan?.name ?? ""])
             case .cancelled:
                 print("User cancelled: \(plan?.name ?? "No plan")")
                 self.delegate?.cancelSubscription()
@@ -183,7 +186,7 @@ public class PurchaselyManager: NSObject {
 
 extension PurchaselyManager: PLYUIDelegate {
     public func display(controller: UIViewController, type: PLYUIControllerType, from sourceController: UIViewController?) {
-        EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchasely_screen_shown.rawValue)
+        EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchasely_screen_shown.rawValue, keys: ["provider", "placement"], values: ["purchasely", currentPlacement ?? ""])
     }
 
     public func display(alert: PLYAlertMessage, error: Error?) {
