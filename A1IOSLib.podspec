@@ -28,4 +28,5 @@ Pod::Spec.new do |spec|
   spec.dependency 'FBSDKCoreKit'
   spec.dependency 'YandexMobileMetrica'
   spec.dependency 'Beacon'
+  spec.dependency 'Google-Mobile-Ads-SDK'
 end
