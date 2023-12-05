@@ -26,6 +26,12 @@ class ViewController: UIViewController {
         HSBeaconManager.open(id: "08c6e40e-271f-4a8f-b74d-5b9d73ce3251")
     }
     
+    @IBAction func setAds(_ sender: Any) {
+        
+    }
+    
+    
+    
 }
 
 extension ViewController: PurchaselyManagerDelegate {

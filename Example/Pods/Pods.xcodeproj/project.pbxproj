@@ -175,6 +175,20 @@
 		16E65DEA217178083F1D105D19121E06 /* URLEncodedFormEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C3F38646128E3B149A696D4C07C59B /* URLEncodedFormEncoder.swift */; };
 		16FCCF5F8593C18D02F15747AE956FF6 /* GULReachabilityChecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 5202C933E0486D77521AB51F3F0AE521 /* GULReachabilityChecker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		178BF6003996B22EE9DA5618CEC84772 /* GULSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C0EF684584B620EF875E64E4A6ADB9 /* GULSwizzler.m */; };
+		1887179F2B15CB8A00459DF0 /* AdsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1887179E2B15CB8A00459DF0 /* AdsConfiguration.swift */; };
+		188717A22B15CC4800459DF0 /* AdsUnitId.plist in Resources */ = {isa = PBXBuildFile; fileRef = 188717A12B15CC4800459DF0 /* AdsUnitId.plist */; };
+		188717A52B15CD4400459DF0 /* AdsBannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717A42B15CD4400459DF0 /* AdsBannerType.swift */; };
+		188717A72B15CD9800459DF0 /* AdsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717A62B15CD9800459DF0 /* AdsError.swift */; };
+		188717A92B15CE1700459DF0 /* AdsBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717A82B15CE1700459DF0 /* AdsBanner.swift */; };
+		188717AB2B15CF2000459DF0 /* AdsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717AA2B15CF2000459DF0 /* AdsType.swift */; };
+		188717AD2B15D00000459DF0 /* AdsEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717AC2B15D00000459DF0 /* AdsEnvironment.swift */; };
+		188717AF2B15D1BF00459DF0 /* Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717AE2B15D1BF00459DF0 /* Ads.swift */; };
+		188717B92B15FF0F00459DF0 /* AdsIntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717B82B15FF0F00459DF0 /* AdsIntervalTracker.swift */; };
+		188717BB2B15FF8700459DF0 /* AdsInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717BA2B15FF8700459DF0 /* AdsInterstitial.swift */; };
+		188717BD2B16003000459DF0 /* AdsRewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717BC2B16003000459DF0 /* AdsRewarded.swift */; };
+		188717BF2B1600FF00459DF0 /* AdsRewardedInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717BE2B1600FF00459DF0 /* AdsRewardedInterstitial.swift */; };
+		188717C12B16027C00459DF0 /* AdsNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717C02B16027C00459DF0 /* AdsNative.swift */; };
+		188717CC2B171B2A00459DF0 /* AdsAppOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188717CB2B171B2A00459DF0 /* AdsAppOpen.swift */; };
 		1AB1B4A1B6703F5D13BDF9682B91221C /* Mixpanel-swift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B41F3AD900082F344800BAA6B6150D2 /* Mixpanel-swift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1B3DB66A3FC3E1C477D1D2F22E81A914 /* GULOriginalIMPConvenienceMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = D3BCE933511E04285FA3BF418B006687 /* GULOriginalIMPConvenienceMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BA2B6E4A117D27B2F3E5EFACDF47516 /* GULSceneDelegateSwizzler.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F1A3DE45A8B1D385971BC3DDC38875 /* GULSceneDelegateSwizzler.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -856,6 +870,20 @@
 		16D2922D460427C3E1E5B20E87F587EE /* FirebaseInstallations.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FirebaseInstallations.debug.xcconfig; sourceTree = "<group>"; };
 		16E26C5AE4D34A9ADCCEF4B19A344DD2 /* Pods-A1IOSLib_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-A1IOSLib_Example-dummy.m"; sourceTree = "<group>"; };
 		186614BCC12F743938EB0576B7D41D5B /* MixpanelPersistence.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MixpanelPersistence.swift; path = Sources/MixpanelPersistence.swift; sourceTree = "<group>"; };
+		1887179E2B15CB8A00459DF0 /* AdsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsConfiguration.swift; sourceTree = "<group>"; };
+		188717A12B15CC4800459DF0 /* AdsUnitId.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AdsUnitId.plist; sourceTree = "<group>"; };
+		188717A42B15CD4400459DF0 /* AdsBannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsBannerType.swift; sourceTree = "<group>"; };
+		188717A62B15CD9800459DF0 /* AdsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsError.swift; sourceTree = "<group>"; };
+		188717A82B15CE1700459DF0 /* AdsBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsBanner.swift; sourceTree = "<group>"; };
+		188717AA2B15CF2000459DF0 /* AdsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsType.swift; sourceTree = "<group>"; };
+		188717AC2B15D00000459DF0 /* AdsEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsEnvironment.swift; sourceTree = "<group>"; };
+		188717AE2B15D1BF00459DF0 /* Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ads.swift; sourceTree = "<group>"; };
+		188717B82B15FF0F00459DF0 /* AdsIntervalTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsIntervalTracker.swift; sourceTree = "<group>"; };
+		188717BA2B15FF8700459DF0 /* AdsInterstitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsInterstitial.swift; sourceTree = "<group>"; };
+		188717BC2B16003000459DF0 /* AdsRewarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsRewarded.swift; sourceTree = "<group>"; };
+		188717BE2B1600FF00459DF0 /* AdsRewardedInterstitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsRewardedInterstitial.swift; sourceTree = "<group>"; };
+		188717C02B16027C00459DF0 /* AdsNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsNative.swift; sourceTree = "<group>"; };
+		188717CB2B171B2A00459DF0 /* AdsAppOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsAppOpen.swift; sourceTree = "<group>"; };
 		18BA1A9C9F4F653EB792391F8080CF39 /* GoogleUtilities.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleUtilities.debug.xcconfig; sourceTree = "<group>"; };
 		18E32BCD6E6F3E067F4F470B8D6D12D2 /* FirebaseInstallations-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "FirebaseInstallations-Info.plist"; sourceTree = "<group>"; };
 		1A86A52DCFCE16B1FCC2393BBD4939CB /* FirebaseCoreInternal-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FirebaseCoreInternal-umbrella.h"; sourceTree = "<group>"; };
@@ -1566,6 +1594,51 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/YandexMobileMetrica";
+			sourceTree = "<group>";
+		};
+		1887177C2B15C46700459DF0 /* Ads_Module */ = {
+			isa = PBXGroup;
+			children = (
+				188717A32B15CD2100459DF0 /* Public Files */,
+				1887179D2B15CB6A00459DF0 /* Internal Files */,
+				188717A02B15CC2300459DF0 /* Supported Files */,
+			);
+			path = Ads_Module;
+			sourceTree = "<group>";
+		};
+		1887179D2B15CB6A00459DF0 /* Internal Files */ = {
+			isa = PBXGroup;
+			children = (
+				1887179E2B15CB8A00459DF0 /* AdsConfiguration.swift */,
+				188717CB2B171B2A00459DF0 /* AdsAppOpen.swift */,
+				188717A82B15CE1700459DF0 /* AdsBanner.swift */,
+				188717B82B15FF0F00459DF0 /* AdsIntervalTracker.swift */,
+				188717BA2B15FF8700459DF0 /* AdsInterstitial.swift */,
+				188717BC2B16003000459DF0 /* AdsRewarded.swift */,
+				188717BE2B1600FF00459DF0 /* AdsRewardedInterstitial.swift */,
+				188717C02B16027C00459DF0 /* AdsNative.swift */,
+			);
+			path = "Internal Files";
+			sourceTree = "<group>";
+		};
+		188717A02B15CC2300459DF0 /* Supported Files */ = {
+			isa = PBXGroup;
+			children = (
+				188717A12B15CC4800459DF0 /* AdsUnitId.plist */,
+			);
+			path = "Supported Files";
+			sourceTree = "<group>";
+		};
+		188717A32B15CD2100459DF0 /* Public Files */ = {
+			isa = PBXGroup;
+			children = (
+				188717AE2B15D1BF00459DF0 /* Ads.swift */,
+				188717AC2B15D00000459DF0 /* AdsEnvironment.swift */,
+				188717AA2B15CF2000459DF0 /* AdsType.swift */,
+				188717A62B15CD9800459DF0 /* AdsError.swift */,
+				188717A42B15CD4400459DF0 /* AdsBannerType.swift */,
+			);
+			path = "Public Files";
 			sourceTree = "<group>";
 		};
 		1F16B9AB0D9E02BB49097B529DA80786 /* PromisesObjC */ = {
@@ -2375,6 +2448,7 @@
 		D3E0086DD1C0B197888CB768340F0218 /* A1IOSLib */ = {
 			isa = PBXGroup;
 			children = (
+				1887177C2B15C46700459DF0 /* Ads_Module */,
 				BD2C798D8D9B90E914B7BCAC6D6779F9 /* Event.swift */,
 				C30C68E2417155B166C38F75E9D75664 /* HSBeacon.swift */,
 				B7651A3FD37169FD4705D10E917FCBF6 /* Localization.swift */,
@@ -3124,6 +3198,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188717A22B15CC4800459DF0 /* AdsUnitId.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3544,12 +3619,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188717AF2B15D1BF00459DF0 /* Ads.swift in Sources */,
 				C616B48BE4653AE9BCCFCCBA8DE61538 /* A1IOSLib-dummy.m in Sources */,
+				188717BD2B16003000459DF0 /* AdsRewarded.swift in Sources */,
+				188717A52B15CD4400459DF0 /* AdsBannerType.swift in Sources */,
+				1887179F2B15CB8A00459DF0 /* AdsConfiguration.swift in Sources */,
+				188717BB2B15FF8700459DF0 /* AdsInterstitial.swift in Sources */,
+				188717A72B15CD9800459DF0 /* AdsError.swift in Sources */,
 				635105CDD3999E0E150A38286AE256F0 /* Event.swift in Sources */,
 				B71B344CB735689FDB7E79DFFD189465 /* HSBeacon.swift in Sources */,
 				350CEF031E4C75F86C1F40B8740914B5 /* Localization.swift in Sources */,
+				188717AD2B15D00000459DF0 /* AdsEnvironment.swift in Sources */,
+				188717A92B15CE1700459DF0 /* AdsBanner.swift in Sources */,
+				188717BF2B1600FF00459DF0 /* AdsRewardedInterstitial.swift in Sources */,
 				BBC0B103AA622E1ECFAE239E7B84164D /* Purchasely.swift in Sources */,
+				188717CC2B171B2A00459DF0 /* AdsAppOpen.swift in Sources */,
 				FEA02D0FE06D5CF2F89406B8A91F9C6F /* ReplaceMe.swift in Sources */,
+				188717B92B15FF0F00459DF0 /* AdsIntervalTracker.swift in Sources */,
+				188717C12B16027C00459DF0 /* AdsNative.swift in Sources */,
+				188717AB2B15CF2000459DF0 /* AdsType.swift in Sources */,
 				CCE58DE8A59567FCD3A1A9413375574D /* Validator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

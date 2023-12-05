@@ -7,41 +7,78 @@
 //
 
 import UIKit
+import A1IOSLib
+import GoogleMobileAds
+
+extension Notification.Name {
+    static let adsConfigureCompletion = Notification.Name("AdsConfigureCompletion")
+}
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    private let a1Ads: AdsType = Ads.shared
+    private let notificationCenter: NotificationCenter = .default
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         EventHandler.shared.configureEventHandler()
         // Override point for customization after application launch.
+        let navigationController = UINavigationController()
+        let demoSelectionViewController = DemoSelectionViewController(a1Ads: self.a1Ads)
+        navigationController.setViewControllers([demoSelectionViewController], animated: true)
+        self.configureA1Ads(from: navigationController)
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = .white
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
         return true
     }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        let rootViewController = application.windows.first(
+            where: { $0.isKeyWindow })?.rootViewController
+        ///Enable if app open ads need to show
+//        if let rootViewController = rootViewController {
+//            // Do not show app open ad if the current view controller is DemoSelectionViewController.
+//            if rootViewController is DemoSelectionViewController {
+//                return
+//            }
+//    
+//            a1Ads.showAppOpenAd(from: rootViewController, afterInterval: 0) {
+//                
+//            } onClose: {
+//                
+//            } onError: { error in
+//                
+//            }
+//
+//        }
     }
+    
+}
 
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+private extension AppDelegate {
+    func configureA1Ads(from viewController: UIViewController) {
+        #if DEBUG
+        let environment: AdsEnvironment = .development(testDeviceIdentifiers: [])
+        #else
+        let environment:AdsEnvironment = .production
+        #endif
+        a1Ads.configure(
+            from: viewController,
+            for: environment,
+            requestBuilder: AdsRequestBuilder())
+            
+                // Ads are now ready to be displayed
+                self.notificationCenter.post(name: .adsConfigureCompletion, object: nil)
     }
+}
 
-
+private final class AdsRequestBuilder: AdsRequestBuilderType {
+    func build() -> GADRequest {
+        GADRequest()
+    }
 }
 
