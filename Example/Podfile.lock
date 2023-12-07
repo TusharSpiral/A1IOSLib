@@ -1,5 +1,5 @@
 PODS:
-  - A1IOSLib (1.0.11):
+  - A1IOSLib (1.1.0):
     - Alamofire
     - Beacon
     - FBSDKCoreKit
@@ -145,7 +145,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  A1IOSLib: 85f8a3b840cec11b12955dbfd04122a4dd0d398e
+  A1IOSLib: ca76041beeb3c6bccc34bdebfaf99a6d613d0e6a
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   Beacon: 37196f96e8797ae0071efa1f30ff1c7158e92114
   FBAEMKit: 4763aa27b8f69eb9d2c274189e91388de1dbd88a
@@ -168,4 +168,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b7e5a6feec8aa8f085edb1189a2078f2ee98109c
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.14.2
