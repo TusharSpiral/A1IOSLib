@@ -40,21 +40,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootViewController = application.windows.first(
             where: { $0.isKeyWindow })?.rootViewController
         ///Enable if app open ads need to show
-//        if let rootViewController = rootViewController {
-//            // Do not show app open ad if the current view controller is DemoSelectionViewController.
-//            if rootViewController is DemoSelectionViewController {
-//                return
-//            }
-//    
-//            a1Ads.showAppOpenAd(from: rootViewController, afterInterval: 0) {
-//                
-//            } onClose: {
-//                
-//            } onError: { error in
-//                
-//            }
-//
-//        }
+        if let rootViewController = rootViewController {
+            // Do not show app open ad if the current view controller is DemoSelectionViewController.
+            if rootViewController is DemoSelectionViewController {
+                return
+            }
+    
+            a1Ads.showAppOpenAd(from: rootViewController, afterInterval: 0) {
+                
+            } onClose: {
+                
+            } onError: { error in
+                
+            }
+
+        }
     }
     
 }
