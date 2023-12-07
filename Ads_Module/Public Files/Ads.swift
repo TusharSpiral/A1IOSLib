@@ -384,6 +384,7 @@ extension Ads: AdsType {
             interstitialAd?.stopLoading()
             rewardedInterstitialAd?.stopLoading()
             nativeAd?.stopLoading()
+            rewardedAd?.stopLoading()
         } else {
             loadAds()
         }
@@ -414,8 +415,8 @@ private extension Ads {
     }
     
     func loadAds() {
-        rewardedAd?.load()
         guard !isDisabled else { return }
+        rewardedAd?.load()
         interstitialAd?.load()
         rewardedInterstitialAd?.load()
     }

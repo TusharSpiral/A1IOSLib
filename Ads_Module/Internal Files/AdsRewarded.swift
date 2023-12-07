@@ -11,6 +11,7 @@ import GoogleMobileAds
 protocol AdsRewardedType: AnyObject {
     var isReady: Bool { get }
     func load()
+    func stopLoading()
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
@@ -63,7 +64,12 @@ extension AdsRewarded: AdsRewardedType {
             
         }
     }
- 
+    
+    func stopLoading() {
+        rewardedAd?.fullScreenContentDelegate = nil
+        rewardedAd = nil
+    }
+
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
