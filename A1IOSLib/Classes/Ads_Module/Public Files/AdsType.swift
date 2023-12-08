@@ -46,7 +46,7 @@ public protocol AdsType: AnyObject {
                       adUnitIdType: AdsAdUnitIdType,
                       position: AdsBannerAdPosition,
                       animation: AdsBannerAdAnimation,
-                      onOpen: (() -> Void)?,
+                      onOpen: ((GADBannerView?) -> Void)?,
                       onClose: (() -> Void)?,
                       onError: ((Error) -> Void)?,
                       onWillPresentScreen: (() -> Void)?,

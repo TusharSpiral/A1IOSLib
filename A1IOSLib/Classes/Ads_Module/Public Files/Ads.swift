@@ -48,7 +48,7 @@ public final class Ads: NSObject {
 
 // MARK: - AdsType
 
-extension Ads: AdsType {
+extension Ads: AdsType {    
     
     /// Check if app open  ad is ready to be displayed.
     public var isAppOpenAdReady: Bool {
@@ -177,7 +177,7 @@ extension Ads: AdsType {
                              adUnitIdType: AdsAdUnitIdType,
                              position: AdsBannerAdPosition,
                              animation: AdsBannerAdAnimation,
-                             onOpen: (() -> Void)?,
+                             onOpen: ((GADBannerView?) -> Void)?,
                              onClose: (() -> Void)?,
                              onError: ((Error) -> Void)?,
                              onWillPresentScreen: (() -> Void)?,
@@ -226,6 +226,7 @@ extension Ads: AdsType {
             onDidDismissScreen: onDidDismissScreen
         )
 
+        bannerAd.show(isLandscape: viewController.view.frame.width > viewController.view.frame.height)
         return bannerAd
     }
     

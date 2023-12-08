@@ -115,12 +115,12 @@ final class DemoSelectionViewController: UITableViewController {
         navigationItem.title = "A1 iOS Ads Demo"
         tableView.register(BasicCell.self, forCellReuseIdentifier: String(describing: BasicCell.self))
         notificationCenter.addObserver(self, selector: #selector(adsConfigureCompletion), name: .adsConfigureCompletion, object: nil)
-        makeBanner()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
+        //makeBanner()
+        //bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -133,53 +133,90 @@ final class DemoSelectionViewController: UITableViewController {
     // MARK: - UITableViewDataSource
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        sections.count
+        return sections.count + 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sections[section].rows(isRequiredToAskForConsent: false).count
+        if section < sections.count {
+            return sections[section].rows(isRequiredToAskForConsent: false).count
+        }
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = sections[indexPath.section].rows(isRequiredToAskForConsent: false)[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: BasicCell.self), for: indexPath) as! BasicCell
-        cell.configure(title: row.title, accessoryType: row.accessoryType)
+        if indexPath.section < sections.count {
+            let row = sections[indexPath.section].rows(isRequiredToAskForConsent: false)[indexPath.row]
+            cell.configure(title: row.title, accessoryType: row.accessoryType)
+        } else {
+            bannerAd = a1Ads.makeBannerAd(
+                in: self,
+                adUnitIdType: .plist,
+                position: .bottom(isUsingSafeArea: true),
+                animation: .fade(duration: 1.5),
+                onOpen: { bannerView in
+                    print(" banner ad did open")
+                    if let myBanner = bannerView {
+                        bannerView?.frame = CGRectMake(0, 0, myBanner.frame.width, myBanner.frame.height)
+                        cell.contentView.addSubview(myBanner)
+                    }
+                },
+                onClose: {
+                    print(" banner ad did close")
+                },
+                onError: { error in
+                    print(" banner ad error \(error)")
+                },
+                onWillPresentScreen: {
+                    print(" banner ad was tapped and is about to present screen")
+                },
+                onWillDismissScreen: {
+                    print(" banner ad screen is about to be dismissed")
+                },
+                onDidDismissScreen: {
+                    print(" banner did dismiss screen")
+                }
+            )
+        }
         return cell
+        
     }
     
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = sections[indexPath.section].rows(isRequiredToAskForConsent: false)[indexPath.row]
-        var viewController: UIViewController?
-
-        if row.shouldDeselect {
-            tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section < sections.count {
+            let row = sections[indexPath.section].rows(isRequiredToAskForConsent: false)[indexPath.row]
+            var viewController: UIViewController?
+            
+            if row.shouldDeselect {
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+            
+            switch row {
+            case .viewController:
+                let plainViewController = PlainViewController(a1Ads: a1Ads)
+                viewController = plainViewController
+            case .viewControllerInsideTabBar:
+                break
+            case .tabBarController:
+                break
+            case .nativeAd:
+                viewController = NativeAdViewController(a1Ads: a1Ads)
+            case .updateConsent:
+                break
+                
+            case .disable:
+                a1Ads.setDisabled(true)
+                bannerAd?.remove()
+                bannerAd = nil
+                showDisabledAlert()
+            }
+            
+            guard let validViewController = viewController else { return }
+            validViewController.navigationItem.title = row.title
+            navigationController?.pushViewController(validViewController, animated: true)
         }
-        
-        switch row {
-        case .viewController:
-            let plainViewController = PlainViewController(a1Ads: a1Ads)
-            viewController = plainViewController
-        case .viewControllerInsideTabBar:
-            break
-        case .tabBarController:
-            break
-        case .nativeAd:
-            viewController = NativeAdViewController(a1Ads: a1Ads)
-        case .updateConsent:
-            break
-
-        case .disable:
-            a1Ads.setDisabled(true)
-            bannerAd?.remove()
-            bannerAd = nil
-            showDisabledAlert()
-        }
-        
-        guard let validViewController = viewController else { return }
-        validViewController.navigationItem.title = row.title
-        navigationController?.pushViewController(validViewController, animated: true)
     }
 }
 
@@ -201,7 +238,7 @@ private extension DemoSelectionViewController {
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
             animation: .fade(duration: 1.5),
-            onOpen: {
+            onOpen: { bannerView in
                 print(" banner ad did open")
             },
             onClose: {

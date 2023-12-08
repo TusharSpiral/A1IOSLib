@@ -77,7 +77,7 @@ final class PlainViewController: UIViewController {
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
             animation: .slide(duration: 1.5),
-            onOpen: {
+            onOpen: {_ in 
                 print(" banner ad did open")
             },
             onClose: {

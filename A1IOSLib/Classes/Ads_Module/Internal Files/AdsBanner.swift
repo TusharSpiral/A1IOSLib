@@ -22,7 +22,7 @@ final class AdsBanner: NSObject {
 //    private let hasConsent: () -> Bool
     private let request: () -> GADRequest
 
-    private var onOpen: (() -> Void)?
+    private var onOpen: ((GADBannerView?) -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
     private var onWillPresentScreen: (() -> Void)?
@@ -54,7 +54,7 @@ final class AdsBanner: NSObject {
                  in viewController: UIViewController,
                  position: AdsBannerAdPosition,
                  animation: AdsBannerAdAnimation,
-                 onOpen: (() -> Void)?,
+                 onOpen: ((GADBannerView?) -> Void)?,
                  onClose: (() -> Void)?,
                  onError: ((Error) -> Void)?,
                  onWillPresentScreen: (() -> Void)?,
@@ -154,6 +154,7 @@ extension AdsBanner: GADBannerViewDelegate {
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         show(bannerView, from: bannerView.rootViewController)
         if case .development = environment {
+            onOpen?(bannerView)
             print("AdsBanner did receive ad from: \(bannerView.responseInfo?.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "not found")")
         }
     }
@@ -217,7 +218,7 @@ private extension AdsBanner {
 
     func show(_ bannerAd: GADBannerView, from viewController: UIViewController?) {
         // Stop current animations
-        stopCurrentAnimatorAnimations()
+        //stopCurrentAnimatorAnimations()
 
         // Show banner incase it was hidden
         bannerAd.isHidden = false
@@ -250,9 +251,9 @@ private extension AdsBanner {
         }
 
         // Add animation completion if needed
-        animator?.addCompletion { [weak self] _ in
-            self?.onOpen?()
-        }
+//        animator?.addCompletion { [weak self] _ in
+//            self?.onOpen?(self?.bannerView)
+//        }
 
         // Start animation if needed
         animator?.startAnimation()
