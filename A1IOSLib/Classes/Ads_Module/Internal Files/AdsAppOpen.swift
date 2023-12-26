@@ -93,7 +93,13 @@ class AppOpenAdManager: NSObject {
     }
   }
 
-  func showAdIfAvailable(viewController: UIViewController) {
+  func showAdIfAvailable(viewController: UIViewController,
+                         onOpen: (() -> Void)?,
+                         onClose: (() -> Void)?,
+                         onError: ((Error) -> Void)?) {
+      self.onOpen = onOpen
+      self.onClose = onClose
+      self.onError = onError
     // If the app open ad is already showing, do not show the ad again.
     if isShowingAd {
       print("App open ad is already showing.")

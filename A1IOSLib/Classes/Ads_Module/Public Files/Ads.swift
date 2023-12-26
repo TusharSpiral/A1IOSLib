@@ -233,7 +233,10 @@ extension Ads: AdsType {
     // MARK: App Open Ads
     
     public func showAppOpenAd(from viewController: UIViewController, afterInterval interval: Int?, onOpen: (() -> Void)?, onClose: (() -> Void)?, onError: ((Error) -> Void)?) {
-        AppOpenAdManager.shared.showAdIfAvailable(viewController: viewController)
+        AppOpenAdManager.shared.showAdIfAvailable(viewController: viewController,
+                                                  onOpen: onOpen,
+                                                  onClose: onClose,
+                                                  onError: onError)
     }
 
     // MARK: Interstitial Ads

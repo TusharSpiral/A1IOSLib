@@ -121,8 +121,21 @@ final class DemoSelectionViewController: UITableViewController {
         super.viewDidAppear(animated)
         //makeBanner()
         //bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
+        showAppOpenAd()
     }
 
+    func showAppOpenAd() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
+            self.a1Ads.showAppOpenAd(from: self, afterInterval: 0) {
+                
+            } onClose: {
+                
+            } onError: { error in
+                
+            }
+        }
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self] _ in
