@@ -46,10 +46,40 @@ public final class Ads: NSObject {
     }
 }
 
+//public final class A1IOSLib {
+//    static let resourceBundle: Bundle = {
+//        let myBundle = Bundle(for: A1IOSLib.self)
+//
+//        guard let resourceBundleURL = myBundle.url(
+//            forResource: "A1IOSLib", withExtension: "bundle")
+//            else { fatalError("A1IOSLib.bundle not found!") }
+//
+//        guard let resourceBundle = Bundle(url: resourceBundleURL)
+//            else { fatalError("Cannot access A1IOSLib.bundle!") }
+//
+//        return resourceBundle
+//    }()
+//}
+
 // MARK: - AdsType
 
 extension Ads: AdsType {    
     
+//    public func getDebugScreen() -> MyViewController? {
+//        let podBundle = Bundle(for:MyViewController.self)
+//           if let bundleURL = podBundle.url(forResource: "MyViewController", withExtension: "xib") {
+//               if let bundle = Bundle(url: bundleURL) {
+//                   return MyViewController(nibName: "MyViewController", bundle: bundle)
+//               } else {
+//                   assertionFailure("Could not load the bundle")
+//               }
+//           } else {
+//               assertionFailure("Could not create a path to the bundle")
+//           }
+//        return nil
+//
+//    }
+
     /// Check if app open  ad is ready to be displayed.
     public var isAppOpenAdReady: Bool {
         appOpenAd?.isReady ?? false
@@ -233,7 +263,10 @@ extension Ads: AdsType {
     // MARK: App Open Ads
     
     public func showAppOpenAd(from viewController: UIViewController, afterInterval interval: Int?, onOpen: (() -> Void)?, onClose: (() -> Void)?, onError: ((Error) -> Void)?) {
-        AppOpenAdManager.shared.showAdIfAvailable(viewController: viewController)
+        AppOpenAdManager.shared.showAdIfAvailable(viewController: viewController,
+                                                  onOpen: onOpen,
+                                                  onClose: onClose,
+                                                  onError: onError)
     }
 
     // MARK: Interstitial Ads
@@ -385,6 +418,7 @@ extension Ads: AdsType {
             interstitialAd?.stopLoading()
             rewardedInterstitialAd?.stopLoading()
             nativeAd?.stopLoading()
+            appOpenAd?.stopLoading()
         } else {
             loadAds()
         }
@@ -419,6 +453,7 @@ private extension Ads {
         guard !isDisabled else { return }
         interstitialAd?.load()
         rewardedInterstitialAd?.load()
+        appOpenAd?.load()
     }
 }
 

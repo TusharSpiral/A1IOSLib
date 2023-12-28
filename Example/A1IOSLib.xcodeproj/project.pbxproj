@@ -19,6 +19,13 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		628EC3662B3C026800D7C46B /* DebugAdsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628EC3642B3C026800D7C46B /* DebugAdsViewController.swift */; };
+		628EC3672B3C026800D7C46B /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 628EC3652B3C026800D7C46B /* Debug.storyboard */; };
+		628EC36A2B3C034800D7C46B /* DebugTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628EC3682B3C034800D7C46B /* DebugTableViewCell.swift */; };
+		628EC36B2B3C034800D7C46B /* DebugTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 628EC3692B3C034800D7C46B /* DebugTableViewCell.xib */; };
+		628EC36E2B3C07D000D7C46B /* DebugTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628EC36C2B3C07D000D7C46B /* DebugTextCell.swift */; };
+		628EC36F2B3C07D000D7C46B /* DebugTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 628EC36D2B3C07D000D7C46B /* DebugTextCell.xib */; };
+		628EC3712B3C0E8F00D7C46B /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628EC3702B3C0E8F00D7C46B /* DebugViewController.swift */; };
 		927F1EEFAA9D77291FA06BCD /* Pods_A1IOSLib_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2FF3232CD8E87A0FC2553E /* Pods_A1IOSLib_Tests.framework */; };
 		93C5B0274CE9E683DFD3FFAB /* Pods_A1IOSLib_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C9EC288BDC258EED04CDEB /* Pods_A1IOSLib_Example.framework */; };
 		BD7394A12AAB318F007FC77F /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7394A02AAB318F007FC77F /* EventHandler.swift */; };
@@ -54,6 +61,13 @@
 		607FACE51AFB9204008FA782 /* A1IOSLib_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = A1IOSLib_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		628EC3642B3C026800D7C46B /* DebugAdsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugAdsViewController.swift; sourceTree = "<group>"; };
+		628EC3652B3C026800D7C46B /* Debug.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Debug.storyboard; sourceTree = "<group>"; };
+		628EC3682B3C034800D7C46B /* DebugTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTableViewCell.swift; sourceTree = "<group>"; };
+		628EC3692B3C034800D7C46B /* DebugTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugTableViewCell.xib; sourceTree = "<group>"; };
+		628EC36C2B3C07D000D7C46B /* DebugTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTextCell.swift; sourceTree = "<group>"; };
+		628EC36D2B3C07D000D7C46B /* DebugTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugTextCell.xib; sourceTree = "<group>"; };
+		628EC3702B3C0E8F00D7C46B /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		63C9EC288BDC258EED04CDEB /* Pods_A1IOSLib_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_A1IOSLib_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A9C9E797635CA673894EAE2 /* A1IOSLib.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = A1IOSLib.podspec; path = ../A1IOSLib.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9775822E1DA875245C45A617 /* Pods-A1IOSLib_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A1IOSLib_Example.release.xcconfig"; path = "Target Support Files/Pods-A1IOSLib_Example/Pods-A1IOSLib_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -113,6 +127,7 @@
 		188717C62B160F6F00459DF0 /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				628EC3632B3C025C00D7C46B /* Debug */,
 				188717C82B160F9500459DF0 /* Native */,
 				188717C72B160F8600459DF0 /* Plain */,
 			);
@@ -130,8 +145,6 @@
 		188717C82B160F9500459DF0 /* Native */ = {
 			isa = PBXGroup;
 			children = (
-				188717C92B160FBE00459DF0 /* AdView.xib */,
-				188717C42B160E4C00459DF0 /* NativeAdViewController.swift */,
 			);
 			name = Native;
 			sourceTree = "<group>";
@@ -207,6 +220,22 @@
 				11C09426F717C7580CCBFF01 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		628EC3632B3C025C00D7C46B /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				628EC3652B3C026800D7C46B /* Debug.storyboard */,
+				628EC3702B3C0E8F00D7C46B /* DebugViewController.swift */,
+				628EC3642B3C026800D7C46B /* DebugAdsViewController.swift */,
+				628EC3682B3C034800D7C46B /* DebugTableViewCell.swift */,
+				628EC3692B3C034800D7C46B /* DebugTableViewCell.xib */,
+				628EC36C2B3C07D000D7C46B /* DebugTextCell.swift */,
+				628EC36D2B3C07D000D7C46B /* DebugTextCell.xib */,
+				188717C92B160FBE00459DF0 /* AdView.xib */,
+				188717C42B160E4C00459DF0 /* NativeAdViewController.swift */,
+			);
+			name = Debug;
 			sourceTree = "<group>";
 		};
 		CA9220DB0D7963B972F17419 /* Pods */ = {
@@ -309,11 +338,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				628EC3672B3C026800D7C46B /* Debug.storyboard in Resources */,
 				188717CA2B160FBE00459DF0 /* AdView.xib in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				188717B72B15EC1F00459DF0 /* AdsUnitId.plist in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				628EC36F2B3C07D000D7C46B /* DebugTextCell.xib in Resources */,
+				628EC36B2B3C034800D7C46B /* DebugTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,13 +452,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				628EC36E2B3C07D000D7C46B /* DebugTextCell.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				628EC3712B3C0E8F00D7C46B /* DebugViewController.swift in Sources */,
 				BD7394A12AAB318F007FC77F /* EventHandler.swift in Sources */,
+				628EC3662B3C026800D7C46B /* DebugAdsViewController.swift in Sources */,
 				188717B52B15E76D00459DF0 /* BasicCellTableViewCell.swift in Sources */,
 				188717B22B15E67E00459DF0 /* DemoSelectionViewController.swift in Sources */,
 				188717C52B160E4C00459DF0 /* NativeAdViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				188717C32B1603E100459DF0 /* PlainViewController.swift in Sources */,
+				628EC36A2B3C034800D7C46B /* DebugTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
