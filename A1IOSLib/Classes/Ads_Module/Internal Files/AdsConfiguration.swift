@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct AdsConfiguration: Decodable, Equatable {
-    let appOpenAdUnitId: String?
-    let bannerAdUnitId: String?
-    let interstitialAdUnitId: String?
-    let rewardedAdUnitId: String?
-    let rewardedInterstitialAdUnitId: String?
-    let nativeAdUnitId: String?
+public struct AdsConfiguration: Decodable, Equatable {
+    public let appOpenAdUnitId: String?
+    public let bannerAdUnitId: String?
+    public let interstitialAdUnitId: String?
+    public let rewardedAdUnitId: String?
+    public let rewardedInterstitialAdUnitId: String?
+    public let nativeAdUnitId: String?
 }
 
-extension AdsConfiguration {
+public extension AdsConfiguration {
     static func production(bundle: Bundle = .main) -> AdsConfiguration {
         guard let url = bundle.url(forResource: "AdsUnitId", withExtension: "plist") else {
             fatalError("AdsUnitId could not find AdsUnitId.plist in the main bundle.")

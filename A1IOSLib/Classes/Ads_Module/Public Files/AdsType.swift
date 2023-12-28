@@ -87,4 +87,6 @@ public protocol AdsType: AnyObject {
                       onReceive: @escaping (GADNativeAd) -> Void)
     
     func setDisabled(_ isDisabled: Bool)
+    
+//    func getDebugScreen() -> MyViewController?
 }

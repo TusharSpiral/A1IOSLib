@@ -48,9 +48,9 @@ final class DemoSelectionViewController: UITableViewController {
             case .viewController:
                 return "ViewController"
             case .viewControllerInsideTabBar:
-                return "ViewController inside TabBarController"
+                return "Debug"
             case .tabBarController:
-                return "TabBarController"
+                return "Debug using pods"
             case .nativeAd:
                 return "Native Ad"
             case .updateConsent:
@@ -121,11 +121,11 @@ final class DemoSelectionViewController: UITableViewController {
         super.viewDidAppear(animated)
         //makeBanner()
         //bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
-        showAppOpenAd()
+        //showAppOpenAd()
     }
 
     func showAppOpenAd() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             self.a1Ads.showAppOpenAd(from: self, afterInterval: 0) {
                 
             } onClose: {
@@ -211,8 +211,22 @@ final class DemoSelectionViewController: UITableViewController {
                 let plainViewController = PlainViewController(a1Ads: a1Ads)
                 viewController = plainViewController
             case .viewControllerInsideTabBar:
-                break
+                let storyboard = UIStoryboard(name: "Debug", bundle: nil)
+                if let vc = storyboard.instantiateViewController(withIdentifier: "DebugViewController") as? DebugViewController {
+                    navigationController?.pushViewController(vc, animated: true)
+                }
             case .tabBarController:
+//                if let vc = a1Ads.getDebugScreen() {
+//                    navigationController?.pushViewController(vc, animated: true)
+//                }
+//                let vc = DebugViewController()
+//                navigationController?.pushViewController(vc, animated: true)
+                //let bundleName = Bundle(for: EventHandler.self)
+//                dump()
+//                let storyboard = UIStoryboard(name: "Debug", bundle: A1IOSLib.nibBundle?.bundleURL)
+//                if let vc = storyboard.instantiateViewController(withIdentifier: "DebugViewController") as? DebugViewController {
+//                    self.navigationController?.pushViewController(vc, animated: true)
+//                }
                 break
             case .nativeAd:
                 viewController = NativeAdViewController(a1Ads: a1Ads)
