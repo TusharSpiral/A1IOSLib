@@ -19,10 +19,8 @@ Pod::Spec.new do |spec|
     spec.swift_version = '5.0'
   spec.static_framework = true
   spec.ios.deployment_target  = '14.0'
-  spec.source_files  = "A1IOSLib/**/*.{swift, storyboard}"
-#  spec.resources  = "A1IOSLib/**/*.storyboard"
-  spec.resource_bundles = { 'A1IOSLib' => ['A1IOSLib/**/*.{xib,storyboard,xcassets}'] }
-  spec.resources = "A1IOSLib/**/*.{storyboard}"
+  spec.source_files  = "A1IOSLib/**/*.{swift}"
+  spec.resource_bundles = { 'A1IOSLib' => ['A1IOSLib/**/*.{storyboard}'] }
   spec.dependency 'Alamofire'
   spec.dependency 'Purchasely', '3.7.2'
   spec.dependency 'FirebaseAnalytics'
