@@ -85,7 +85,7 @@ final class AdsBanner: NSObject {
         bannerView.delegate = self
 
         // Add banner view to view controller
-        //add(bannerView, to: viewController)
+        add(bannerView, to: viewController)
 
         // Hide banner without animation
         hide(bannerView, from: viewController, skipAnimation: true)
