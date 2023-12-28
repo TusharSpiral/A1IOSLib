@@ -104,6 +104,10 @@ extension Ads: AdsType {
     public var isDisabled: Bool {
         disabled
     }
+    
+    public var getConfiguration: AdsConfiguration? {
+        configuration
+    }
 
     // MARK: Configure
     
@@ -139,10 +143,12 @@ extension Ads: AdsType {
 
          // Create ads
         if let appOpenAdUnitId = configuration.appOpenAdUnitId {
-//            appOpenAd = AppOpenAdManager()
+            appOpenAd = AppOpenAdManager(
+                environment: environment,
+                adUnitId: appOpenAdUnitId,
+                request: requestBuilder.build
+            )
         }
-        
-        
         
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
             interstitialAd = AdsInterstitial(
@@ -263,10 +269,11 @@ extension Ads: AdsType {
     // MARK: App Open Ads
     
     public func showAppOpenAd(from viewController: UIViewController, afterInterval interval: Int?, onOpen: (() -> Void)?, onClose: (() -> Void)?, onError: ((Error) -> Void)?) {
-        AppOpenAdManager.shared.showAdIfAvailable(viewController: viewController,
-                                                  onOpen: onOpen,
-                                                  onClose: onClose,
-                                                  onError: onError)
+        appOpenAd?.show(from: viewController,
+                        onOpen: onOpen,
+                        onClose: onClose,
+                        onError: onError
+        )
     }
 
     // MARK: Interstitial Ads

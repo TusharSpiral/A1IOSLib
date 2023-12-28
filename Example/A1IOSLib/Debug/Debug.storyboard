@@ -108,7 +108,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mmF-2x-7Jn">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="689"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Y6W-OH-hqX" id="Z7W-Zw-tFV"/>
@@ -121,7 +121,7 @@
                         <constraints>
                             <constraint firstItem="mmF-2x-7Jn" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="JaH-Mf-Lp9"/>
                             <constraint firstItem="mmF-2x-7Jn" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="b4J-dX-jXI"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="mmF-2x-7Jn" secondAttribute="bottom" id="pgF-tL-Qqk"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="mmF-2x-7Jn" secondAttribute="bottom" constant="70" id="pgF-tL-Qqk"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="mmF-2x-7Jn" secondAttribute="trailing" id="th8-Ds-0gN"/>
                         </constraints>
                     </view>

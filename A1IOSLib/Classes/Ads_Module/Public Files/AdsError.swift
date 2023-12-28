@@ -8,6 +8,7 @@
 import Foundation
 
 public enum AdsError: Error {
+    case appOpenAdNotLoaded
     case interstitialAdNotLoaded
     case rewardedAdNotLoaded
     case rewardedInterstitialAdNotLoaded
@@ -15,6 +16,8 @@ public enum AdsError: Error {
 
     public var errorDescription: String? {
         switch self {
+        case .appOpenAdNotLoaded:
+            return "App Open ad not loaded"
         case .interstitialAdNotLoaded:
             return "Interstitial ad not loaded"
         case .rewardedAdNotLoaded:

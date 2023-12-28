@@ -27,8 +27,17 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
         debugTableView.register(UINib(nibName: "DebugTableViewCell", bundle: nil), forCellReuseIdentifier: "DebugCell")
         debugTableView.register(UINib(nibName: "DebugTextCell", bundle: nil), forCellReuseIdentifier: "DebugTextCell")
         // Do any additional setup after loading the view.
-        AdsConfiguration.debug().bannerAdUnitId
-        idsText.append("")
+        idsText.append("\n\n\nApp Open Ad unit id\n")
+        idsText.append(Ads.shared.getConfiguration?.appOpenAdUnitId ?? "NA")
+        idsText.append("\n\n\nInter Ad unit id\n")
+        idsText.append(Ads.shared.getConfiguration?.interstitialAdUnitId ?? "NA")
+        idsText.append("\n\n\nRewarded Ad unit id\n")
+        idsText.append(Ads.shared.getConfiguration?.rewardedAdUnitId ?? "NA")
+        idsText.append("\n\n\nBanner Ad unit id\n")
+        idsText.append(Ads.shared.getConfiguration?.bannerAdUnitId ?? "NA")
+        idsText.append("\n\n\nNative Ad unit id\n")
+        idsText.append(Ads.shared.getConfiguration?.nativeAdUnitId ?? "NA")
+        idsText.append("\n\n\n")
     }
     
 

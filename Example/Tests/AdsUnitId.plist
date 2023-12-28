@@ -12,5 +12,7 @@
 	<string>Some id</string>
 	<key>nativeAdUnitId</key>
 	<string>Some id</string>
+	<key>appOpenAdUnitId</key>
+	<string>Some id</string>
 </dict>
 </plist>

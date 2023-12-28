@@ -25,7 +25,11 @@ protocol AppOpenAdManagerDelegate: AnyObject {
   func appOpenAdManagerAdDidComplete(_ appOpenAdManager: AppOpenAdManager)
 }
 
-class AppOpenAdManager: NSObject {
+final class AppOpenAdManager: NSObject {
+    private let environment: AdsEnvironment
+    private let adUnitId: String
+    private let request: () -> GADRequest
+
   /// Ad references in the app open beta will time out after four hours,
   /// but this time limit may change in future beta versions. For details, see:
   /// https://support.google.com/admob/answer/9341964?hl=en
@@ -45,7 +49,13 @@ class AppOpenAdManager: NSObject {
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
 
-  static let shared = AppOpenAdManager()
+  //static let shared = AppOpenAdManager()
+    
+    init(environment: AdsEnvironment, adUnitId: String, request: @escaping () -> GADRequest) {
+        self.environment = environment
+        self.adUnitId = adUnitId
+        self.request = request
+    }
 
   private func wasLoadTimeLessThanNHoursAgo(timeoutInterval: TimeInterval) -> Bool {
     // Check if ad was loaded more than n hours ago.
@@ -74,7 +84,7 @@ class AppOpenAdManager: NSObject {
     isLoadingAd = true
     print("Start loading app open ad.")
     GADAppOpenAd.load(
-      withAdUnitID: "ca-app-pub-3940256099942544/9257395921",
+      withAdUnitID: adUnitId,
       request: GADRequest(),
       orientation: UIInterfaceOrientation.portrait
     ) { ad, error in
@@ -151,4 +161,47 @@ extension AppOpenAdManager: GADFullScreenContentDelegate {
     appOpenAdManagerAdDidComplete()
     loadAd()
   }
+}
+
+extension AppOpenAdManager: AdsAppOpenType {
+    var isReady: Bool {
+        return isAdAvailable()
+    }
+    
+    func load() {
+        loadAd()
+    }
+    
+    func stopLoading() {
+        appOpenAd?.fullScreenContentDelegate = nil
+        appOpenAd = nil
+    }
+    
+    func show(from viewController: UIViewController, onOpen: (() -> Void)?, onClose: (() -> Void)?, onError: ((Error) -> Void)?) {
+        self.onOpen = onOpen
+        self.onClose = onClose
+        self.onError = onError
+        
+//        guard let appOpenAd = appOpenAd else {
+//            load()
+//            onError?(AdsError.appOpenAdNotLoaded)
+//            return
+//        }
+        
+//        do {
+//            try appOpenAd.canPresent(fromRootViewController: viewController)
+//            appOpenAd.present(fromRootViewController: viewController)
+//        } catch {
+//            load()
+//            onError?(error)
+//        }
+        
+        showAdIfAvailable(viewController: viewController,
+                          onOpen: onOpen,
+                          onClose: onClose,
+                          onError: onError
+        )
+    }
+    
+    
 }

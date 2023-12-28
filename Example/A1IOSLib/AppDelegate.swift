@@ -60,11 +60,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
     func configureA1Ads(from viewController: UIViewController) {
+        /*
         #if DEBUG
         let environment: AdsEnvironment = .development(testDeviceIdentifiers: [])
         #else
         let environment:AdsEnvironment = .production
         #endif
+        */
+        let environment: AdsEnvironment = .development(testDeviceIdentifiers: [])
+
         a1Ads.configure(
             from: viewController,
             for: environment,
