@@ -71,6 +71,11 @@ extension Ads: AdsType {
         appOpenAd?.isReady ?? false
     }
      
+    /// Check if app open  ad is ready to be displayed.
+    public var isAppOpenAdShowing: Bool {
+        appOpenAd?.isShowing ?? false
+    }
+
     /// Check if interstitial ad is ready to be displayed.
     public var isInterstitialAdReady: Bool {
         interstitialAd?.isReady ?? false
