@@ -227,6 +227,10 @@ final class DemoSelectionViewController: UITableViewController {
 //                if let vc = storyboard.instantiateViewController(withIdentifier: "DebugViewController") as? DebugViewController {
 //                    self.navigationController?.pushViewController(vc, animated: true)
 //                }
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                if let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabbarController") as? MasterTabbarController {
+//                    navigationController?.pushViewController(vc, animated: true)
+//                }
                 break
             case .nativeAd:
                 viewController = NativeAdViewController(a1Ads: a1Ads)
