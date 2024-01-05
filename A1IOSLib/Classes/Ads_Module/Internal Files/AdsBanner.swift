@@ -153,8 +153,8 @@ extension AdsBanner: GADBannerViewDelegate {
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         show(bannerView, from: bannerView.rootViewController)
+        onOpen?(bannerView)
         if case .development = environment {
-            onOpen?(bannerView)
             print("AdsBanner did receive ad from: \(bannerView.responseInfo?.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "not found")")
         }
     }
