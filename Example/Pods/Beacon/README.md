@@ -1,21 +1,16 @@
 # Beacon SDK
 
-[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Beacon.svg)](https://img.shields.io/cocoapods/v/Beacon.svg)
+![Cocoapods Version](https://img.shields.io/cocoapods/v/Beacon)
 
 Help Scout's Beacon SDK allows you to embed the same Beacon functionality we have for the web inside your iOS app. Beacons provide a quick and straightforward way for customers to flip through your knowledge base or reach out to your team.
 
 ## Requirements
 
-The Beacon SDK 2.0 requires iOS 11.0+.
-
-As of Beacon 2.1.0 Xcode 12 is required to build with the Beacon SDK.
-Beacon 2.0.x requires Xcode 11.4
-
 ### Supported platform and language versions
 
-* iOS 11 to 17
+* iOS/iPadOS 12.0 to 17
 * Swift 5
-* Xcode 12+
+* Xcode 15.0+
 
 ## Installation
 
