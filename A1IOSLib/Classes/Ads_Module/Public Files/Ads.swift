@@ -113,7 +113,7 @@ extension Ads: AdsType {
     ///
     /// - Warning:
     /// Returns .notRequired in the completion handler if consent has been disabled via Ads.plist isUMPDisabled entry.
-    public func configure(from viewController: UIViewController,
+    public func configure(from customIds: AdsConfiguration?,
                           for environment: AdsEnvironment,
                           requestBuilder: AdsRequestBuilderType
                           ) {
@@ -121,9 +121,17 @@ extension Ads: AdsType {
         let configuration: AdsConfiguration
         switch environment {
         case .production:
-            configuration = .production()
+            if let custom = customIds {
+                configuration = custom
+            } else {
+                configuration = .production()
+            }
         case .development(let testDeviceIdentifiers):
-            configuration = .debug()
+            if let custom = customIds {
+                configuration = custom
+            } else {
+                configuration = .debug()
+            }
             mobileAds.requestConfiguration.testDeviceIdentifiers = [GADSimulatorID].compactMap { $0 } + testDeviceIdentifiers
         }
         
@@ -177,7 +185,7 @@ extension Ads: AdsType {
 //        if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
 //            /// If consent flow was skipped we need to update COPPA settings.
 //            updateCOPPA(for: configuration, mediationConfigurator: mediationConfigurator)
-//            
+//
 //            /// If consent flow was skipped we can start `GADMobileAds` and preload ads.
             startMobileAdsSDK { [weak self] in
                 guard let self = self else { return }

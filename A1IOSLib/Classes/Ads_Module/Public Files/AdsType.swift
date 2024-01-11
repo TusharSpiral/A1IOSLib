@@ -38,7 +38,7 @@ public protocol AdsType: AnyObject {
     var isRewardedInterstitialAdReady: Bool { get }
     var isDisabled: Bool { get }
     
-    func configure(from viewController: UIViewController,
+    func configure(from customIds: AdsConfiguration?,
                    for environment: AdsEnvironment,
                    requestBuilder: AdsRequestBuilderType)
     

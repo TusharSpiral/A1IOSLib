@@ -70,7 +70,7 @@ private extension AppDelegate {
         let environment: AdsEnvironment = .development(testDeviceIdentifiers: [])
 
         a1Ads.configure(
-            from: viewController,
+            from: nil,
             for: environment,
             requestBuilder: AdsRequestBuilder())
             
