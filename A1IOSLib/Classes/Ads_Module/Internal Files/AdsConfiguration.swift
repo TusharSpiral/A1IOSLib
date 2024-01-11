@@ -42,4 +42,16 @@ public extension AdsConfiguration {
             nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511"
         )
     }
+    
+    static func customIds(bannerId: String, appOpenId: String, interId: String, rewardedId: String, rewardedInterId: String, nativeId: String) -> AdsConfiguration {
+        AdsConfiguration(
+            appOpenAdUnitId: appOpenId,
+            bannerAdUnitId: bannerId,
+            interstitialAdUnitId: interId,
+            rewardedAdUnitId: rewardedId,
+            rewardedInterstitialAdUnitId: rewardedInterId,
+            nativeAdUnitId: nativeId
+        )
+    }
+
 }
