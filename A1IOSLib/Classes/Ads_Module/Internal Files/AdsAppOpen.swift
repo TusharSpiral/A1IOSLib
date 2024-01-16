@@ -34,7 +34,7 @@ final class AppOpenAdManager: NSObject {
   /// Ad references in the app open beta will time out after four hours,
   /// but this time limit may change in future beta versions. For details, see:
   /// https://support.google.com/admob/answer/9341964?hl=en
-  let timeoutInterval: TimeInterval = 4 * 3_600
+  let timeoutInterval: TimeInterval = 15
   /// The app open ad.
   var appOpenAd: GADAppOpenAd?
   /// Maintains a reference to the delegate.
@@ -45,7 +45,9 @@ final class AppOpenAdManager: NSObject {
   var isShowingAd = false
   /// Keeps track of the time when an app open ad was loaded to discard expired ad.
   var loadTime: Date?
-    
+    private var viewController: UIViewController?
+    private var showAdAfterLoad = false
+
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
@@ -94,13 +96,19 @@ final class AppOpenAdManager: NSObject {
         self.appOpenAd = nil
         self.loadTime = nil
         print("App open ad failed to load with error: \(error.localizedDescription)")
+          self.onError?(error)
         return
       }
 
       self.appOpenAd = ad
       self.appOpenAd?.fullScreenContentDelegate = self
       self.loadTime = Date()
-      print("App open ad loaded successfully.")
+        print("App open ad loaded successfully.")
+        if self.showAdAfterLoad, let ads = self.appOpenAd, let viewController = self.viewController {
+            self.showAdAfterLoad = false
+            ads.present(fromRootViewController: viewController)
+            self.viewController = nil
+        }
     }
   }
 
@@ -111,6 +119,8 @@ final class AppOpenAdManager: NSObject {
       self.onOpen = onOpen
       self.onClose = onClose
       self.onError = onError
+      self.viewController = viewController
+      self.showAdAfterLoad = true
     // If the app open ad is already showing, do not show the ad again.
     if isShowingAd {
       print("App open ad is already showing.")
@@ -128,6 +138,7 @@ final class AppOpenAdManager: NSObject {
     if let ad = appOpenAd {
       print("App open ad will be displayed.")
       isShowingAd = true
+    self.showAdAfterLoad = false
       ad.present(fromRootViewController: viewController)
     }
   }
@@ -161,6 +172,7 @@ extension AppOpenAdManager: GADFullScreenContentDelegate {
     print("App open ad failed to present with error: \(error.localizedDescription)")
     appOpenAdManagerAdDidComplete()
     loadAd()
+    onError?(error)
   }
 }
 
@@ -183,24 +195,6 @@ extension AppOpenAdManager: AdsAppOpenType {
     }
     
     func show(from viewController: UIViewController, onOpen: (() -> Void)?, onClose: (() -> Void)?, onError: ((Error) -> Void)?) {
-        self.onOpen = onOpen
-        self.onClose = onClose
-        self.onError = onError
-        
-//        guard let appOpenAd = appOpenAd else {
-//            load()
-//            onError?(AdsError.appOpenAdNotLoaded)
-//            return
-//        }
-        
-//        do {
-//            try appOpenAd.canPresent(fromRootViewController: viewController)
-//            appOpenAd.present(fromRootViewController: viewController)
-//        } catch {
-//            load()
-//            onError?(error)
-//        }
-        
         showAdIfAvailable(viewController: viewController,
                           onOpen: onOpen,
                           onClose: onClose,

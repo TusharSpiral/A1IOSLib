@@ -59,7 +59,7 @@ final class AdsBanner: NSObject {
                  onError: ((Error) -> Void)?,
                  onWillPresentScreen: (() -> Void)?,
                  onWillDismissScreen: (() -> Void)?,
-                 onDidDismissScreen: (() -> Void)?) {
+                 onDidDismissScreen: (() -> Void)?) -> GADBannerView {
         self.position = position
         self.animation = animation
         self.onOpen = onOpen
@@ -71,7 +71,8 @@ final class AdsBanner: NSObject {
         
         // Create banner view
         let bannerView = GADBannerView()
-        
+        bannerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60)
+
         // Keep reference to created banner view
         self.bannerView = bannerView
 
@@ -85,10 +86,11 @@ final class AdsBanner: NSObject {
         bannerView.delegate = self
 
         // Add banner view to view controller
-        add(bannerView, to: viewController)
+//        add(bannerView, to: viewController)
 
         // Hide banner without animation
-        hide(bannerView, from: viewController, skipAnimation: true)
+//        hide(bannerView, from: viewController, skipAnimation: true)
+        return bannerView
     }
 }
 

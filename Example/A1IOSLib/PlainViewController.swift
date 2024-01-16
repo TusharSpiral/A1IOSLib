@@ -72,9 +72,8 @@ final class PlainViewController: UIViewController {
         view.backgroundColor = .white
         addSubviews()
 
-        bannerAd = a1Ads.makeBannerAd(
+       let banner = a1Ads.makeBannerAd(
             in: self,
-            adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
             animation: .slide(duration: 1.5),
             onOpen: {_ in 
@@ -96,6 +95,7 @@ final class PlainViewController: UIViewController {
                 print(" banner did dismiss screen")
             }
         )
+        // show banner on any of the view you want to
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -162,9 +162,8 @@ final class DemoSelectionViewController: UITableViewController {
             let row = sections[indexPath.section].rows(isRequiredToAskForConsent: false)[indexPath.row]
             cell.configure(title: row.title, accessoryType: row.accessoryType)
         } else {
-            bannerAd = a1Ads.makeBannerAd(
+            let banner = a1Ads.makeBannerAd(
                 in: self,
-                adUnitIdType: .plist,
                 position: .bottom(isUsingSafeArea: true),
                 animation: .fade(duration: 1.5),
                 onOpen: { bannerView in
@@ -190,6 +189,8 @@ final class DemoSelectionViewController: UITableViewController {
                     print(" banner did dismiss screen")
                 }
             )
+            // show banner on any of the view you want to
+
         }
         return cell
         
@@ -264,9 +265,8 @@ private extension DemoSelectionViewController {
     }
 
     func makeBanner() {
-        bannerAd = a1Ads.makeBannerAd(
+        let banner = a1Ads.makeBannerAd(
             in: self,
-            adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
             animation: .fade(duration: 1.5),
             onOpen: { bannerView in
@@ -288,6 +288,7 @@ private extension DemoSelectionViewController {
                 print(" banner did dismiss screen")
             }
         )
+        // show banner on any of the view you want to
     }
 
     func showDisabledAlert() {

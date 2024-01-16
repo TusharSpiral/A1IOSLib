@@ -225,9 +225,8 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func showBanner() {
-        bannerAd = Ads.shared.makeBannerAd(
+       let banner = Ads.shared.makeBannerAd(
             in: self,
-            adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
             animation: .fade(duration: 1.5),
             onOpen: { bannerView in
@@ -249,6 +248,8 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
                 print(" banner did dismiss screen")
             }
         )
+        // show banner on any of the view you want to
+
     }
 
     func showNative() {

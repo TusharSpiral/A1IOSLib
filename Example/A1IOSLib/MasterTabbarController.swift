@@ -20,9 +20,8 @@ class MasterTabbarController: UITabBarController {
     }
     
     func makeBanner() {
-        bannerAd = Ads.shared.makeBannerAd(
+        let banner = Ads.shared.makeBannerAd(
             in: self,
-            adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: false),
             animation: .fade(duration: 1.5),
             onOpen: { bannerView in
@@ -48,6 +47,7 @@ class MasterTabbarController: UITabBarController {
                 print(" banner did dismiss screen")
             }
         )
+        // show banner on any of the view you want to
     }
     
     func adBannerOnTabBar(banner: GADBannerView) {
