@@ -145,12 +145,12 @@ class AdaptyHandler: NSObject {
                         self.savePaywall(placement: placement, paywall: visualPaywall)
                         completion(true)
                     case .failure(_):
-                        break
+                        completion(false)
                     }
                 }
                 // the requested paywall
             case .failure(_):
-                break
+                completion(false)
             }
         }
     }
