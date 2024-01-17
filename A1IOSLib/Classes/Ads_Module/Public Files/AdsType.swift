@@ -43,7 +43,6 @@ public protocol AdsType: AnyObject {
                    requestBuilder: AdsRequestBuilderType)
     
     func makeBannerAd(in viewController: UIViewController,
-                      adUnitIdType: AdsAdUnitIdType,
                       position: AdsBannerAdPosition,
                       animation: AdsBannerAdAnimation,
                       onOpen: ((GADBannerView?) -> Void)?,
@@ -51,7 +50,7 @@ public protocol AdsType: AnyObject {
                       onError: ((Error) -> Void)?,
                       onWillPresentScreen: (() -> Void)?,
                       onWillDismissScreen: (() -> Void)?,
-                      onDidDismissScreen: (() -> Void)?) -> AdsBannerType?
+                      onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, GADBannerView)?
     
     func showAppOpenAd(from viewController: UIViewController,
                       afterInterval interval: Int?,

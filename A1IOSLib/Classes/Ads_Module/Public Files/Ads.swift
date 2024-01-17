@@ -209,7 +209,6 @@ extension Ads: AdsType {
     /// - parameter onDidDismissScreen: An optional callback when the banner did dismiss a presented screen.
     /// - returns AdsBannerType to show, hide or remove the prepared banner ad.
     public func makeBannerAd(in viewController: UIViewController,
-                             adUnitIdType: AdsAdUnitIdType,
                              position: AdsBannerAdPosition,
                              animation: AdsBannerAdAnimation,
                              onOpen: ((GADBannerView?) -> Void)?,
@@ -217,20 +216,12 @@ extension Ads: AdsType {
                              onError: ((Error) -> Void)?,
                              onWillPresentScreen: (() -> Void)?,
                              onWillDismissScreen: (() -> Void)?,
-                             onDidDismissScreen: (() -> Void)?) -> AdsBannerType? {
+                             onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, GADBannerView)? {
         guard !isDisabled else { return nil }
 //        guard hasConsent else { return nil }
 
         var adUnitId: String? {
-            switch adUnitIdType {
-            case .plist:
-                return configuration?.bannerAdUnitId
-            case .custom(let id):
-                if case .development = environment {
-                    return configuration?.bannerAdUnitId
-                }
-                return id
-            }
+            configuration?.bannerAdUnitId
         }
 
         guard let validAdUnitId = adUnitId else {
@@ -248,7 +239,7 @@ extension Ads: AdsType {
             }
         )
 
-        bannerAd.prepare(
+        let gadBannerView = bannerAd.prepare(
             withAdUnitId: validAdUnitId,
             in: viewController,
             position: position,
@@ -261,8 +252,8 @@ extension Ads: AdsType {
             onDidDismissScreen: onDidDismissScreen
         )
 
-        bannerAd.show(isLandscape: viewController.view.frame.width > viewController.view.frame.height)
-        return bannerAd
+//        bannerAd.show(isLandscape: viewController.view.frame.width > viewController.view.frame.height)
+        return (bannerAd, gadBannerView)
     }
     
     // MARK: App Open Ads
