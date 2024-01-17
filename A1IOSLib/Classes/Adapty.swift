@@ -10,7 +10,7 @@ import UIKit
 import Adapty
 import AdaptyUI
 
-protocol AdaptyHandlerDelegate: AnyObject {
+public protocol AdaptyHandlerDelegate: AnyObject {
     func didUpdateSubscription()
     func alertAction(text: String?)
     func loader(isShown: Bool)
@@ -29,8 +29,8 @@ extension NSNotification.Name {
     static let ReceivedOnboardingPaywall = NSNotification.Name("ReceivedOnboardingPaywall")
 }
 
-class AdaptyHandler: NSObject {
-    static var shared = AdaptyHandler()
+public class AdaptyHandler: NSObject {
+    public static var shared = AdaptyHandler()
     var purchaselyViewController: UIViewController?
     var fromController: UIViewController?
     var delegate: AdaptyHandlerDelegate?
@@ -43,8 +43,11 @@ class AdaptyHandler: NSObject {
         Adapty.setLogHandler { time, level, message  in
             print("Adapty time:\(time), level: \(level): \(message)")
         }
-        Adapty.activate(key, customerUserId: uid, enableUsageLogs: true)
-        //Adapty.activate(key, enableUsageLogs: true)
+        if uid != "", !uid.isEmpty {
+            Adapty.activate(key, customerUserId: uid, enableUsageLogs: true)
+        } else {
+            Adapty.activate(key, enableUsageLogs: true)
+        }
 //        self.restorePurchase(completionHandler: completion)
     }
     
@@ -197,11 +200,12 @@ class AdaptyHandler: NSObject {
 }
 
 extension AdaptyHandler: AdaptyPaywallControllerDelegate {
-    func paywallController(_ controller: AdaptyPaywallController,
+    public func paywallController(_ controller: AdaptyPaywallController,
                            didPerform action: AdaptyUI.Action) {
 
         switch action {
             case .close:
+            EventManager.shared.logEvent(title: AdaptyKey.event_subs_paywall_cross_clicked.rawValue)
             self.delegate?.cancelSubscription()
                 controller.dismiss(animated: true)
             case let .openURL(url):
@@ -214,7 +218,7 @@ extension AdaptyHandler: AdaptyPaywallControllerDelegate {
         }
     }
     
-    func paywallController(_ controller: AdaptyPaywallController,
+    public func paywallController(_ controller: AdaptyPaywallController,
                            didSelectProduct product: AdaptyPaywallProduct) {
         print("didSelectProduct")
         //vendorProductId == "monthly_subscription_v3", "yearly_subscription_v2"
@@ -227,30 +231,30 @@ extension AdaptyHandler: AdaptyPaywallControllerDelegate {
         }
     }
 
-    func paywallController(_ controller: AdaptyPaywallController,
+    public func paywallController(_ controller: AdaptyPaywallController,
                            didStartPurchase product: AdaptyPaywallProduct) {
         print("didStartPurchase")
     }
-    func paywallController(_ controller: AdaptyPaywallController,
+    public func paywallController(_ controller: AdaptyPaywallController,
                            didCancelPurchase product: AdaptyPaywallProduct) {
         print("didCancelPurchase")
 
     }
-    func paywallController(_ controller: AdaptyPaywallController,
+    public func paywallController(_ controller: AdaptyPaywallController,
                            didFinishPurchase product: AdaptyPaywallProduct,
                            purchasedInfo: AdaptyPurchasedInfo) {
         EventManager.shared.logEvent(title: AdaptyKey.event_subs_purchase_acknowledged.rawValue)
         self.updateControllers()
         controller.dismiss(animated: true)
     }
-    func paywallController(_ controller: AdaptyPaywallController,
+    public func paywallController(_ controller: AdaptyPaywallController,
                            didFailPurchase product: AdaptyPaywallProduct,
                            error: AdaptyError) {
         EventManager.shared.logEvent(title: AdaptyKey.event_subs_paywall_payment_failed.rawValue)
         print("didFailPurchase")
 
     }
-    func paywallController(_ controller: AdaptyPaywallController,
+    public func paywallController(_ controller: AdaptyPaywallController,
                            didFinishRestoreWith profile: AdaptyProfile) {
         if profile.accessLevels["premium"]?.isActive ?? false {
             self.updateControllers()
