@@ -238,7 +238,7 @@ extension Ads: AdsType {
                 self?.requestBuilder?.build() ?? GADRequest()
             }
         )
-
+        EventManager.shared.logEvent(title: AdsKey.event_ad_banner_load_start.rawValue)
         let gadBannerView = bannerAd.prepare(
             withAdUnitId: validAdUnitId,
             in: viewController,
@@ -251,7 +251,7 @@ extension Ads: AdsType {
             onWillDismissScreen: onWillDismissScreen,
             onDidDismissScreen: onDidDismissScreen
         )
-
+        EventManager.shared.logEvent(title: AdsKey.event_ad_banner_loaded.rawValue)
 //        bannerAd.show(isLandscape: viewController.view.frame.width > viewController.view.frame.height)
         return (bannerAd, gadBannerView)
     }

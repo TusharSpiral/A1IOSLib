@@ -18,4 +18,6 @@ public protocol AdsBannerType: AnyObject {
 
     /// Removes the banner from its superview.
     func remove()
+    
+    func show()
 }

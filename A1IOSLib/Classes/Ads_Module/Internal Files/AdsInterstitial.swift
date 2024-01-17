@@ -50,14 +50,16 @@ extension AdsInterstitial: AdsInterstitialType {
     }
     
     func load() {
+        EventManager.shared.logEvent(title: AdsKey.event_ad_inter_load_start.rawValue)
         GADInterstitialAd.load(withAdUnitID: adUnitId, request: request()) { [weak self] (ad, error) in
             guard let self = self else { return }
 
             if let error = error {
+                EventManager.shared.logEvent(title: AdsKey.event_ad_inter_load_failed.rawValue)
                 self.onError?(error)
                 return
             }
-
+            EventManager.shared.logEvent(title: AdsKey.event_ad_inter_loaded.rawValue)
             self.interstitialAd = ad
             self.interstitialAd?.fullScreenContentDelegate = self
         }
@@ -75,18 +77,21 @@ extension AdsInterstitial: AdsInterstitialType {
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
-        
+        EventManager.shared.logEvent(title: AdsKey.event_ad_inter_show_requested.rawValue)
         guard let interstitialAd = interstitialAd else {
             load()
+            EventManager.shared.logEvent(title: AdsKey.event_ad_inter_show_failed.rawValue)
             onError?(AdsError.interstitialAdNotLoaded)
             return
         }
 
         do {
             try interstitialAd.canPresent(fromRootViewController: viewController)
+            EventManager.shared.logEvent(title: AdsKey.event_ad_inter_shown.rawValue)
             interstitialAd.present(fromRootViewController: viewController)
         } catch {
             load()
+            EventManager.shared.logEvent(title: AdsKey.event_ad_inter_show_failed.rawValue)
             onError?(error)
         }
     }

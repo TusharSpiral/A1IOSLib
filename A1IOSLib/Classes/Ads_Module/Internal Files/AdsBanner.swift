@@ -68,7 +68,6 @@ final class AdsBanner: NSObject {
         self.onWillPresentScreen = onWillPresentScreen
         self.onWillDismissScreen = onWillDismissScreen
         self.onDidDismissScreen = onDidDismissScreen
-        
         // Create banner view
         let bannerView = GADBannerView()
         bannerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60)
@@ -102,7 +101,7 @@ extension AdsBanner: AdsBannerType {
 //        guard hasConsent() else { return }
         guard let bannerView = bannerView else { return }
         guard let currentView = bannerView.rootViewController?.view else { return }
-
+        EventManager.shared.logEvent(title: AdsKey.event_ad_banner_shown.rawValue)
         // Determine the view width to use for the ad width.
         let frame = { () -> CGRect in
             switch position {
@@ -126,6 +125,16 @@ extension AdsBanner: AdsBannerType {
         bannerView.load(request())
     }
 
+    func show() {
+        EventManager.shared.logEvent(title: AdsKey.event_ad_banner_shown.rawValue)
+        guard !isDisabled() else { return }
+//        guard hasConsent() else { return }
+        guard let bannerView = bannerView else { return }
+        bannerView.adSize = GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(UIScreen.main.bounds.width)
+        bannerView.load(request())
+
+    }
+    
     func hide() {
         guard let bannerView = bannerView else { return }
         guard let rootViewController = bannerView.rootViewController else { return }
@@ -162,12 +171,14 @@ extension AdsBanner: GADBannerViewDelegate {
     }
 
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        EventManager.shared.logEvent(title: AdsKey.event_ad_banner_load_failed.rawValue)
         hide(bannerView, from: bannerView.rootViewController)
         onError?(error)
     }
 
     // Click-Time lifecycle events
     func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+        EventManager.shared.logEvent(title: AdsKey.event_ad_banner_show_requested.rawValue)
         onWillPresentScreen?()
     }
 
@@ -221,6 +232,7 @@ private extension AdsBanner {
     func show(_ bannerAd: GADBannerView, from viewController: UIViewController?) {
         // Stop current animations
         //stopCurrentAnimatorAnimations()
+        EventManager.shared.logEvent(title: AdsKey.event_ad_banner_shown.rawValue)
 
         // Show banner incase it was hidden
         bannerAd.isHidden = false
@@ -312,6 +324,7 @@ private extension AdsBanner {
         // Add animation completion if needed
         animator?.addCompletion { [weak self, weak bannerAd] _ in
             bannerAd?.isHidden = true
+            EventManager.shared.logEvent(title: AdsKey.event_ad_banner_show_failed.rawValue)
             self?.onClose?()
         }
 

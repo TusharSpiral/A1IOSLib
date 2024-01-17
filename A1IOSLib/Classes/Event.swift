@@ -24,6 +24,32 @@ public enum PurchaselyKey: String {
     case event_subs_purchasely_screen_shown
     case event_subs_purchasely_payment_failed
     case event_subs_purchase_acknowledged // with params
+
+}
+
+public enum AdsKey: String {
+    
+    // MARK: - Ads
+    case event_ad_banner_load_start
+    case event_ad_banner_load_failed
+    case event_ad_banner_loaded
+    case event_ad_banner_show_requested
+    case event_ad_banner_shown
+    case event_ad_banner_show_failed
+
+    case event_ad_inter_load_start
+    case event_ad_inter_load_failed
+    case event_ad_inter_loaded
+    case event_ad_inter_show_requested
+    case event_ad_inter_shown
+    case event_ad_inter_show_failed
+
+    case event_ad_appopen_load_start
+    case event_ad_appopen_load_failed
+    case event_ad_appopen_loaded
+    case event_ad_appopen_show_requested
+    case event_ad_appopen_shown
+    case event_ad_appopen_show_failed
     
 }
 
