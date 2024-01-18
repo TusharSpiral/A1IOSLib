@@ -1,14 +1,21 @@
 PODS:
-  - A1IOSLib (1.1.6):
+  - A1IOSLib (1.1.8):
+    - Adapty
+    - AdaptyUI
     - Alamofire
     - Beacon
     - FBSDKCoreKit
     - Firebase
     - FirebaseAnalytics
+    - FirebaseRemoteConfig
     - Google-Mobile-Ads-SDK
     - Mixpanel-swift
     - Purchasely (= 3.7.2)
+    - SwiftyJSON
     - YandexMobileMetrica
+  - Adapty (2.7.0)
+  - AdaptyUI (2.0.2):
+    - Adapty (~> 2.7.0)
   - Alamofire (5.8.1)
   - Beacon (3.0.0)
   - FBAEMKit (16.3.1):
@@ -24,6 +31,8 @@ PODS:
     - FirebaseAnalytics (~> 10.19.0)
   - Firebase/CoreOnly (10.19.0):
     - FirebaseCore (= 10.19.0)
+  - FirebaseABTesting (10.19.0):
+    - FirebaseCore (~> 10.0)
   - FirebaseAnalytics (10.19.0):
     - FirebaseAnalytics/AdIdSupport (= 10.19.0)
     - FirebaseCore (~> 10.0)
@@ -53,6 +62,14 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
+  - FirebaseRemoteConfig (10.19.0):
+    - FirebaseABTesting (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - FirebaseSharedSwift (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseSharedSwift (10.19.0)
   - Google-Mobile-Ads-SDK (10.14.0):
     - GoogleAppMeasurement (< 11.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
@@ -106,6 +123,7 @@ PODS:
   - nanopb/encode (2.30909.1)
   - PromisesObjC (2.3.1)
   - Purchasely (3.7.2)
+  - SwiftyJSON (5.0.1)
   - YandexMobileMetrica (4.5.2):
     - YandexMobileMetrica/Static (= 4.5.2)
   - YandexMobileMetrica/Static (4.5.2):
@@ -116,21 +134,25 @@ PODS:
     - YandexMobileMetrica/Static/Core
 
 DEPENDENCIES:
-  - A1IOSLib
+  - A1IOSLib (from `../`)
 
 SPEC REPOS:
   trunk:
-    - A1IOSLib
+    - Adapty
+    - AdaptyUI
     - Alamofire
     - Beacon
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
     - Firebase
+    - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseCoreInternal
     - FirebaseInstallations
+    - FirebaseRemoteConfig
+    - FirebaseSharedSwift
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
@@ -139,20 +161,30 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Purchasely
+    - SwiftyJSON
     - YandexMobileMetrica
 
+EXTERNAL SOURCES:
+  A1IOSLib:
+    :path: "../"
+
 SPEC CHECKSUMS:
-  A1IOSLib: 25fdde0caad6787c1fb92451c0945338072a5c88
+  A1IOSLib: 845bc4c37d4ce41dc2a68765c4c2a626ff98ed1b
+  Adapty: 66d16579ed1966f1caf8d806e3f3f0d77d9968c7
+  AdaptyUI: 5dbd7cdff05c1d1aa2b44949ebeb65b87a44ffb6
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   Beacon: 40264b605cb79338f8dfe28b9e07ebd172121deb
   FBAEMKit: 6c7b5eb77c96861bb59e040842c6e55bf39512ce
   FBSDKCoreKit: 5e4dd478947ab1bcc887e8cfadeae0727af1a942
   FBSDKCoreKit_Basics: cd7b5f5d1e8868c26706917919d058999ca672c3
   Firebase: 63ce8ece0d43743dc28eacac0c6867a2d7fd5a9d
+  FirebaseABTesting: bfa3b384b68cee10a89183649c64cd7998a37a12
   FirebaseAnalytics: 87513010b13b7c8610164d3602ea10571f76afc1
   FirebaseCore: dc5c7badf99d47613c52b2e3a57a64cd187f8554
   FirebaseCoreInternal: b444828ea7cfd594fca83046b95db98a2be4f290
   FirebaseInstallations: 033d199474164db20c8350736842a94fe717b960
+  FirebaseRemoteConfig: a7fcc7a5941faa7e09248e91c8797340aa4c85f6
+  FirebaseSharedSwift: f34eeb7d3ea87a34497629b6ca41657beadef76a
   Google-Mobile-Ads-SDK: 8f67a72f88d057335b1ac3f501e2b68ad054116e
   GoogleAppMeasurement: 68afe759316673c6554dac35a0c7ae8f5d6cb4ed
   GoogleUserMessagingPlatform: dce302b8f1b84d6e945812ee7a15c3f65a102cbf
@@ -161,8 +193,9 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   Purchasely: c9b257db16938c0a25fca5a054b5b27fd224fab6
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   YandexMobileMetrica: f5368ee93f286c793d73b58da00929babfc897c1
 
-PODFILE CHECKSUM: e241ecec574484438fbc39a4d3526c200210efbe
+PODFILE CHECKSUM: aaffff02a7630e509d0518264cc2a0adbd5f4451
 
 COCOAPODS: 1.14.3
