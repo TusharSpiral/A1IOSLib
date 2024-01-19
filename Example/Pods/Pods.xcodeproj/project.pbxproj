@@ -419,7 +419,7 @@
 		6200714A685239AA24DCD7E1D869F76B /* AdaptyTitleImageComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A7667AAFE8A87DA4EF1FC5EFC4596F /* AdaptyTitleImageComponentView.swift */; };
 		62177CF7A9A51DB5040692A3F50843EA /* LayoutBuilder+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA846C5D87B3F3D591A3FBEBCF28E69 /* LayoutBuilder+Text.swift */; };
 		625C5089E7E296FCAF1950E771E5035E /* MixpanelInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F121A6873A3DC53AEA3CF051F1B402 /* MixpanelInstance.swift */; };
-		62CD11532B5A8ECC00A80470 /* AppUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CD11522B5A8ECC00A80470 /* AppUpdate.swift */; };
+		62CD11572B5A950B00A80470 /* AppUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CD11562B5A950B00A80470 /* AppUpdate.swift */; };
 		63EBF7B55822E52A5D1E16A21C1F76F5 /* AdaptyInsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBD6C1CDDEDEAAAF7B3DF24BA01CDED /* AdaptyInsetLabel.swift */; };
 		645804DD40E945BC6A31A86AB803F308 /* ValidateReceiptRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242099824E41165E41CAF5752DD0EA2D /* ValidateReceiptRequest.swift */; };
 		6472769DFA741BAA79CAE679D81732DB /* Text+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1B968EA522C8D5E7BA72405DE2612 /* Text+UIKit.swift */; };
@@ -1624,7 +1624,7 @@
 		622ACA4E04AE1B9EE0EC02842458C030 /* Purchasely-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Purchasely-xcframeworks.sh"; sourceTree = "<group>"; };
 		6268A430C85DB46E7C51A89DA5FE5B4A /* Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Source/Alamofire.swift; sourceTree = "<group>"; };
 		62A6BFCDBD6735FCAC45AA0FD50D4D6A /* FIRHeartbeatLogger.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRHeartbeatLogger.m; path = FirebaseCore/Sources/FIRHeartbeatLogger.m; sourceTree = "<group>"; };
-		62CD11522B5A8ECC00A80470 /* AppUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdate.swift; sourceTree = "<group>"; };
+		62CD11562B5A950B00A80470 /* AppUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppUpdate.swift; path = A1IOSLib/Classes/AppUpdate.swift; sourceTree = "<group>"; };
 		62F4180908904F8FE875A3B8EC662302 /* Combine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Combine.swift; path = Source/Combine.swift; sourceTree = "<group>"; };
 		634DF1AE35FA7393A507EFDF28BABEF9 /* RemoteConfigValueObservable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RemoteConfigValueObservable.swift; path = FirebaseRemoteConfig/Swift/PropertyWrapper/RemoteConfigValueObservable.swift; sourceTree = "<group>"; };
 		63DFF1AE00B2996A613610E733F477E7 /* FIRLibrary.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRLibrary.h; path = FirebaseCore/Extension/FIRLibrary.h; sourceTree = "<group>"; };
@@ -3204,8 +3204,8 @@
 				10AC45B879141936A58CABEE886A3BEA /* HSBeacon.swift */,
 				E8781056DEC83EBF6E9A5D564E465E7C /* Localization.swift */,
 				BB369EC93C6C23B39A83CDBBE7DF57F8 /* Purchasely.swift */,
-				62CD11522B5A8ECC00A80470 /* AppUpdate.swift */,
 				09A7C65488F9659D6E65FCF128D966CF /* RemoteConfig.swift */,
+				62CD11562B5A950B00A80470 /* AppUpdate.swift */,
 				2813255AB046B16E59EE07FF359296E8 /* ReplaceMe.swift */,
 				97C1009BC26C2C28DF49DC6A06CEC193 /* Validator.swift */,
 				E1A5F7B3C60EF029A36DFD006448D00A /* Ads_Module */,
@@ -5558,7 +5558,7 @@
 				B700C0B722DE14E6468B3A8EA07216E3 /* AdsAppOpen.swift in Sources */,
 				61977AFCE93E4ADAF90B1B53EF012629 /* AdsBanner.swift in Sources */,
 				2E314364E8F950B5E2F9A4B54A18D193 /* AdsBannerType.swift in Sources */,
-				62CD11532B5A8ECC00A80470 /* AppUpdate.swift in Sources */,
+				62CD11572B5A950B00A80470 /* AppUpdate.swift in Sources */,
 				02C651AC9FDBBA30A6FF36539D757533 /* AdsConfiguration.swift in Sources */,
 				3AC226FF9820AA5367F6BD08B08E3795 /* AdsEnvironment.swift in Sources */,
 				BC9BE3C301453ACDF2952525326722E3 /* AdsError.swift in Sources */,
