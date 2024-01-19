@@ -142,7 +142,7 @@ final class DemoSelectionViewController: UITableViewController {
             self?.bannerAd?.show(isLandscape: size.width > size.height)
         })
     }
-    
+        
     // MARK: - UITableViewDataSource
 
     override func numberOfSections(in tableView: UITableView) -> Int {

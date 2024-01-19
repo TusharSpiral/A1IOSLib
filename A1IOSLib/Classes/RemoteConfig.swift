@@ -107,7 +107,8 @@ public class FirebaseHandler {
 public class FirebaseConfig: Codable {
     public var adConfig: AdConfig = AdConfig(interInterval: 30, adsEnabled: true, interEnabled: true, interID: "", appOpenEnabled: true, appOpenID: "", bannerEnabled: true, bannerID: "", appOpenInterval: 10, appOpenInterInterval: 10)
     public var subsConfig: SubsConfig = SubsConfig(doublePaywallEnabled: false)
-    public var versionConfig: VersionConfig = VersionConfig(forceUpdateRequired: false, forceUpdateVersion: "")
+    public var versionConfig: VersionConfig = VersionConfig(forceTitle: "App update required", forceMessage: "A new version is available. Please update your app before proceeding.", optionalTitle: "App update available", optionalMessage: "We have incorporated several innovative enhancements in this latest update.", minVersion: "", stableVersion: "")
+
 
     init(){}
     enum CodingKeys: String, CodingKey {
@@ -166,11 +167,14 @@ public struct SubsConfig: Codable {
 
 // MARK: - VersionConfig
 public struct VersionConfig: Codable {
-    public let forceUpdateRequired: Bool
-    public let forceUpdateVersion: String
+    public let forceTitle, forceMessage, optionalTitle, optionalMessage: String
+    public let minVersion, stableVersion: String
 
     enum CodingKeys: String, CodingKey {
-        case forceUpdateRequired = "force_update_required"
-        case forceUpdateVersion = "force_update_version"
+        case forceTitle = "force_title"
+        case forceMessage = "force_message"
+        case optionalTitle = "optional_title"
+        case optionalMessage = "optional_message"
+        case minVersion, stableVersion
     }
 }
