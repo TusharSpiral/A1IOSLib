@@ -1,7 +1,5 @@
 PODS:
   - A1IOSLib (1.1.8):
-    - Adapty
-    - AdaptyUI
     - Alamofire
     - Beacon
     - FBSDKCoreKit
@@ -13,9 +11,6 @@ PODS:
     - Purchasely (= 3.7.2)
     - SwiftyJSON
     - YandexMobileMetrica
-  - Adapty (2.7.0)
-  - AdaptyUI (2.0.2):
-    - Adapty (~> 2.7.0)
   - Alamofire (5.8.1)
   - Beacon (3.0.0)
   - FBAEMKit (16.3.1):
@@ -138,8 +133,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Adapty
-    - AdaptyUI
     - Alamofire
     - Beacon
     - FBAEMKit
@@ -169,9 +162,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  A1IOSLib: 845bc4c37d4ce41dc2a68765c4c2a626ff98ed1b
-  Adapty: 66d16579ed1966f1caf8d806e3f3f0d77d9968c7
-  AdaptyUI: 5dbd7cdff05c1d1aa2b44949ebeb65b87a44ffb6
+  A1IOSLib: b8dc2c928b8bda80c57c666af215b12820f561e4
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   Beacon: 40264b605cb79338f8dfe28b9e07ebd172121deb
   FBAEMKit: 6c7b5eb77c96861bb59e040842c6e55bf39512ce
