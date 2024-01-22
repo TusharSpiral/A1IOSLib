@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "A1IOSLib"
-  spec.version      = "1.1.8"
+  spec.version      = "1.1.9"
   spec.summary      = "Private common A1IOSLib."
   spec.description  = "Private common SDK to personal use A1IOSLib."
   spec.homepage         = 'https://github.com/TusharSpiral/A1IOSLib'
@@ -21,7 +21,7 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target  = '14.0'
   spec.source_files  = "A1IOSLib/**/*.{swift, xib}"
   spec.dependency 'Alamofire'
-  spec.dependency 'Purchasely', '3.7.2'
+  spec.dependency 'Purchasely', '4.2.0'
   spec.dependency 'FirebaseAnalytics'
   spec.dependency 'Firebase'
   spec.dependency 'Mixpanel-swift'

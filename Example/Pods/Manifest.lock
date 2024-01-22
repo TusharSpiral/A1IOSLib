@@ -1,7 +1,5 @@
 PODS:
   - A1IOSLib (1.1.8):
-    - Adapty
-    - AdaptyUI
     - Alamofire
     - Beacon
     - FBSDKCoreKit
@@ -9,11 +7,8 @@ PODS:
     - FirebaseAnalytics
     - Google-Mobile-Ads-SDK
     - Mixpanel-swift
-    - Purchasely (= 3.7.2)
+    - Purchasely (= 4.2.0)
     - YandexMobileMetrica
-  - Adapty (2.7.0)
-  - AdaptyUI (2.0.2):
-    - Adapty (~> 2.7.0)
   - Alamofire (5.8.1)
   - Beacon (2.2.8)
   - FBAEMKit (16.2.1):
@@ -110,7 +105,7 @@ PODS:
   - nanopb/decode (2.30909.1)
   - nanopb/encode (2.30909.1)
   - PromisesObjC (2.3.1)
-  - Purchasely (3.7.2)
+  - Purchasely (4.2.0)
   - YandexMobileMetrica (4.5.2):
     - YandexMobileMetrica/Static (= 4.5.2)
   - YandexMobileMetrica/Static (4.5.2):
@@ -125,8 +120,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Adapty
-    - AdaptyUI
     - Alamofire
     - Beacon
     - FBAEMKit
@@ -152,9 +145,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  A1IOSLib: 6ca53ba81181bb2ed211ad9dbfd9facb00d10b8a
-  Adapty: 66d16579ed1966f1caf8d806e3f3f0d77d9968c7
-  AdaptyUI: 5dbd7cdff05c1d1aa2b44949ebeb65b87a44ffb6
+  A1IOSLib: 2ca434cd81e82f1e5f7f624dbf7cdaec0ca50179
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   Beacon: 37196f96e8797ae0071efa1f30ff1c7158e92114
   FBAEMKit: 4763aa27b8f69eb9d2c274189e91388de1dbd88a
@@ -172,7 +163,7 @@ SPEC CHECKSUMS:
   Mixpanel-swift: 4991762c97c3535ce4e67c395a93e40ab7b666f7
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  Purchasely: c9b257db16938c0a25fca5a054b5b27fd224fab6
+  Purchasely: 46641748d09d6d4746bb799a9f46d88810dbb256
   YandexMobileMetrica: f5368ee93f286c793d73b58da00929babfc897c1
 
 PODFILE CHECKSUM: aaffff02a7630e509d0518264cc2a0adbd5f4451
