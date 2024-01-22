@@ -48,6 +48,12 @@
     ],
     "Google-Mobile-Ads-SDK": [
 
+    ],
+    "FirebaseRemoteConfig": [
+
+    ],
+    "SwiftyJSON": [
+
     ]
   },
   "swift_version": "5.0"

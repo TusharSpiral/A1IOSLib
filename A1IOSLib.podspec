@@ -29,4 +29,6 @@ Pod::Spec.new do |spec|
   spec.dependency 'YandexMobileMetrica'
   spec.dependency 'Beacon'
   spec.dependency 'Google-Mobile-Ads-SDK'
+  spec.dependency 'FirebaseRemoteConfig'
+  spec.dependency 'SwiftyJSON'
 end
