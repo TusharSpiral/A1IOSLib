@@ -53,6 +53,10 @@
 
     ],
     "AdaptyUI": [
+    "FirebaseRemoteConfig": [
+
+    ],
+    "SwiftyJSON": [
 
     ]
   },

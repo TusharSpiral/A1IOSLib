@@ -17,11 +17,9 @@ extension Notification.Name {
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
     private let a1Ads: AdsType = Ads.shared
     private let notificationCenter: NotificationCenter = .default
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         EventHandler.shared.configureEventHandler()
         // Override point for customization after application launch.
@@ -45,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if rootViewController is DemoSelectionViewController {
                 return
             }
-    
             a1Ads.showAppOpenAd(from: rootViewController, afterInterval: 0) {
                 
             } onClose: {
@@ -55,7 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
 }
 
 private extension AppDelegate {
