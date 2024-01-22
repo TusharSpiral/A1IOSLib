@@ -39,28 +39,15 @@ public class AppUpdate: NSObject {
     
     /// Checks for Firebase - Remote config properties for server maintenance and application update
     /// - Parameter config: FirebaseConfig model
-    func checkForceUpdateNeeded(config: VersionConfig) -> Bool {
-        guard config.stableVersion != "", !config.stableVersion.isEmpty else {
+    private func checkForceUpdateNeeded(config: VersionConfig) -> Bool {
+        guard !config.stableVersion.isEmpty else {
             return false
         }
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-        let appComponents = appVersion.components(separatedBy: ".")
-        let firebaseVersion = config.stableVersion
-        let firebaseComponents = firebaseVersion.components(separatedBy: ".")
         var isUpgradeNeeded = false
-        if firebaseComponents.count > 0 && appComponents.count > 0 {
-            for (index, firebaseDigit) in firebaseComponents.enumerated() {
-                if appComponents.count > index {
-                    let firebaseVersionInt = Int(firebaseDigit) ?? 0
-                    let appVersionInt = Int(appComponents[index]) ?? 0
-                    if firebaseVersionInt > appVersionInt {
-                        isUpgradeNeeded = true
-                        break
-                    } else if firebaseVersionInt < appVersionInt {
-                        break
-                    }
-                }
-            }
+        if config.stableVersion.compare(appVersion, options: .numeric) == .orderedDescending {
+            print("firebase version is newer than app version")
+            isUpgradeNeeded = true
         }
         if isUpgradeNeeded {
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
@@ -85,29 +72,16 @@ public class AppUpdate: NSObject {
         }
     }
     
-    func checkOptionalUpdateNeeded(config: VersionConfig) -> Bool {
+    private func checkOptionalUpdateNeeded(config: VersionConfig) -> Bool {
         guard isOptionalUpdateShown == false else { return false }
-        guard config.minVersion != "", !config.minVersion.isEmpty else {
+        guard !config.minVersion.isEmpty else {
             return false
         }
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-        let appComponents = appVersion.components(separatedBy: ".")
-        let firebaseVersion = config.minVersion
-        let firebaseComponents = firebaseVersion.components(separatedBy: ".")
         var isUpgradeNeeded = false
-        if firebaseComponents.count > 0 && appComponents.count > 0 {
-            for (index, firebaseDigit) in firebaseComponents.enumerated() {
-                if appComponents.count > index {
-                    let firebaseVersionInt = Int(firebaseDigit) ?? 0
-                    let appVersionInt = Int(appComponents[index]) ?? 0
-                    if firebaseVersionInt > appVersionInt {
-                        isUpgradeNeeded = true
-                        break
-                    } else if firebaseVersionInt < appVersionInt {
-                        break
-                    }
-                }
-            }
+        if config.minVersion.compare(appVersion, options: .numeric) == .orderedDescending {
+            print("firebase version is newer than app version")
+            isUpgradeNeeded = true
         }
         if isUpgradeNeeded {
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
