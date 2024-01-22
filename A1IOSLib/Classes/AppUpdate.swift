@@ -37,10 +37,10 @@ public class AppUpdate {
     /// Checks for Firebase - Remote config properties for server maintenance and application update
     /// - Parameter config: FirebaseConfig model
     private func checkForceUpdateNeeded(config: VersionConfig) -> Bool {
-        guard !config.stableVersion.isEmpty, let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
+        guard !config.minVersion.isEmpty, let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
             return false
         }
-        if config.stableVersion.compare(appVersion, options: .numeric) == .orderedDescending {
+        if config.minVersion.compare(appVersion, options: .numeric) == .orderedDescending {
             print("force version is newer than app version")
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
                 if let urlString = self?.appStoreURL {
@@ -58,10 +58,10 @@ public class AppUpdate {
     
     private func checkOptionalUpdateNeeded(config: VersionConfig) -> Bool {
         guard isOptionalUpdateShown == false, let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return false }
-        guard !config.minVersion.isEmpty else {
+        guard !config.stableVersion.isEmpty else {
             return false
         }
-        if config.minVersion.compare(appVersion, options: .numeric) == .orderedDescending {
+        if config.stableVersion.compare(appVersion, options: .numeric) == .orderedDescending {
             print("optional version is newer than app version")
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
                 self?.isOptionalUpdateShown = true
