@@ -37,10 +37,9 @@ public class AppUpdate {
     /// Checks for Firebase - Remote config properties for server maintenance and application update
     /// - Parameter config: FirebaseConfig model
     private func checkForceUpdateNeeded(config: VersionConfig) -> Bool {
-        guard !config.stableVersion.isEmpty else {
+        guard !config.stableVersion.isEmpty, let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
             return false
         }
-        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         if config.stableVersion.compare(appVersion, options: .numeric) == .orderedDescending {
             print("force version is newer than app version")
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
