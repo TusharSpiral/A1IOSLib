@@ -13,13 +13,14 @@ import UIKit
 public class AppUpdate: NSObject {
     public static var shared = AppUpdate()
     var isOptionalUpdateShown = false
-    var firebaseConfig: FirebaseConfig = FirebaseConfig()
-    var isConfigFetched = false
+    var versionConfig: VersionConfig?
     var appStoreURL: String?
     
-    public func setAppStoreURL(url: String) {
+    public func configureAppUpdate(url: String, config: VersionConfig) {
         appStoreURL = url
+        versionConfig = config
     }
+    
     /**
      Checks for Firebase remote config and check if update needed.
      
@@ -27,44 +28,24 @@ public class AppUpdate: NSObject {
      - Parameter failure: Completion handler gives Error
      */
     public func checkUpdate(canCheckOptionalUpdate: Bool = true) {
-        if isConfigFetched == true {
-            let forceUpdate = checkForceUpdateNeeded(config: firebaseConfig)
-            print("Old Force update needed \(forceUpdate)")
-            if forceUpdate == false, canCheckOptionalUpdate == true {
-                let optionalUpdate = checkOptionalUpdateNeeded(config: firebaseConfig)
-                print("Old Optional update needed \(optionalUpdate)")
-            }
-        } else {
-            FirebaseHandler.getRemoteConfig { [weak self] (result) in
-                if let self = self {
-                    switch result {
-                    case .success(let result):
-                        self.isConfigFetched = true
-                        self.firebaseConfig = result
-                        let forceUpdate = self.checkForceUpdateNeeded(config: result)
-                        print("Fresh Force update needed \(forceUpdate)")
-                        if forceUpdate == false, canCheckOptionalUpdate == true {
-                            let optionalUpdate = self.checkOptionalUpdateNeeded(config: result)
-                            print("Fresh Optional update needed \(optionalUpdate)")
-                        }
-                    case .failure(let error):
-                        print("getRemoteConfig Failure: \(error.localizedDescription)")
-                    }
-                }
-            }
+        guard let config = versionConfig else { return }
+        let forceUpdate = checkForceUpdateNeeded(config: config)
+        print("Old Force update needed \(forceUpdate)")
+        if forceUpdate == false, canCheckOptionalUpdate == true {
+            let optionalUpdate = checkOptionalUpdateNeeded(config: config)
+            print("Old Optional update needed \(optionalUpdate)")
         }
     }
     
     /// Checks for Firebase - Remote config properties for server maintenance and application update
     /// - Parameter config: FirebaseConfig model
-    func checkForceUpdateNeeded(config: FirebaseConfig) -> Bool {
-        let config = firebaseConfig
-        guard config.versionConfig.stableVersion != "", !config.versionConfig.stableVersion.isEmpty else {
+    func checkForceUpdateNeeded(config: VersionConfig) -> Bool {
+        guard config.stableVersion != "", !config.stableVersion.isEmpty else {
             return false
         }
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         let appComponents = appVersion.components(separatedBy: ".")
-        let firebaseVersion = config.versionConfig.stableVersion
+        let firebaseVersion = config.stableVersion
         let firebaseComponents = firebaseVersion.components(separatedBy: ".")
         var isUpgradeNeeded = false
         if firebaseComponents.count > 0 && appComponents.count > 0 {
@@ -86,15 +67,15 @@ public class AppUpdate: NSObject {
                 self?.openAppStore()
             }
             DispatchQueue.main.async {
-                var title = config.versionConfig.forceTitle
+                var title = config.forceTitle
                 if title == "" || title.isEmpty {
                     title = "App update required"
                 }
-                var message = config.versionConfig.forceMessage
+                var message = config.forceMessage
                 if message == "" || message.isEmpty {
                     message = "A new version is available. Please update your app before proceeding."
                 }
-                AppUpdate.showAlert(title:title, message:message, defaultTitle: "Update Now", defaultHandler: handler)
+                Utility.showAlert(title:title, message:message, defaultTitle: "Update Now", defaultHandler: handler)
             }
             return true
         } else {
@@ -102,15 +83,14 @@ public class AppUpdate: NSObject {
         }
     }
     
-    func checkOptionalUpdateNeeded(config: FirebaseConfig) -> Bool {
+    func checkOptionalUpdateNeeded(config: VersionConfig) -> Bool {
         guard isOptionalUpdateShown == false else { return false }
-        let config = firebaseConfig
-        guard config.versionConfig.minVersion != "", !config.versionConfig.minVersion.isEmpty else {
+        guard config.minVersion != "", !config.minVersion.isEmpty else {
             return false
         }
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         let appComponents = appVersion.components(separatedBy: ".")
-        let firebaseVersion = config.versionConfig.minVersion
+        let firebaseVersion = config.minVersion
         let firebaseComponents = firebaseVersion.components(separatedBy: ".")
         var isUpgradeNeeded = false
         if firebaseComponents.count > 0 && appComponents.count > 0 {
@@ -136,15 +116,15 @@ public class AppUpdate: NSObject {
                 self?.openAppStore()
             }
             DispatchQueue.main.async {
-                var title = config.versionConfig.optionalTitle
+                var title = config.optionalTitle
                 if title == "" || title.isEmpty {
                     title = "App update available"
                 }
-                var message = config.versionConfig.optionalMessage
+                var message = config.optionalMessage
                 if message == "" || message.isEmpty {
                     message = "We have incorporated several innovative enhancements in this latest update."
                 }
-                AppUpdate.showAlert(title: title, message: message, defaultTitle: "Maybe Later", defaultHandler: handler, isCancel: true, cancelTitle: "Update Now", cancelHandler: handler1)
+                Utility.showAlert(title: title, message: message, defaultTitle: "Maybe Later", defaultHandler: handler, isCancel: true, cancelTitle: "Update Now", cancelHandler: handler1)
             }
             return true
         } else {
@@ -164,34 +144,4 @@ public class AppUpdate: NSObject {
         }
         return
     }
-
-    class func showAlert(title:String = "Alert", message: String, defaultTitle: String? = "Ok", defaultHandler: ((UIAlertAction) -> Void)? = nil, isCancel: Bool = false, cancelTitle: String? = "Cancel", cancelHandler: ((UIAlertAction) -> Void)? = nil) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: defaultTitle, style: UIAlertAction.Style.default, handler: defaultHandler))
-        if isCancel {
-            alert.addAction(UIAlertAction(title: cancelTitle, style: UIAlertAction.Style.cancel, handler: cancelHandler))
-        }
-        
-        let alertWindow = UIWindow(frame: UIScreen.main.bounds)
-        alertWindow.rootViewController = UIViewController()
-        alertWindow.windowLevel = UIWindow.Level.alert + 1;
-        
-        if let keyWindow = UIApplication.shared.windows.first,
-           let rootViewController = keyWindow.rootViewController {
-            rootViewController.present(alert, animated: true, completion: nil)
-
-//            if rootViewController is InitialViewController,
-//               let presentedVc = rootViewController.presentedViewController as? ParentViewController {
-//                presentedVc.present(alert, animated: true, completion: nil)
-//            } else {
-//                rootViewController.present(alert, animated: true, completion: nil)
-//            }
-        }
-    }
-
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-    return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

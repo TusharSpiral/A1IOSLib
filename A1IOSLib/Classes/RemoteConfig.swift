@@ -55,7 +55,6 @@ public class FirebaseHandler {
     public class func getUpdatedvalue() -> FirebaseConfig {
         let config = FirebaseConfig()
         config.adConfig = getModelForAdConfig(key: firebaseKeys.AD_CONFIG, defaultvalue: config.adConfig)
-        config.subsConfig = getModelForSubsConfig(key: firebaseKeys.SUBS_CONFIG, defaultvalue: config.subsConfig)
         config.versionConfig = getModelForVersionConfig(key: firebaseKeys.VERSION_CONFIG, defaultvalue: config.versionConfig)
         return config
     }
@@ -71,19 +70,7 @@ public class FirebaseHandler {
             return defaultvalue
         }
     }
-    
-    public class func getModelForSubsConfig(key : String?, defaultvalue : SubsConfig) -> SubsConfig {
-        let item = JSON.init(RemoteConfig.remoteConfig().configValue(forKey : key).jsonValue)
-        let jsonEncoder = JSONEncoder()
-        do {
-            let jsonData = try jsonEncoder.encode(item)
-            return try JSONDecoder().decode(SubsConfig.self, from: jsonData)
-        } catch {
-            print("\(error)")
-            return defaultvalue
-        }
-    }
-    
+        
     public class func getModelForVersionConfig(key : String?, defaultvalue : VersionConfig) -> VersionConfig {
         let item = JSON.init(RemoteConfig.remoteConfig().configValue(forKey : key).jsonValue)
         let jsonEncoder = JSONEncoder()
@@ -106,28 +93,25 @@ public class FirebaseHandler {
  */
 public class FirebaseConfig: Codable {
     public var adConfig: AdConfig = AdConfig(interInterval: 30, adsEnabled: true, interEnabled: true, interID: "", appOpenEnabled: true, appOpenID: "", bannerEnabled: true, bannerID: "", appOpenInterval: 10, appOpenInterInterval: 10)
-    public var subsConfig: SubsConfig = SubsConfig(doublePaywallEnabled: false)
     public var versionConfig: VersionConfig = VersionConfig(forceTitle: "App update required", forceMessage: "A new version is available. Please update your app before proceeding.", optionalTitle: "App update available", optionalMessage: "We have incorporated several innovative enhancements in this latest update.", minVersion: "", stableVersion: "")
 
 
     init(){}
     enum CodingKeys: String, CodingKey {
         case adConfig = "ad_config"
-        case subsConfig = "subs_config"
         case versionConfig = "version_config"
     }
     
     public required init(from decoder: Decoder) throws {
         let values = try! decoder.container(keyedBy: CodingKeys.self)
         adConfig = try! values.decode(AdConfig.self, forKey: .adConfig)
-        subsConfig = try! values.decode(SubsConfig.self, forKey: .subsConfig) 
         versionConfig = try! values.decode(VersionConfig.self, forKey: .versionConfig)
     }
 }
 
 fileprivate struct firebaseKeys{
     static let AD_CONFIG = "ad_config"
-    static let SUBS_CONFIG = "subs_config"
+//    static let SUBS_CONFIG = "subs_config"
     static let VERSION_CONFIG = "version_config"
 }
 
@@ -153,15 +137,6 @@ public struct AdConfig: Codable {
         case bannerID = "banner_id"
         case appOpenInterval = "app_open_interval"
         case appOpenInterInterval = "app_open_inter_interval"
-    }
-}
-
-// MARK: - SubsConfig
-public struct SubsConfig: Codable {
-    public let doublePaywallEnabled: Bool
-
-    enum CodingKeys: String, CodingKey {
-        case doublePaywallEnabled = "double_paywall_enabled"
     }
 }
 
