@@ -311,6 +311,7 @@ typedef SWIFT_ENUM(NSInteger, PLYAppTechnology, open) {
   PLYAppTechnologyNative = 2,
   PLYAppTechnologyMacCatalyst = 3,
   PLYAppTechnologyReactNative = 4,
+  PLYAppTechnologyUnity = 5,
 };
 
 typedef SWIFT_ENUM(NSInteger, PLYCancellationReason, open) {
@@ -460,6 +461,7 @@ typedef SWIFT_ENUM(NSInteger, PLYEventProperty, open) {
   PLYEventPropertyPaywallrequestDurationInMs = 69,
   PLYEventPropertyStoreKitVersion = 70,
   PLYEventPropertyPresentationType = 71,
+  PLYEventPropertyPromoOffer = 72,
 };
 
 typedef SWIFT_ENUM(NSInteger, PLYEventType, open) {
@@ -505,7 +507,23 @@ SWIFT_CLASS("_TtC10Purchasely10PLYMessage")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@class NSUUID;
+
+SWIFT_CLASS("_TtC10Purchasely17PLYOfferSignature")
+@interface PLYOfferSignature : NSObject
+@property (nonatomic, copy) NSString * _Nonnull planVendorId;
+@property (nonatomic, copy) NSString * _Nonnull identifier;
+@property (nonatomic, copy) NSString * _Nonnull signature;
+@property (nonatomic, copy) NSUUID * _Nonnull nonce;
+@property (nonatomic, copy) NSString * _Nonnull keyIdentifier;
+@property (nonatomic) double timestamp;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
 enum PLYPlanType : NSInteger;
+@class PLYPromoOffer;
 
 SWIFT_CLASS("_TtC10Purchasely7PLYPlan")
 @interface PLYPlan : NSObject
@@ -513,11 +531,11 @@ SWIFT_CLASS("_TtC10Purchasely7PLYPlan")
 @property (nonatomic, copy) NSString * _Nullable appleProductId;
 @property (nonatomic) enum PLYPlanType type;
 @property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSArray<PLYPromoOffer *> * _Nonnull promoOffers;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
-
 
 
 
@@ -528,17 +546,18 @@ SWIFT_CLASS("_TtC10Purchasely7PLYPlan")
 @end
 
 
+
 @interface PLYPlan (SWIFT_EXTENSION(Purchasely))
 /// This attribute is used to check if current user is eligible for introductory offer for current plan
 /// <ul>
 ///   <li>
+///     Completion:
+///   </li>
+///   <li>
 ///     Bool: true if user is eligible. False if not, or if receipt cannot be decoded.
 ///   </li>
 /// </ul>
-///
-/// returns:
-///
-@property (nonatomic, readonly) BOOL isUserEligibleForIntroductoryOffer;
+- (void)isUserEligibleForIntroductoryOfferWithCompletion:(void (^ _Nonnull)(BOOL))completion;
 @end
 
 @class NSDecimalNumber;
@@ -555,6 +574,7 @@ SWIFT_CLASS("_TtC10Purchasely7PLYPlan")
 - (NSString * _Nullable)localizedPriceWithLanguage:(NSString * _Nullable)language SWIFT_WARN_UNUSED_RESULT;
 - (NSString * _Nullable)localizedPeriodWithLanguage:(NSString * _Nullable)language SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly) BOOL hasIntroductoryPrice;
+@property (nonatomic, readonly) BOOL hasPromoOffers;
 @property (nonatomic, readonly) BOOL hasFreeTrial;
 - (NSString * _Nullable)localizedFullIntroductoryPriceWithLanguage:(NSString * _Nullable)language SWIFT_WARN_UNUSED_RESULT;
 - (NSString * _Nullable)localizedIntroductoryPriceWithLanguage:(NSString * _Nullable)language SWIFT_WARN_UNUSED_RESULT;
@@ -574,6 +594,8 @@ typedef SWIFT_ENUM(NSInteger, PLYPlanType, open) {
 
 enum PLYPresentationType : NSInteger;
 @class PLYPresentationViewController;
+@class PLYPresentationPlan;
+@class PLYPresentationMetadata;
 
 SWIFT_CLASS("_TtC10Purchasely15PLYPresentation")
 @interface PLYPresentation : NSObject
@@ -585,7 +607,8 @@ SWIFT_CLASS("_TtC10Purchasely15PLYPresentation")
 @property (nonatomic, readonly, copy) NSString * _Nullable abTestVariantId;
 @property (nonatomic, readonly) enum PLYPresentationType type;
 @property (nonatomic, readonly, strong) PLYPresentationViewController * _Nullable controller;
-@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull plans;
+@property (nonatomic, readonly, copy) NSArray<PLYPresentationPlan *> * _Nonnull plans;
+@property (nonatomic, readonly, strong) PLYPresentationMetadata * _Nullable metadata;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -607,6 +630,7 @@ SWIFT_CLASS("_TtC10Purchasely31PLYPresentationActionParameters")
 @property (nonatomic, copy) NSURL * _Nullable url;
 @property (nonatomic, copy) NSString * _Nullable title;
 @property (nonatomic, strong) PLYPlan * _Nullable plan;
+@property (nonatomic, strong) PLYPromoOffer * _Nullable promoOffer;
 @property (nonatomic, copy) NSString * _Nullable presentation;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -629,8 +653,33 @@ SWIFT_CLASS("_TtC10Purchasely19PLYPresentationInfo")
 @property (nonatomic, copy) NSString * _Nullable abTestVariantId;
 /// <code>abTestId</code> parameter represents current A/B test Id
 @property (nonatomic, copy) NSString * _Nullable abTestId;
+/// <code>presentationVendorId</code> parameter represents current Purchasely paywall presentation id
+@property (nonatomic, copy) NSString * _Nullable presentationVendorId;
+/// <code>placementVendorId</code> parameter represents current Purchasely placement id
+@property (nonatomic, copy) NSString * _Nullable placementVendorId;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
+
+SWIFT_CLASS("_TtC10Purchasely23PLYPresentationMetadata")
+@interface PLYPresentationMetadata : NSObject
+- (void)getStringWith:(NSString * _Nonnull)key completion:(void (^ _Nonnull)(NSString * _Nullable))completion;
+- (NSArray<NSString *> * _Nonnull)getKeys SWIFT_WARN_UNUSED_RESULT;
+- (NSDictionary<NSString *, id> * _Nonnull)getRawMetadata SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS("_TtC10Purchasely19PLYPresentationPlan")
+@interface PLYPresentationPlan : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nullable planVendorId;
+@property (nonatomic, readonly, copy) NSString * _Nullable storeProductId;
+@property (nonatomic, readonly, copy) NSString * _Nullable offerId;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 
 typedef SWIFT_ENUM(NSInteger, PLYPresentationType, open) {
   PLYPresentationTypeNormal = 0,
@@ -647,6 +696,7 @@ SWIFT_CLASS("_TtC10Purchasely29PLYPresentationViewController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
+
 
 
 @interface PLYPresentationViewController (SWIFT_EXTENSION(Purchasely))
@@ -670,6 +720,16 @@ typedef SWIFT_ENUM(NSInteger, PLYProductViewControllerResult, open) {
   PLYProductViewControllerResultCancelled = 1,
   PLYProductViewControllerResultRestored = 2,
 };
+
+
+SWIFT_CLASS("_TtC10Purchasely13PLYPromoOffer")
+@interface PLYPromoOffer : NSObject
+@property (nonatomic, copy) NSString * _Nonnull vendorId;
+@property (nonatomic, copy) NSString * _Nonnull storeOfferId;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 
 typedef SWIFT_ENUM(NSInteger, PLYRunningMode, open) {
   PLYRunningModeTransactionOnly = 0,
@@ -718,6 +778,7 @@ typedef SWIFT_ENUM(NSInteger, PLYSubscriptionOfferType, open) {
   PLYSubscriptionOfferTypeFreeTrial = 1,
   PLYSubscriptionOfferTypeIntroOffer = 2,
   PLYSubscriptionOfferTypePromoCode = 3,
+  PLYSubscriptionOfferTypePromotionalOffer = 4,
 };
 
 typedef SWIFT_ENUM(NSInteger, PLYSubscriptionSource, open) {
@@ -784,6 +845,7 @@ SWIFT_CLASS("_TtC10Purchasely10Purchasely")
 
 
 
+
 @interface Purchasely (SWIFT_EXTENSION(Purchasely))
 + (void)showController:(UIViewController * _Nonnull)controller type:(enum PLYUIControllerType)type;
 @end
@@ -792,16 +854,18 @@ SWIFT_CLASS("_TtC10Purchasely10Purchasely")
 
 
 
+
 @class StorekitSettings;
 @class NSLocale;
 enum PLYAttribute : NSInteger;
+enum PLYThemeMode : NSInteger;
 
 @interface Purchasely (SWIFT_EXTENSION(Purchasely))
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull anonymousUserId;)
 + (NSString * _Nonnull)anonymousUserId SWIFT_WARN_UNUSED_RESULT;
 /// Sets the SDK to point to a client
 /// This must be called in <code>didFinishLaunchingWithOptions</code> to handle the receipts sent on startup
-+ (void)startWithAPIKey:(NSString * _Nonnull)apiKey appUserId:(NSString * _Nullable)appUserId runningMode:(enum PLYRunningMode)runningMode eventDelegate:(id <PLYEventDelegate> _Nullable)eventDelegate uiDelegate:(id <PLYUIDelegate> _Nullable)uiDelegate paywallActionsInterceptor:(void (^ _Nullable)(enum PLYPresentationAction, PLYPresentationActionParameters * _Nullable, PLYPresentationInfo * _Nullable, void (^ _Nonnull)(BOOL)))paywallActionsInterceptor storekitSettings:(StorekitSettings * _Nonnull)storekitSettings logLevel:(enum LogLevel)logLevel initialized:(void (^ _Nullable)(BOOL, NSError * _Nullable))initialized;
++ (void)startWithAPIKey:(NSString * _Nonnull)apiKey appUserId:(NSString * _Nullable)appUserId runningMode:(enum PLYRunningMode)runningMode paywallActionsInterceptor:(void (^ _Nullable)(enum PLYPresentationAction, PLYPresentationActionParameters * _Nullable, PLYPresentationInfo * _Nullable, void (^ _Nonnull)(BOOL)))paywallActionsInterceptor storekitSettings:(StorekitSettings * _Nonnull)storekitSettings logLevel:(enum LogLevel)logLevel initialized:(void (^ _Nullable)(BOOL, NSError * _Nullable))initialized;
 + (void)setEventDelegate:(id <PLYEventDelegate> _Nullable)eventDelegate;
 + (void)setUIDelegate:(id <PLYUIDelegate> _Nullable)uiDelegate;
 /// This function is used to set a handler that is called when a user
@@ -838,6 +902,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (void)userLoginWith:(NSString * _Nonnull)appUserId;
 + (void)userLoginWith:(NSString * _Nonnull)appUserId shouldRefresh:(void (^ _Nullable)(BOOL))shouldRefresh;
 + (void)userLogout;
++ (BOOL)isAnonymous SWIFT_WARN_UNUSED_RESULT;
 /// This function sets a handler that is triggered once the purchase controller is dismissed.
 /// It provides the output of the action (cancel, purchase, restore).
 /// You can use it for your tracking or to decide if you want to display something post purchase.
@@ -851,7 +916,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// You can force a language for the SDK including error messages and paywall.
 /// The language passed must be ISO 639-1 or ISO 639-2
 + (void)setLanguageFrom:(NSLocale * _Nullable)locale;
-+ (void)isReadyToPurchase:(BOOL)ready;
++ (void)readyToOpenDeeplink:(BOOL)ready;
 + (void)setEnvironment:(enum PLYEnvironment)environment;
 + (void)setLogLevel:(enum LogLevel)logLevel;
 + (void)setAppTechnology:(enum PLYAppTechnology)technology;
@@ -860,7 +925,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (void)allProductsWithSuccess:(void (^ _Nonnull)(NSArray<PLYProduct *> * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nullable))failure;
 + (void)productWith:(NSString * _Nonnull)vendorId success:(void (^ _Nonnull)(PLYProduct * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nullable))failure;
 + (void)planWith:(NSString * _Nonnull)vendorId success:(void (^ _Nonnull)(PLYPlan * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nullable))failure;
-+ (void)userSubscriptionsWithSuccess:(void (^ _Nonnull)(NSArray<PLYSubscription *> * _Nullable))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure;
++ (void)userSubscriptions:(BOOL)invalidateCache success:(void (^ _Nonnull)(NSArray<PLYSubscription *> * _Nullable))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure;
 /// This method returns a presentation for a specific product. If no presentationVendorId is set (or an invalid one)
 /// the product default presentation will be displayed. If none has been set it will fallback to the app default presentation.
 /// If a <code>contentId</code> is provided, this identifier will be sent to your backend for association purposes.
@@ -1107,7 +1172,45 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 ///     url: the URL of the deeplink to open
 ///   </li>
 /// </ul>
-+ (BOOL)handleWithDeeplink:(NSURL * _Nonnull)url;
++ (BOOL)isDeeplinkHandledWithDeeplink:(NSURL * _Nonnull)url;
+/// This method performs a Promotional Offer signature with StoreKit 2
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     plan: the PLYPlan that you setup in Purchasely admin
+///   </li>
+///   <li>
+///     promoOffer: the PLYPromoOffer corresponding of the promotional offer that you setup in Purchasely admin and that is referring to your AppStore Connect promotional offers setup.
+///   </li>
+///   <li>
+///     success: the block called when the signature was completed from end to end
+///   </li>
+///   <li>
+///     failure: the block called when any error occured. The error can be displayed to the user using localizedDescription
+///   </li>
+/// </ul>
++ (void)signPromotionalOfferWithPlan:(PLYPlan * _Nonnull)plan promoOffer:(PLYPromoOffer * _Nonnull)promoOffer success:(void (^ _Nonnull)(PLYOfferSignature * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure SWIFT_AVAILABILITY(watchos,introduced=8.0) SWIFT_AVAILABILITY(tvos,introduced=15.0) SWIFT_AVAILABILITY(macos,introduced=12.0) SWIFT_AVAILABILITY(ios,introduced=12.2);
+/// This method performs a Promotional Offer signature with StoreKit 2
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     storeProductId: Apple’s ProductId for the item purchased
+///   </li>
+///   <li>
+///     storeOfferId: the promotional offer’s identifier referring to your AppStore Connect promotional offers setup.
+///   </li>
+///   <li>
+///     success: the block called when the signature was completed from end to end
+///   </li>
+///   <li>
+///     failure: the block called when any error occured. The error can be displayed to the user using localizedDescription
+///   </li>
+/// </ul>
++ (void)signPromotionalOfferWithStoreProductId:(NSString * _Nonnull)storeProductId storeOfferId:(NSString * _Nonnull)storeOfferId success:(void (^ _Nonnull)(PLYOfferSignature * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure SWIFT_AVAILABILITY(watchos,introduced=8.0) SWIFT_AVAILABILITY(tvos,introduced=15.0) SWIFT_AVAILABILITY(macos,introduced=12.0) SWIFT_AVAILABILITY(ios,introduced=12.2);
 /// This method performs a purchase on an plan of a Purchasely product
 /// <ul>
 ///   <li>
@@ -1143,6 +1246,28 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 ///   </li>
 /// </ul>
 + (void)purchaseWithPlan:(PLYPlan * _Nonnull)plan success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure;
+/// This method performs a purchase on an plan of a Purchasely product with specified Promotional Offer
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     plan: the PLYPlan that you setup in Purchasely admin
+///   </li>
+///   <li>
+///     contentId: (optional) an identifier that can be used to associate the purchase with your internal item id
+///   </li>
+///   <li>
+///     storeOfferId: the promotional offer’s identifier referring to your AppStore Connect promotional offers setup.
+///   </li>
+///   <li>
+///     success: the block called when the purchase was completed from end to end
+///   </li>
+///   <li>
+///     failure: the block called when any error occured. The error can be displayed to the user using localizedDescription
+///   </li>
+/// </ul>
++ (void)purchaseWithPromotionalOfferWithPlan:(PLYPlan * _Nonnull)plan contentId:(NSString * _Nullable)contentId storeOfferId:(NSString * _Nonnull)storeOfferId success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure SWIFT_AVAILABILITY(watchos,introduced=8.0) SWIFT_AVAILABILITY(tvos,introduced=15.0) SWIFT_AVAILABILITY(macos,introduced=12.0) SWIFT_AVAILABILITY(ios,introduced=12.2);
 /// <em>Mode: Observer, PaywallObserver</em>
 /// This method <em>must</em> be called right after a purchase is made using an SDK that is using StoreKit2, but you don’t have direct access to <em>Product.PurchaseResult</em>, in order for our back-end to synchronize this transaction for the current user.
 /// <ul>
@@ -1200,23 +1325,19 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSDictionary<N
 + (void)clearUserAttributes;
 + (void)clearUserAttributeForKey:(NSString * _Nonnull)key;
 + (void)setAttribute:(enum PLYAttribute)attribute value:(NSString * _Nonnull)value;
++ (void)setThemeMode:(enum PLYThemeMode)mode;
 /// This method is used to trigger an event telling Purchasely that a content has been consumed through a subscription.
 + (void)userDidConsumeSubscriptionContent;
-+ (void)startWithAPIKey:(NSString * _Nonnull)apiKey appUserId:(NSString * _Nullable)appUserId observerMode:(BOOL)observerMode eventDelegate:(id <PLYEventDelegate> _Nullable)eventDelegate uiDelegate:(id <PLYUIDelegate> _Nullable)uiDelegate confirmPurchaseHandler:(void (^ _Nullable)(UIViewController * _Nonnull, void (^ _Nonnull)(BOOL)))confirmPurchaseHandler logLevel:(enum LogLevel)logLevel initialized:(void (^ _Nullable)(BOOL, NSError * _Nullable))initialized SWIFT_UNAVAILABLE_MSG("With Purchasely 3.0.0, 2 parameters of the `start` method changed.\n 1. A more generic approach for interacting with paywall actions named `paywallActionsInterceptor` replaced the `confirmPurchaseHandler`.\n 2. New running modes were added alongside to `observerMode` to offer you more flexibility in Purchasely's use.");
-+ (void)setLoginTappedHandler:(void (^ _Nullable)(UIViewController * _Nonnull, void (^ _Nonnull)(BOOL)))loginTappedHandler SWIFT_UNAVAILABLE_MSG("With Purchasely 3.0.0 `setLoginTappedHandler(_:)` was replaced with a more generic approach for interacting with paywall actions. You should now use the `paywallActionsInterceptor` and intercept the `login` action.");
-+ (void)setConfirmPurchaseHandler:(void (^ _Nullable)(UIViewController * _Nonnull, void (^ _Nonnull)(BOOL)))confirmPurchaseHandler SWIFT_UNAVAILABLE_MSG("With Purchasely 3.0.0 `setConfirmPurchaseHandler(_:)` was replaced with a more generic approach for interacting with paywall actions. You should now use the `paywallActionsInterceptor` and intercept the `purchase` action.");
-+ (void)setAppUserId:(NSString * _Nullable)appUserId SWIFT_UNAVAILABLE_MSG("Call `userLogin(with:)` when you have the userId or `userLogout()` when the user disconnects.");
-+ (void)silentRestoreAllProductsWithSuccess:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure SWIFT_UNAVAILABLE_MSG("`silentRestoreAllProducts(success:failure:)` has been renamed to `synchronize(success:failure:)`");
 @end
 
 typedef SWIFT_ENUM(NSInteger, PLYAttribute, open) {
-  PLYAttributeAmplitudeSessionId = 0,
-  PLYAttributeAmplitudeUserId = 1,
-  PLYAttributeAmplitudeDeviceId = 2,
-  PLYAttributeFirebaseAppInstanceId = 3,
-  PLYAttributeAirshipChannelId = 4,
-  PLYAttributeAirshipUserId = 5,
-  PLYAttributeBatchInstallationId = 6,
+  PLYAttributeAmplitudeUserId = 0,
+  PLYAttributeAmplitudeDeviceId = 1,
+  PLYAttributeFirebaseAppInstanceId = 2,
+  PLYAttributeAirshipChannelId = 3,
+  PLYAttributeAirshipUserId = 4,
+  PLYAttributeBatchInstallationId = 5,
+  PLYAttributeBatchCustomUserId = 6,
   PLYAttributeAdjustId = 7,
   PLYAttributeAppsflyerId = 8,
   PLYAttributeOneSignalPlayerId = 9,
@@ -1231,6 +1352,13 @@ typedef SWIFT_ENUM(NSInteger, PLYAttribute, open) {
   PLYAttributeCustomerioUserEmail = 18,
   PLYAttributeCustomerioUserId = 19,
   PLYAttributeMoengageUniqueId = 20,
+  PLYAttributeOneSignalExternalId = 21,
+};
+
+typedef SWIFT_ENUM(NSInteger, PLYThemeMode, open) {
+  PLYThemeModeLight = 0,
+  PLYThemeModeDark = 1,
+  PLYThemeModeSystem = 2,
 };
 
 
@@ -1245,8 +1373,10 @@ typedef SWIFT_ENUM(NSInteger, PLYAttribute, open) {
 SWIFT_CLASS("_TtC10Purchasely16StorekitSettings")
 @interface StorekitSettings : NSObject
 - (nonnull instancetype)initWithShouldUseStorekit2IfAvailable:(BOOL)shouldUseStorekit2IfAvailable simulateAskToBuy:(BOOL)simulateAskToBuy OBJC_DESIGNATED_INITIALIZER;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong, getter=default) StorekitSettings * _Nonnull default_;)
-+ (StorekitSettings * _Nonnull)default SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) StorekitSettings * _Nonnull storeKit1;)
++ (StorekitSettings * _Nonnull)storeKit1 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) StorekitSettings * _Nonnull storeKit2;)
++ (StorekitSettings * _Nonnull)storeKit2 SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1589,6 +1719,7 @@ typedef SWIFT_ENUM(NSInteger, PLYAppTechnology, open) {
   PLYAppTechnologyNative = 2,
   PLYAppTechnologyMacCatalyst = 3,
   PLYAppTechnologyReactNative = 4,
+  PLYAppTechnologyUnity = 5,
 };
 
 typedef SWIFT_ENUM(NSInteger, PLYCancellationReason, open) {
@@ -1738,6 +1869,7 @@ typedef SWIFT_ENUM(NSInteger, PLYEventProperty, open) {
   PLYEventPropertyPaywallrequestDurationInMs = 69,
   PLYEventPropertyStoreKitVersion = 70,
   PLYEventPropertyPresentationType = 71,
+  PLYEventPropertyPromoOffer = 72,
 };
 
 typedef SWIFT_ENUM(NSInteger, PLYEventType, open) {
@@ -1783,7 +1915,23 @@ SWIFT_CLASS("_TtC10Purchasely10PLYMessage")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@class NSUUID;
+
+SWIFT_CLASS("_TtC10Purchasely17PLYOfferSignature")
+@interface PLYOfferSignature : NSObject
+@property (nonatomic, copy) NSString * _Nonnull planVendorId;
+@property (nonatomic, copy) NSString * _Nonnull identifier;
+@property (nonatomic, copy) NSString * _Nonnull signature;
+@property (nonatomic, copy) NSUUID * _Nonnull nonce;
+@property (nonatomic, copy) NSString * _Nonnull keyIdentifier;
+@property (nonatomic) double timestamp;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
 enum PLYPlanType : NSInteger;
+@class PLYPromoOffer;
 
 SWIFT_CLASS("_TtC10Purchasely7PLYPlan")
 @interface PLYPlan : NSObject
@@ -1791,11 +1939,11 @@ SWIFT_CLASS("_TtC10Purchasely7PLYPlan")
 @property (nonatomic, copy) NSString * _Nullable appleProductId;
 @property (nonatomic) enum PLYPlanType type;
 @property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSArray<PLYPromoOffer *> * _Nonnull promoOffers;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
-
 
 
 
@@ -1806,17 +1954,18 @@ SWIFT_CLASS("_TtC10Purchasely7PLYPlan")
 @end
 
 
+
 @interface PLYPlan (SWIFT_EXTENSION(Purchasely))
 /// This attribute is used to check if current user is eligible for introductory offer for current plan
 /// <ul>
 ///   <li>
+///     Completion:
+///   </li>
+///   <li>
 ///     Bool: true if user is eligible. False if not, or if receipt cannot be decoded.
 ///   </li>
 /// </ul>
-///
-/// returns:
-///
-@property (nonatomic, readonly) BOOL isUserEligibleForIntroductoryOffer;
+- (void)isUserEligibleForIntroductoryOfferWithCompletion:(void (^ _Nonnull)(BOOL))completion;
 @end
 
 @class NSDecimalNumber;
@@ -1833,6 +1982,7 @@ SWIFT_CLASS("_TtC10Purchasely7PLYPlan")
 - (NSString * _Nullable)localizedPriceWithLanguage:(NSString * _Nullable)language SWIFT_WARN_UNUSED_RESULT;
 - (NSString * _Nullable)localizedPeriodWithLanguage:(NSString * _Nullable)language SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly) BOOL hasIntroductoryPrice;
+@property (nonatomic, readonly) BOOL hasPromoOffers;
 @property (nonatomic, readonly) BOOL hasFreeTrial;
 - (NSString * _Nullable)localizedFullIntroductoryPriceWithLanguage:(NSString * _Nullable)language SWIFT_WARN_UNUSED_RESULT;
 - (NSString * _Nullable)localizedIntroductoryPriceWithLanguage:(NSString * _Nullable)language SWIFT_WARN_UNUSED_RESULT;
@@ -1852,6 +2002,8 @@ typedef SWIFT_ENUM(NSInteger, PLYPlanType, open) {
 
 enum PLYPresentationType : NSInteger;
 @class PLYPresentationViewController;
+@class PLYPresentationPlan;
+@class PLYPresentationMetadata;
 
 SWIFT_CLASS("_TtC10Purchasely15PLYPresentation")
 @interface PLYPresentation : NSObject
@@ -1863,7 +2015,8 @@ SWIFT_CLASS("_TtC10Purchasely15PLYPresentation")
 @property (nonatomic, readonly, copy) NSString * _Nullable abTestVariantId;
 @property (nonatomic, readonly) enum PLYPresentationType type;
 @property (nonatomic, readonly, strong) PLYPresentationViewController * _Nullable controller;
-@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull plans;
+@property (nonatomic, readonly, copy) NSArray<PLYPresentationPlan *> * _Nonnull plans;
+@property (nonatomic, readonly, strong) PLYPresentationMetadata * _Nullable metadata;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1885,6 +2038,7 @@ SWIFT_CLASS("_TtC10Purchasely31PLYPresentationActionParameters")
 @property (nonatomic, copy) NSURL * _Nullable url;
 @property (nonatomic, copy) NSString * _Nullable title;
 @property (nonatomic, strong) PLYPlan * _Nullable plan;
+@property (nonatomic, strong) PLYPromoOffer * _Nullable promoOffer;
 @property (nonatomic, copy) NSString * _Nullable presentation;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -1907,8 +2061,33 @@ SWIFT_CLASS("_TtC10Purchasely19PLYPresentationInfo")
 @property (nonatomic, copy) NSString * _Nullable abTestVariantId;
 /// <code>abTestId</code> parameter represents current A/B test Id
 @property (nonatomic, copy) NSString * _Nullable abTestId;
+/// <code>presentationVendorId</code> parameter represents current Purchasely paywall presentation id
+@property (nonatomic, copy) NSString * _Nullable presentationVendorId;
+/// <code>placementVendorId</code> parameter represents current Purchasely placement id
+@property (nonatomic, copy) NSString * _Nullable placementVendorId;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
+
+SWIFT_CLASS("_TtC10Purchasely23PLYPresentationMetadata")
+@interface PLYPresentationMetadata : NSObject
+- (void)getStringWith:(NSString * _Nonnull)key completion:(void (^ _Nonnull)(NSString * _Nullable))completion;
+- (NSArray<NSString *> * _Nonnull)getKeys SWIFT_WARN_UNUSED_RESULT;
+- (NSDictionary<NSString *, id> * _Nonnull)getRawMetadata SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS("_TtC10Purchasely19PLYPresentationPlan")
+@interface PLYPresentationPlan : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nullable planVendorId;
+@property (nonatomic, readonly, copy) NSString * _Nullable storeProductId;
+@property (nonatomic, readonly, copy) NSString * _Nullable offerId;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 
 typedef SWIFT_ENUM(NSInteger, PLYPresentationType, open) {
   PLYPresentationTypeNormal = 0,
@@ -1925,6 +2104,7 @@ SWIFT_CLASS("_TtC10Purchasely29PLYPresentationViewController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
+
 
 
 @interface PLYPresentationViewController (SWIFT_EXTENSION(Purchasely))
@@ -1948,6 +2128,16 @@ typedef SWIFT_ENUM(NSInteger, PLYProductViewControllerResult, open) {
   PLYProductViewControllerResultCancelled = 1,
   PLYProductViewControllerResultRestored = 2,
 };
+
+
+SWIFT_CLASS("_TtC10Purchasely13PLYPromoOffer")
+@interface PLYPromoOffer : NSObject
+@property (nonatomic, copy) NSString * _Nonnull vendorId;
+@property (nonatomic, copy) NSString * _Nonnull storeOfferId;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 
 typedef SWIFT_ENUM(NSInteger, PLYRunningMode, open) {
   PLYRunningModeTransactionOnly = 0,
@@ -1996,6 +2186,7 @@ typedef SWIFT_ENUM(NSInteger, PLYSubscriptionOfferType, open) {
   PLYSubscriptionOfferTypeFreeTrial = 1,
   PLYSubscriptionOfferTypeIntroOffer = 2,
   PLYSubscriptionOfferTypePromoCode = 3,
+  PLYSubscriptionOfferTypePromotionalOffer = 4,
 };
 
 typedef SWIFT_ENUM(NSInteger, PLYSubscriptionSource, open) {
@@ -2062,6 +2253,7 @@ SWIFT_CLASS("_TtC10Purchasely10Purchasely")
 
 
 
+
 @interface Purchasely (SWIFT_EXTENSION(Purchasely))
 + (void)showController:(UIViewController * _Nonnull)controller type:(enum PLYUIControllerType)type;
 @end
@@ -2070,16 +2262,18 @@ SWIFT_CLASS("_TtC10Purchasely10Purchasely")
 
 
 
+
 @class StorekitSettings;
 @class NSLocale;
 enum PLYAttribute : NSInteger;
+enum PLYThemeMode : NSInteger;
 
 @interface Purchasely (SWIFT_EXTENSION(Purchasely))
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull anonymousUserId;)
 + (NSString * _Nonnull)anonymousUserId SWIFT_WARN_UNUSED_RESULT;
 /// Sets the SDK to point to a client
 /// This must be called in <code>didFinishLaunchingWithOptions</code> to handle the receipts sent on startup
-+ (void)startWithAPIKey:(NSString * _Nonnull)apiKey appUserId:(NSString * _Nullable)appUserId runningMode:(enum PLYRunningMode)runningMode eventDelegate:(id <PLYEventDelegate> _Nullable)eventDelegate uiDelegate:(id <PLYUIDelegate> _Nullable)uiDelegate paywallActionsInterceptor:(void (^ _Nullable)(enum PLYPresentationAction, PLYPresentationActionParameters * _Nullable, PLYPresentationInfo * _Nullable, void (^ _Nonnull)(BOOL)))paywallActionsInterceptor storekitSettings:(StorekitSettings * _Nonnull)storekitSettings logLevel:(enum LogLevel)logLevel initialized:(void (^ _Nullable)(BOOL, NSError * _Nullable))initialized;
++ (void)startWithAPIKey:(NSString * _Nonnull)apiKey appUserId:(NSString * _Nullable)appUserId runningMode:(enum PLYRunningMode)runningMode paywallActionsInterceptor:(void (^ _Nullable)(enum PLYPresentationAction, PLYPresentationActionParameters * _Nullable, PLYPresentationInfo * _Nullable, void (^ _Nonnull)(BOOL)))paywallActionsInterceptor storekitSettings:(StorekitSettings * _Nonnull)storekitSettings logLevel:(enum LogLevel)logLevel initialized:(void (^ _Nullable)(BOOL, NSError * _Nullable))initialized;
 + (void)setEventDelegate:(id <PLYEventDelegate> _Nullable)eventDelegate;
 + (void)setUIDelegate:(id <PLYUIDelegate> _Nullable)uiDelegate;
 /// This function is used to set a handler that is called when a user
@@ -2116,6 +2310,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (void)userLoginWith:(NSString * _Nonnull)appUserId;
 + (void)userLoginWith:(NSString * _Nonnull)appUserId shouldRefresh:(void (^ _Nullable)(BOOL))shouldRefresh;
 + (void)userLogout;
++ (BOOL)isAnonymous SWIFT_WARN_UNUSED_RESULT;
 /// This function sets a handler that is triggered once the purchase controller is dismissed.
 /// It provides the output of the action (cancel, purchase, restore).
 /// You can use it for your tracking or to decide if you want to display something post purchase.
@@ -2129,7 +2324,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// You can force a language for the SDK including error messages and paywall.
 /// The language passed must be ISO 639-1 or ISO 639-2
 + (void)setLanguageFrom:(NSLocale * _Nullable)locale;
-+ (void)isReadyToPurchase:(BOOL)ready;
++ (void)readyToOpenDeeplink:(BOOL)ready;
 + (void)setEnvironment:(enum PLYEnvironment)environment;
 + (void)setLogLevel:(enum LogLevel)logLevel;
 + (void)setAppTechnology:(enum PLYAppTechnology)technology;
@@ -2138,7 +2333,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (void)allProductsWithSuccess:(void (^ _Nonnull)(NSArray<PLYProduct *> * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nullable))failure;
 + (void)productWith:(NSString * _Nonnull)vendorId success:(void (^ _Nonnull)(PLYProduct * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nullable))failure;
 + (void)planWith:(NSString * _Nonnull)vendorId success:(void (^ _Nonnull)(PLYPlan * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nullable))failure;
-+ (void)userSubscriptionsWithSuccess:(void (^ _Nonnull)(NSArray<PLYSubscription *> * _Nullable))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure;
++ (void)userSubscriptions:(BOOL)invalidateCache success:(void (^ _Nonnull)(NSArray<PLYSubscription *> * _Nullable))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure;
 /// This method returns a presentation for a specific product. If no presentationVendorId is set (or an invalid one)
 /// the product default presentation will be displayed. If none has been set it will fallback to the app default presentation.
 /// If a <code>contentId</code> is provided, this identifier will be sent to your backend for association purposes.
@@ -2385,7 +2580,45 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 ///     url: the URL of the deeplink to open
 ///   </li>
 /// </ul>
-+ (BOOL)handleWithDeeplink:(NSURL * _Nonnull)url;
++ (BOOL)isDeeplinkHandledWithDeeplink:(NSURL * _Nonnull)url;
+/// This method performs a Promotional Offer signature with StoreKit 2
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     plan: the PLYPlan that you setup in Purchasely admin
+///   </li>
+///   <li>
+///     promoOffer: the PLYPromoOffer corresponding of the promotional offer that you setup in Purchasely admin and that is referring to your AppStore Connect promotional offers setup.
+///   </li>
+///   <li>
+///     success: the block called when the signature was completed from end to end
+///   </li>
+///   <li>
+///     failure: the block called when any error occured. The error can be displayed to the user using localizedDescription
+///   </li>
+/// </ul>
++ (void)signPromotionalOfferWithPlan:(PLYPlan * _Nonnull)plan promoOffer:(PLYPromoOffer * _Nonnull)promoOffer success:(void (^ _Nonnull)(PLYOfferSignature * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure SWIFT_AVAILABILITY(watchos,introduced=8.0) SWIFT_AVAILABILITY(tvos,introduced=15.0) SWIFT_AVAILABILITY(macos,introduced=12.0) SWIFT_AVAILABILITY(ios,introduced=12.2);
+/// This method performs a Promotional Offer signature with StoreKit 2
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     storeProductId: Apple’s ProductId for the item purchased
+///   </li>
+///   <li>
+///     storeOfferId: the promotional offer’s identifier referring to your AppStore Connect promotional offers setup.
+///   </li>
+///   <li>
+///     success: the block called when the signature was completed from end to end
+///   </li>
+///   <li>
+///     failure: the block called when any error occured. The error can be displayed to the user using localizedDescription
+///   </li>
+/// </ul>
++ (void)signPromotionalOfferWithStoreProductId:(NSString * _Nonnull)storeProductId storeOfferId:(NSString * _Nonnull)storeOfferId success:(void (^ _Nonnull)(PLYOfferSignature * _Nonnull))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure SWIFT_AVAILABILITY(watchos,introduced=8.0) SWIFT_AVAILABILITY(tvos,introduced=15.0) SWIFT_AVAILABILITY(macos,introduced=12.0) SWIFT_AVAILABILITY(ios,introduced=12.2);
 /// This method performs a purchase on an plan of a Purchasely product
 /// <ul>
 ///   <li>
@@ -2421,6 +2654,28 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 ///   </li>
 /// </ul>
 + (void)purchaseWithPlan:(PLYPlan * _Nonnull)plan success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure;
+/// This method performs a purchase on an plan of a Purchasely product with specified Promotional Offer
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     plan: the PLYPlan that you setup in Purchasely admin
+///   </li>
+///   <li>
+///     contentId: (optional) an identifier that can be used to associate the purchase with your internal item id
+///   </li>
+///   <li>
+///     storeOfferId: the promotional offer’s identifier referring to your AppStore Connect promotional offers setup.
+///   </li>
+///   <li>
+///     success: the block called when the purchase was completed from end to end
+///   </li>
+///   <li>
+///     failure: the block called when any error occured. The error can be displayed to the user using localizedDescription
+///   </li>
+/// </ul>
++ (void)purchaseWithPromotionalOfferWithPlan:(PLYPlan * _Nonnull)plan contentId:(NSString * _Nullable)contentId storeOfferId:(NSString * _Nonnull)storeOfferId success:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure SWIFT_AVAILABILITY(watchos,introduced=8.0) SWIFT_AVAILABILITY(tvos,introduced=15.0) SWIFT_AVAILABILITY(macos,introduced=12.0) SWIFT_AVAILABILITY(ios,introduced=12.2);
 /// <em>Mode: Observer, PaywallObserver</em>
 /// This method <em>must</em> be called right after a purchase is made using an SDK that is using StoreKit2, but you don’t have direct access to <em>Product.PurchaseResult</em>, in order for our back-end to synchronize this transaction for the current user.
 /// <ul>
@@ -2478,23 +2733,19 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSDictionary<N
 + (void)clearUserAttributes;
 + (void)clearUserAttributeForKey:(NSString * _Nonnull)key;
 + (void)setAttribute:(enum PLYAttribute)attribute value:(NSString * _Nonnull)value;
++ (void)setThemeMode:(enum PLYThemeMode)mode;
 /// This method is used to trigger an event telling Purchasely that a content has been consumed through a subscription.
 + (void)userDidConsumeSubscriptionContent;
-+ (void)startWithAPIKey:(NSString * _Nonnull)apiKey appUserId:(NSString * _Nullable)appUserId observerMode:(BOOL)observerMode eventDelegate:(id <PLYEventDelegate> _Nullable)eventDelegate uiDelegate:(id <PLYUIDelegate> _Nullable)uiDelegate confirmPurchaseHandler:(void (^ _Nullable)(UIViewController * _Nonnull, void (^ _Nonnull)(BOOL)))confirmPurchaseHandler logLevel:(enum LogLevel)logLevel initialized:(void (^ _Nullable)(BOOL, NSError * _Nullable))initialized SWIFT_UNAVAILABLE_MSG("With Purchasely 3.0.0, 2 parameters of the `start` method changed.\n 1. A more generic approach for interacting with paywall actions named `paywallActionsInterceptor` replaced the `confirmPurchaseHandler`.\n 2. New running modes were added alongside to `observerMode` to offer you more flexibility in Purchasely's use.");
-+ (void)setLoginTappedHandler:(void (^ _Nullable)(UIViewController * _Nonnull, void (^ _Nonnull)(BOOL)))loginTappedHandler SWIFT_UNAVAILABLE_MSG("With Purchasely 3.0.0 `setLoginTappedHandler(_:)` was replaced with a more generic approach for interacting with paywall actions. You should now use the `paywallActionsInterceptor` and intercept the `login` action.");
-+ (void)setConfirmPurchaseHandler:(void (^ _Nullable)(UIViewController * _Nonnull, void (^ _Nonnull)(BOOL)))confirmPurchaseHandler SWIFT_UNAVAILABLE_MSG("With Purchasely 3.0.0 `setConfirmPurchaseHandler(_:)` was replaced with a more generic approach for interacting with paywall actions. You should now use the `paywallActionsInterceptor` and intercept the `purchase` action.");
-+ (void)setAppUserId:(NSString * _Nullable)appUserId SWIFT_UNAVAILABLE_MSG("Call `userLogin(with:)` when you have the userId or `userLogout()` when the user disconnects.");
-+ (void)silentRestoreAllProductsWithSuccess:(void (^ _Nonnull)(void))success failure:(void (^ _Nonnull)(NSError * _Nonnull))failure SWIFT_UNAVAILABLE_MSG("`silentRestoreAllProducts(success:failure:)` has been renamed to `synchronize(success:failure:)`");
 @end
 
 typedef SWIFT_ENUM(NSInteger, PLYAttribute, open) {
-  PLYAttributeAmplitudeSessionId = 0,
-  PLYAttributeAmplitudeUserId = 1,
-  PLYAttributeAmplitudeDeviceId = 2,
-  PLYAttributeFirebaseAppInstanceId = 3,
-  PLYAttributeAirshipChannelId = 4,
-  PLYAttributeAirshipUserId = 5,
-  PLYAttributeBatchInstallationId = 6,
+  PLYAttributeAmplitudeUserId = 0,
+  PLYAttributeAmplitudeDeviceId = 1,
+  PLYAttributeFirebaseAppInstanceId = 2,
+  PLYAttributeAirshipChannelId = 3,
+  PLYAttributeAirshipUserId = 4,
+  PLYAttributeBatchInstallationId = 5,
+  PLYAttributeBatchCustomUserId = 6,
   PLYAttributeAdjustId = 7,
   PLYAttributeAppsflyerId = 8,
   PLYAttributeOneSignalPlayerId = 9,
@@ -2509,6 +2760,13 @@ typedef SWIFT_ENUM(NSInteger, PLYAttribute, open) {
   PLYAttributeCustomerioUserEmail = 18,
   PLYAttributeCustomerioUserId = 19,
   PLYAttributeMoengageUniqueId = 20,
+  PLYAttributeOneSignalExternalId = 21,
+};
+
+typedef SWIFT_ENUM(NSInteger, PLYThemeMode, open) {
+  PLYThemeModeLight = 0,
+  PLYThemeModeDark = 1,
+  PLYThemeModeSystem = 2,
 };
 
 
@@ -2523,8 +2781,10 @@ typedef SWIFT_ENUM(NSInteger, PLYAttribute, open) {
 SWIFT_CLASS("_TtC10Purchasely16StorekitSettings")
 @interface StorekitSettings : NSObject
 - (nonnull instancetype)initWithShouldUseStorekit2IfAvailable:(BOOL)shouldUseStorekit2IfAvailable simulateAskToBuy:(BOOL)simulateAskToBuy OBJC_DESIGNATED_INITIALIZER;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong, getter=default) StorekitSettings * _Nonnull default_;)
-+ (StorekitSettings * _Nonnull)default SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) StorekitSettings * _Nonnull storeKit1;)
++ (StorekitSettings * _Nonnull)storeKit1 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) StorekitSettings * _Nonnull storeKit2;)
++ (StorekitSettings * _Nonnull)storeKit2 SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end

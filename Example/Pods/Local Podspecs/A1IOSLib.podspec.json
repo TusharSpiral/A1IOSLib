@@ -1,6 +1,6 @@
 {
   "name": "A1IOSLib",
-  "version": "1.1.0",
+  "version": "1.1.8",
   "summary": "Private common A1IOSLib.",
   "description": "Private common SDK to personal use A1IOSLib.",
   "homepage": "https://github.com/TusharSpiral/A1IOSLib",
@@ -13,20 +13,20 @@
   },
   "source": {
     "git": "https://TusharSpiral@github.com/TusharSpiral/A1IOSLib.git",
-    "tag": "1.1.0"
+    "tag": "1.1.8"
   },
   "platforms": {
     "ios": "14.0"
   },
   "swift_versions": "5.0",
   "static_framework": true,
-  "source_files": "A1IOSLib/**/*.{swift}",
+  "source_files": "A1IOSLib/**/*.{swift, xib}",
   "dependencies": {
     "Alamofire": [
 
     ],
     "Purchasely": [
-      "3.7.2"
+      "4.2.0"
     ],
     "FirebaseAnalytics": [
 

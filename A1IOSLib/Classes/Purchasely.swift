@@ -38,9 +38,25 @@ public class PurchaselyManager: NSObject {
     var products: [PLYProduct]?
     var currentPlacement: String?
 
+//    public func configurePurchasely(key: String, completionHandler: @escaping (Int, Error?) -> Void) {
+//        handlerAction()
+//        Purchasely.start(withAPIKey: key, appUserId: nil, runningMode: .full, eventDelegate: self, logLevel: .debug) { [weak self] (success, error) in
+//            Purchasely.setUIDelegate(self)
+//            if error == nil {
+//                self?.restorePurchasely(completionHandler: { value, error in
+//                    completionHandler(value, error)
+//                })
+//            } else {
+//                completionHandler(0, error)
+//            }
+//        }
+//        Purchasely.isReadyToPurchase(true)
+//        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent(_:)), name: .ply_purchasedSubscription, object: nil)
+//    }
+
     public func configurePurchasely(key: String, completionHandler: @escaping (Int, Error?) -> Void) {
         handlerAction()
-        Purchasely.start(withAPIKey: key, appUserId: nil, runningMode: .full, eventDelegate: self, logLevel: .debug) { [weak self] (success, error) in
+        Purchasely.start(withAPIKey: key, appUserId: nil, runningMode: .full, storekitSettings: StorekitSettings.init(shouldUseStorekit2IfAvailable: true), logLevel: .debug) { [weak self] (success, error) in
             Purchasely.setUIDelegate(self)
             if error == nil {
                 self?.restorePurchasely(completionHandler: { value, error in
@@ -50,7 +66,6 @@ public class PurchaselyManager: NSObject {
                 completionHandler(0, error)
             }
         }
-        Purchasely.isReadyToPurchase(true)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent(_:)), name: .ply_purchasedSubscription, object: nil)
     }
 
