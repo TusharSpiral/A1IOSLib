@@ -10,7 +10,7 @@ import UIKit
 // Prerequisits
 // Firebase configure method must call before requesting the firebase config
 // app store url must be set before checking update
-public class AppUpdate: NSObject {
+public class AppUpdate {
     public static var shared = AppUpdate()
     private var isOptionalUpdateShown = false
     private var versionConfig: VersionConfig?
@@ -29,11 +29,8 @@ public class AppUpdate: NSObject {
      */
     public func checkUpdate(canCheckOptionalUpdate: Bool = true) {
         guard let config = versionConfig else { return }
-        let forceUpdate = checkForceUpdateNeeded(config: config)
-        print("Old Force update needed \(forceUpdate)")
-        if forceUpdate == false, canCheckOptionalUpdate == true {
-            let optionalUpdate = checkOptionalUpdateNeeded(config: config)
-            print("Old Optional update needed \(optionalUpdate)")
+        if !checkForceUpdateNeeded(config: config), canCheckOptionalUpdate {
+            _ = checkOptionalUpdateNeeded(config: config)
         }
     }
     
@@ -44,27 +41,15 @@ public class AppUpdate: NSObject {
             return false
         }
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-        var isUpgradeNeeded = false
         if config.stableVersion.compare(appVersion, options: .numeric) == .orderedDescending {
-            print("firebase version is newer than app version")
-            isUpgradeNeeded = true
-        }
-        if isUpgradeNeeded {
+            print("force version is newer than app version")
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
                 if let urlString = self?.appStoreURL {
                     Utility.openAppStore(urlString: urlString)
                 }
             }
             DispatchQueue.main.async {
-                var title = config.forceTitle
-                if title == "" || title.isEmpty {
-                    title = "App update required"
-                }
-                var message = config.forceMessage
-                if message == "" || message.isEmpty {
-                    message = "A new version is available. Please update your app before proceeding."
-                }
-                Utility.showAlert(title:title, message:message, defaultTitle: "Update Now", defaultHandler: handler)
+                Utility.showAlert(title:config.forceTitle, message:config.forceMessage, defaultTitle: "Update Now", defaultHandler: handler)
             }
             return true
         } else {
@@ -73,17 +58,12 @@ public class AppUpdate: NSObject {
     }
     
     private func checkOptionalUpdateNeeded(config: VersionConfig) -> Bool {
-        guard isOptionalUpdateShown == false else { return false }
+        guard isOptionalUpdateShown == false, let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return false }
         guard !config.minVersion.isEmpty else {
             return false
         }
-        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-        var isUpgradeNeeded = false
         if config.minVersion.compare(appVersion, options: .numeric) == .orderedDescending {
-            print("firebase version is newer than app version")
-            isUpgradeNeeded = true
-        }
-        if isUpgradeNeeded {
+            print("optional version is newer than app version")
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
                 self?.isOptionalUpdateShown = true
             }
@@ -94,15 +74,7 @@ public class AppUpdate: NSObject {
                 }
             }
             DispatchQueue.main.async {
-                var title = config.optionalTitle
-                if title == "" || title.isEmpty {
-                    title = "App update available"
-                }
-                var message = config.optionalMessage
-                if message == "" || message.isEmpty {
-                    message = "We have incorporated several innovative enhancements in this latest update."
-                }
-                Utility.showAlert(title: title, message: message, defaultTitle: "Maybe Later", defaultHandler: handler, isCancel: true, cancelTitle: "Update Now", cancelHandler: handler1)
+                Utility.showAlert(title: config.optionalTitle, message: config.optionalMessage, defaultTitle: "Maybe Later", defaultHandler: handler, isCancel: true, cancelTitle: "Update Now", cancelHandler: handler1)
             }
             return true
         } else {

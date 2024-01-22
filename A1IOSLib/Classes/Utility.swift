@@ -22,13 +22,6 @@ class Utility {
         if let keyWindow = UIApplication.shared.windows.first,
            let rootViewController = keyWindow.rootViewController {
             rootViewController.present(alert, animated: true, completion: nil)
-
-//            if rootViewController is InitialViewController,
-//               let presentedVc = rootViewController.presentedViewController as? ParentViewController {
-//                presentedVc.present(alert, animated: true, completion: nil)
-//            } else {
-//                rootViewController.present(alert, animated: true, completion: nil)
-//            }
         }
     }
     

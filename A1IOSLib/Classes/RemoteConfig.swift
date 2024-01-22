@@ -111,7 +111,6 @@ public class FirebaseConfig: Codable {
 
 fileprivate struct firebaseKeys{
     static let AD_CONFIG = "ad_config"
-//    static let SUBS_CONFIG = "subs_config"
     static let VERSION_CONFIG = "version_config"
 }
 
