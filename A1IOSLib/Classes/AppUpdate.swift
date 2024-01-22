@@ -13,8 +13,8 @@ import UIKit
 public class AppUpdate {
     public static var shared = AppUpdate()
     private var isOptionalUpdateShown = false
-    private var versionConfig: VersionConfig?
-    private var appStoreURL: String?
+    public var versionConfig: VersionConfig?
+    public var appStoreURL: String?
     
     public func configureAppUpdate(url: String, config: VersionConfig) {
         appStoreURL = url
