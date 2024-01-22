@@ -1,5 +1,7 @@
 PODS:
-  - A1IOSLib (1.1.0):
+  - A1IOSLib (1.1.8):
+    - Adapty
+    - AdaptyUI
     - Alamofire
     - Beacon
     - FBSDKCoreKit
@@ -9,6 +11,9 @@ PODS:
     - Mixpanel-swift
     - Purchasely (= 3.7.2)
     - YandexMobileMetrica
+  - Adapty (2.7.0)
+  - AdaptyUI (2.0.2):
+    - Adapty (~> 2.7.0)
   - Alamofire (5.8.1)
   - Beacon (2.2.8)
   - FBAEMKit (16.2.1):
@@ -120,6 +125,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Adapty
+    - AdaptyUI
     - Alamofire
     - Beacon
     - FBAEMKit
@@ -145,7 +152,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  A1IOSLib: ca76041beeb3c6bccc34bdebfaf99a6d613d0e6a
+  A1IOSLib: 6ca53ba81181bb2ed211ad9dbfd9facb00d10b8a
+  Adapty: 66d16579ed1966f1caf8d806e3f3f0d77d9968c7
+  AdaptyUI: 5dbd7cdff05c1d1aa2b44949ebeb65b87a44ffb6
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   Beacon: 37196f96e8797ae0071efa1f30ff1c7158e92114
   FBAEMKit: 4763aa27b8f69eb9d2c274189e91388de1dbd88a
@@ -166,6 +175,6 @@ SPEC CHECKSUMS:
   Purchasely: c9b257db16938c0a25fca5a054b5b27fd224fab6
   YandexMobileMetrica: f5368ee93f286c793d73b58da00929babfc897c1
 
-PODFILE CHECKSUM: b7e5a6feec8aa8f085edb1189a2078f2ee98109c
+PODFILE CHECKSUM: aaffff02a7630e509d0518264cc2a0adbd5f4451
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.14.3
