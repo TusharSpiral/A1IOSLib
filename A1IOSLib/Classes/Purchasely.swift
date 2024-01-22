@@ -56,7 +56,6 @@ public class PurchaselyManager: NSObject {
 
     public func configurePurchasely(key: String, completionHandler: @escaping (Int, Error?) -> Void) {
         handlerAction()
-        //@objc dynamic public class func start(withAPIKey apiKey: String, appUserId: String? = nil, runningMode: Purchasely.PLYRunningMode = .full, paywallActionsInterceptor: Purchasely.PLYPaywallActionsInterceptor? = nil, storekitSettings: Purchasely.StorekitSettings, logLevel: Purchasely.PLYLogger.LogLevel = .error, initialized: Purchasely.PLYSuccessErrorClosure? = nil)
         Purchasely.start(withAPIKey: key, appUserId: nil, runningMode: .full, storekitSettings: StorekitSettings.init(shouldUseStorekit2IfAvailable: true), logLevel: .debug) { [weak self] (success, error) in
             Purchasely.setUIDelegate(self)
             if error == nil {
@@ -67,7 +66,6 @@ public class PurchaselyManager: NSObject {
                 completionHandler(0, error)
             }
         }
-        //Purchasely.isReadyToPurchase(true)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent(_:)), name: .ply_purchasedSubscription, object: nil)
     }
 
