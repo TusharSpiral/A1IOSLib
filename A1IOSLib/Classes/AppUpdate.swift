@@ -15,7 +15,8 @@ public class AppUpdate {
     private var isOptionalUpdateShown = false
     public var versionConfig: VersionConfig?
     public var appStoreURL: String?
-    
+    public var isPopupShowing = false
+
     public func configureAppUpdate(url: String, config: VersionConfig) {
         appStoreURL = url
         versionConfig = config
@@ -43,11 +44,13 @@ public class AppUpdate {
         if config.minVersion.compare(appVersion, options: .numeric) == .orderedDescending {
             print("force version is newer than app version")
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
+                self?.isPopupShowing = false
                 if let urlString = self?.appStoreURL {
                     Utility.openAppStore(urlString: urlString)
                 }
             }
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                self?.isPopupShowing = true
                 Utility.showAlert(title:config.forceTitle, message:config.forceMessage, defaultTitle: "Update Now", defaultHandler: handler)
             }
             return true
@@ -65,14 +68,17 @@ public class AppUpdate {
             print("optional version is newer than app version")
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
                 self?.isOptionalUpdateShown = true
+                self?.isPopupShowing = false
             }
             let handler1: (UIAlertAction) -> () = { [weak self] (alert) in
                 self?.isOptionalUpdateShown = true
+                self?.isPopupShowing = false
                 if let urlString = self?.appStoreURL {
                     Utility.openAppStore(urlString: urlString)
                 }
             }
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                self?.isPopupShowing = true
                 Utility.showAlert(title: config.optionalTitle, message: config.optionalMessage, defaultTitle: "Maybe Later", defaultHandler: handler, isCancel: true, cancelTitle: "Update Now", cancelHandler: handler1)
             }
             return true
