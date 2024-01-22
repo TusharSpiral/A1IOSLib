@@ -12,9 +12,9 @@ import UIKit
 // app store url must be set before checking update
 public class AppUpdate: NSObject {
     public static var shared = AppUpdate()
-    var isOptionalUpdateShown = false
-    var versionConfig: VersionConfig?
-    var appStoreURL: String?
+    private var isOptionalUpdateShown = false
+    private var versionConfig: VersionConfig?
+    private var appStoreURL: String?
     
     public func configureAppUpdate(url: String, config: VersionConfig) {
         appStoreURL = url
@@ -64,7 +64,9 @@ public class AppUpdate: NSObject {
         }
         if isUpgradeNeeded {
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
-                self?.openAppStore()
+                if let urlString = self?.appStoreURL {
+                    Utility.openAppStore(urlString: urlString)
+                }
             }
             DispatchQueue.main.async {
                 var title = config.forceTitle
@@ -113,7 +115,9 @@ public class AppUpdate: NSObject {
             }
             let handler1: (UIAlertAction) -> () = { [weak self] (alert) in
                 self?.isOptionalUpdateShown = true
-                self?.openAppStore()
+                if let urlString = self?.appStoreURL {
+                    Utility.openAppStore(urlString: urlString)
+                }
             }
             DispatchQueue.main.async {
                 var title = config.optionalTitle
@@ -130,18 +134,5 @@ public class AppUpdate: NSObject {
         } else {
             return false
         }
-    }
-
-    /// Opens applications app store URL
-    func openAppStore() {
-        if let urlString = appStoreURL {
-            if let url = URL(string: urlString),
-               UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options:
-                                            convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:])
-                                          ,completionHandler: nil)
-            }
-        }
-        return
     }
 }

@@ -31,6 +31,17 @@ class Utility {
 //            }
         }
     }
+    
+    /// Opens applications app store URL
+    class func openAppStore(urlString: String) {
+        if let url = URL(string: urlString),
+           UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options:
+                                        convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:])
+                                      ,completionHandler: nil)
+        }
+        return
+    }
 
 }
 
