@@ -158,11 +158,11 @@ public class AdaptyHandler: NSObject {
         }
     }
     
-    func savePaywall(placement: String, paywall: AdaptyPaywallController) {
+    private func savePaywall(placement: String, paywall: AdaptyPaywallController) {
         paywalls[placement] = paywall
     }
     
-    func checkExistingPaywall(placement: String) -> AdaptyPaywallController? {
+    private func checkExistingPaywall(placement: String) -> AdaptyPaywallController? {
         return paywalls[placement]
     }
     
@@ -170,7 +170,7 @@ public class AdaptyHandler: NSObject {
         delayCount += 1
     }
     
-    func restorePurchase(completionHandler: @escaping (Int, Error?) -> Void) {
+    private func restorePurchase(completionHandler: @escaping (Int, Error?) -> Void) {
         Adapty.logout() //clearUser()
         Adapty.restorePurchases { result in
             switch result {
@@ -188,11 +188,10 @@ public class AdaptyHandler: NSObject {
         }
     }
     
-    func updateControllers() {
+    private func updateControllers() {
         if delegate != nil {
             delegate?.didUpdateSubscription()
-        }
-        else {
+        } else {
             delegate?.loadFresh()
         }
     }
