@@ -92,8 +92,8 @@ public class FirebaseHandler {
  * subs_config
  */
 public class FirebaseConfig: Codable {
-    public var adConfig: AdConfig = AdConfig(interInterval: 30, adsEnabled: true, interEnabled: true, interID: "", appOpenEnabled: true, appOpenID: "", bannerEnabled: true, bannerID: "", appOpenInterval: 10, appOpenInterInterval: 10)
-    public var versionConfig: VersionConfig = VersionConfig(forceTitle: "App update required", forceMessage: "A new version is available. Please update your app before proceeding.", optionalTitle: "App update available", optionalMessage: "We have incorporated several innovative enhancements in this latest update.", minVersion: "", stableVersion: "")
+    public var adConfig = AdConfig()
+    public var versionConfig = VersionConfig()
 
 
     init(){}
@@ -124,6 +124,7 @@ public struct AdConfig: Codable {
     public let bannerEnabled: Bool
     public let bannerID: String
     public let appOpenInterval, appOpenInterInterval: Int
+    public let interClickInterval: Int
 
     enum CodingKeys: String, CodingKey {
         case interInterval = "inter_interval"
@@ -136,6 +137,23 @@ public struct AdConfig: Codable {
         case bannerID = "banner_id"
         case appOpenInterval = "app_open_interval"
         case appOpenInterInterval = "app_open_inter_interval"
+        case interClickInterval = "inter_click_interval"
+    }
+    
+    init() {
+        interID = "NA"
+        appOpenID = "NA"
+        bannerID = "NA"
+        
+        adsEnabled = true
+        interEnabled = true
+        appOpenEnabled = true
+        bannerEnabled = true
+
+        interInterval = 10
+        appOpenInterval = 10
+        appOpenInterInterval = 10
+        interClickInterval = 2
     }
 }
 
@@ -150,5 +168,14 @@ public struct VersionConfig: Codable {
         case optionalTitle = "optional_title"
         case optionalMessage = "optional_message"
         case minVersion, stableVersion
+    }
+    
+    init() {
+        forceTitle = "App update required"
+        forceMessage = "A new version is available. Please update your app before proceeding."
+        optionalTitle = "App update available"
+        optionalMessage = "We have incorporated several innovative enhancements in this latest update."
+        minVersion = ""
+        stableVersion = ""
     }
 }
