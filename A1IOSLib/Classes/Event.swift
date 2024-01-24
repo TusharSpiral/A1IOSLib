@@ -53,6 +53,17 @@ public enum AdsKey: String {
     
 }
 
+public enum AppUpdateKey: String {
+    // MARK: - App Update
+    case event_force_update_home_pop_up_loaded
+    case event_force_update_home_pop_up_shown
+    case event_force_update_home_update_now_clicked
+    case event_optional_update_home_pop_up_loaded
+    case event_optional_update_home_pop_up_shown
+    case event_optional_update_home_update_now_clicked
+    case event_optional_update_home_may_be_later_clicked
+}
+
 public class EventManager: NSObject {
     let proOpenFromKey = "pro_opened_from"
     public static var shared = EventManager()
