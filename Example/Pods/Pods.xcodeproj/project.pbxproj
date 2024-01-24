@@ -261,6 +261,9 @@
 		603B8BD283AB7F0A015729FE304E066B /* FirebaseInstallations-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D053F5250BC61B350B69BA98BBD7CA2 /* FirebaseInstallations-dummy.m */; };
 		614BDAC2E5DF02A4510AAC6ED89F3357 /* FIRInstallationsStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 72F1547C5B55556A1FBAA8007AD9E8C9 /* FIRInstallationsStatus.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		62491362BA786B1A76FF6A88669220E2 /* DebugAdsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534BCF0C8DC8320E3286C0F548BC3C6 /* DebugAdsViewController.swift */; };
+		6276F3252B60D7FE00180E42 /* AppUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6276F3222B60D7FE00180E42 /* AppUpdate.swift */; };
+		6276F3262B60D7FE00180E42 /* RemoteConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6276F3232B60D7FE00180E42 /* RemoteConfig.swift */; };
+		6276F3272B60D7FE00180E42 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6276F3242B60D7FE00180E42 /* Utility.swift */; };
 		62906244ACC31D400157EDDBF7209B03 /* FirebaseInstallations.h in Headers */ = {isa = PBXBuildFile; fileRef = A80B3DF4115B2D214C6516F861C902B9 /* FirebaseInstallations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63BCB2538664168FFE41942CA0A6DA7F /* FirebaseInstallationsInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 74E0FE91BF44FBCA47F254FBB17C2FDB /* FirebaseInstallationsInternal.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		646BF274868C38892EDC57D5ED8EE26D /* FIRVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = FD87E7FB9F7421E0000115ED04866AA8 /* FIRVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1033,6 +1036,9 @@
 		60F55951DF467A75F5251A07DC314887 /* nanopb-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "nanopb-prefix.pch"; sourceTree = "<group>"; };
 		618E09D555256AE38EE82C8689EDDF9B /* YandexMobileMetricaCrashes-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "YandexMobileMetricaCrashes-umbrella.h"; path = "static/YandexMobileMetricaCrashes.xcframework/tvos-arm64/YandexMobileMetricaCrashes.framework/Versions/A/Headers/YandexMobileMetricaCrashes-umbrella.h"; sourceTree = "<group>"; };
 		61FA8237CDF62CAEA17C7EA9643A7B76 /* HSBeacon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HSBeacon.swift; path = A1IOSLib/Classes/HSBeacon.swift; sourceTree = "<group>"; };
+		6276F3222B60D7FE00180E42 /* AppUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppUpdate.swift; path = A1IOSLib/Classes/AppUpdate.swift; sourceTree = "<group>"; };
+		6276F3232B60D7FE00180E42 /* RemoteConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteConfig.swift; path = A1IOSLib/Classes/RemoteConfig.swift; sourceTree = "<group>"; };
+		6276F3242B60D7FE00180E42 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utility.swift; path = A1IOSLib/Classes/Utility.swift; sourceTree = "<group>"; };
 		62AE220643B2B5C4F8C7404150B839E4 /* GULReachabilityMessageCode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULReachabilityMessageCode.h; path = GoogleUtilities/Reachability/GULReachabilityMessageCode.h; sourceTree = "<group>"; };
 		62E8FA1DAB101EF75BFA0646F44F6976 /* YMMYandexMetricaPluginReporting.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = YMMYandexMetricaPluginReporting.h; path = "static/YandexMobileMetrica.xcframework/tvos-arm64/YandexMobileMetrica.framework/Versions/A/Headers/YMMYandexMetricaPluginReporting.h"; sourceTree = "<group>"; };
 		6331E17AD7502EA9800DA670DFEABFB9 /* nanopb-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "nanopb-dummy.m"; sourceTree = "<group>"; };
@@ -2298,6 +2304,9 @@
 		A37EF15191AE4793EC63CDD8224CE40B /* A1IOSLib */ = {
 			isa = PBXGroup;
 			children = (
+				6276F3222B60D7FE00180E42 /* AppUpdate.swift */,
+				6276F3232B60D7FE00180E42 /* RemoteConfig.swift */,
+				6276F3242B60D7FE00180E42 /* Utility.swift */,
 				1CA762060FCBF9F88C41CC91E4CE7F52 /* Event.swift */,
 				61FA8237CDF62CAEA17C7EA9643A7B76 /* HSBeacon.swift */,
 				B93BC959683E1CFCFF5356BE195CE52D /* Localization.swift */,
@@ -3623,7 +3632,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6276F3272B60D7FE00180E42 /* Utility.swift in Sources */,
 				64E20649B5D9F374B157CCB6014FB926 /* A1IOSLib-dummy.m in Sources */,
+				6276F3262B60D7FE00180E42 /* RemoteConfig.swift in Sources */,
 				2F4B85AC6D8A6963F4708B4DCCCD1764 /* Ads.swift in Sources */,
 				8FD64C90554630ABB521FE15E6C76750 /* AdsAppOpen.swift in Sources */,
 				B020418C07493FBEFB755D574BD12063 /* AdsBanner.swift in Sources */,
@@ -3643,6 +3654,7 @@
 				8DAEC04F15B46782AA8BE8EE2C73567D /* DebugViewController.swift in Sources */,
 				0E3B5C88539F3946885166869FA3D4FD /* Event.swift in Sources */,
 				813C6FE6564D446F57EE2E563D1DA15C /* HSBeacon.swift in Sources */,
+				6276F3252B60D7FE00180E42 /* AppUpdate.swift in Sources */,
 				CF29CA993AE3AF9352046F0AAA6B4E37 /* Localization.swift in Sources */,
 				BA5DD7C5B7B6DAFFFC247BA25B73CC03 /* NativeAdViewController.swift in Sources */,
 				DB71E232860FC2B342E15237FD223465 /* Purchasely.swift in Sources */,
