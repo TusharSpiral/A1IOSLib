@@ -122,6 +122,7 @@ final class DemoSelectionViewController: UITableViewController {
         //makeBanner()
         //bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
         //showAppOpenAd()
+        checkAndShowPermissionPopup()
     }
 
     func showAppOpenAd() {
@@ -303,5 +304,19 @@ private extension DemoSelectionViewController {
             self.present(alertController, animated: true)
         }
     }
+    
+    func checkAndShowPermissionPopup() {
+        if #available(iOS 14, *) {
+            let viewModel = TrackingViewModel()
+            if viewModel.shouldShowAppTrackingDialog() {
+                viewModel.requestAppTrackingPermission { (status) in
+                    viewModel.updateCurrentStatus()
+                }
+            } else {
+                print("IDFA", viewModel.getIDFA())
+            }
+        }
+    }
+
 }
 

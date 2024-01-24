@@ -43,14 +43,17 @@ public class AppUpdate {
         }
         if config.minVersion.compare(appVersion, options: .numeric) == .orderedDescending {
             print("force version is newer than app version")
+            EventManager.shared.logEvent(title: AppUpdateKey.event_force_update_home_pop_up_loaded.rawValue)
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
                 self?.isPopupShowing = false
+                EventManager.shared.logEvent(title: AppUpdateKey.event_force_update_home_update_now_clicked.rawValue)
                 if let urlString = self?.appStoreURL {
                     Utility.openAppStore(urlString: urlString)
                 }
             }
             DispatchQueue.main.async { [weak self] in
                 self?.isPopupShowing = true
+                EventManager.shared.logEvent(title: AppUpdateKey.event_force_update_home_pop_up_shown.rawValue)
                 Utility.showAlert(title:config.forceTitle, message:config.forceMessage, defaultTitle: "Update Now", defaultHandler: handler)
             }
             return true
@@ -66,19 +69,23 @@ public class AppUpdate {
         }
         if config.stableVersion.compare(appVersion, options: .numeric) == .orderedDescending {
             print("optional version is newer than app version")
+            EventManager.shared.logEvent(title: AppUpdateKey.event_optional_update_home_pop_up_loaded.rawValue)
             let handler: (UIAlertAction) -> () = { [weak self] (alert) in
                 self?.isOptionalUpdateShown = true
                 self?.isPopupShowing = false
+                EventManager.shared.logEvent(title: AppUpdateKey.event_optional_update_home_may_be_later_clicked.rawValue)
             }
             let handler1: (UIAlertAction) -> () = { [weak self] (alert) in
                 self?.isOptionalUpdateShown = true
                 self?.isPopupShowing = false
+                EventManager.shared.logEvent(title: AppUpdateKey.event_optional_update_home_update_now_clicked.rawValue)
                 if let urlString = self?.appStoreURL {
                     Utility.openAppStore(urlString: urlString)
                 }
             }
             DispatchQueue.main.async { [weak self] in
                 self?.isPopupShowing = true
+                EventManager.shared.logEvent(title: AppUpdateKey.event_optional_update_home_pop_up_shown.rawValue)
                 Utility.showAlert(title: config.optionalTitle, message: config.optionalMessage, defaultTitle: "Maybe Later", defaultHandler: handler, isCancel: true, cancelTitle: "Update Now", cancelHandler: handler1)
             }
             return true
