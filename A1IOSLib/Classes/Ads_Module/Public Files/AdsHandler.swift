@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMobileAds
 
-public class AdsHandler: NSObject {
+public class AdsHandler {
     private let notificationCenterAds: NotificationCenter = .default
     private var a1Ads = Ads.shared
     var showAds = true
