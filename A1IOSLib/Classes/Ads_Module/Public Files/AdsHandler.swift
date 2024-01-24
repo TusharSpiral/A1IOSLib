@@ -68,7 +68,7 @@ public class AdsHandler {
         }
         if let loadTime = interLoadTime {
             print("Inter diff \(Date().timeIntervalSince(loadTime))")
-            if Date().timeIntervalSince(loadTime) < interTimeoutInterval || interTriedCount < 3 {
+            if Date().timeIntervalSince(loadTime) < interTimeoutInterval || interTriedCount < interMaxCount + 1 {
                 return false
             } else {
                 interTriedCount = 0
