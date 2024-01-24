@@ -3,7 +3,7 @@ use_frameworks!
 platform :ios, '14.0'
 
 target 'A1IOSLib_Example' do
-  pod 'A1IOSLib', :path => '../'
+  pod 'A1IOSLib'
 
   target 'A1IOSLib_Tests' do
     inherit! :search_paths
