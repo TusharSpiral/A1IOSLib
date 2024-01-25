@@ -107,6 +107,7 @@ final class AppOpenAdManager: NSObject {
       self.loadTime = Date()
         print("App open ad loaded successfully.")
         if self.showAdAfterLoad, let ads = self.appOpenAd, let viewController = self.viewController {
+            self.isShowingAd = true
             self.showAdAfterLoad = false
             ads.present(fromRootViewController: viewController)
             EventManager.shared.logEvent(title: AdsKey.event_ad_appopen_shown.rawValue)
