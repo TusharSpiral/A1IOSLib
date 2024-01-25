@@ -10,26 +10,25 @@ import UIKit
 import GoogleMobileAds
 
 public class AdsHandler {
+    public var a1Ads = Ads.shared
+    public static var shared = AdsHandler()
     private let notificationCenterAds: NotificationCenter = .default
-    private var a1Ads = Ads.shared
-    var showAds = true
-    var isPro = false
-    static var shared = AdsHandler()
-    var adConfig = AdConfig()
-    var interTriedCount = 0
-    var interMaxCount = 2
-    var interLoadTime: Date?
-    var interTimeoutInterval: TimeInterval = 10
-    var appOpenLoadTime: Date?
-    var appOpenTimeoutInterval: TimeInterval = 10
-    var appOpenToInterInterval: TimeInterval = 10
-    var loadTimeRating: Date?
-    var isAppOpnAdShowing = false
-    var isBannerEnabled = false
-    var isAppOpenEnabled = true
-    var isInterEnabled = true
+    private var showAds = true
+    private var isPro = false
+    private var adConfig = AdConfig(interInterval: 0, adsEnabled: false, interEnabled: false, interID: "", appOpenEnabled: false , appOpenID: "", bannerEnabled: false, bannerID: "", appOpenInterval: 0, appOpenInterInterval: 0, interClickInterval: 0)
+    private var interTriedCount = 0
+    private var interMaxCount = 2
+    private var interLoadTime: Date?
+    private var interTimeoutInterval: TimeInterval = 10
+    private var appOpenLoadTime: Date?
+    private var appOpenTimeoutInterval: TimeInterval = 10
+    private var appOpenToInterInterval: TimeInterval = 10
+    private var loadTimeRating: Date?
+    private var isBannerEnabled = false
+    private var isAppOpenEnabled = true
+    private var isInterEnabled = true
     
-    func configureAds(config: AdConfig, pro: Bool) {
+    public func configureAds(config: AdConfig, pro: Bool) {
         if pro {
             Ads.shared.setDisabled(true)
         } else {
@@ -45,19 +44,29 @@ public class AdsHandler {
             if config.adsEnabled != adConfig.adsEnabled || config.appOpenID != adConfig.appOpenID || config.interID != adConfig.interID || config.bannerID != adConfig.bannerID || pro != isPro {
                 isPro = pro
                 adConfig = config
-                configureA1Ads(AdsConfiguration.customIds(bannerId: config.bannerID, appOpenId: config.appOpenID, interId: config.interID, rewardedId: "NA", rewardedInterId: "NA", nativeId: "NA"))
+                configureA1Ads(AdsConfiguration.customIds(bannerId: config.bannerID, appOpenId: config.appOpenID, interId: config.interID, rewardedId: "", rewardedInterId: "", nativeId: ""))
             } else {
                 isPro = pro
                 adConfig = config
-                Ads.shared.setDisabled(false)
             }
+            Ads.shared.setDisabled(false)
         }
     }
-    func canShowBannerAd() -> Bool {
-        return isBannerEnabled
+    
+    public func appOpenAdAvailable() -> Bool {
+        return a1Ads.isAppOpenAdReady
     }
-    func canShowInterAd() -> Bool {
-        guard isInterEnabled else { return false }
+    
+    public func appOpenAdShowing() -> Bool {
+        return a1Ads.isAppOpenAdShowing
+    }
+    
+    public func canShowBannerAd() -> Bool {
+        return isReachable && !isPro && showAds == true && isBannerEnabled
+    }
+    
+    public func canShowInterAd() -> Bool {
+        guard isReachable && !isPro && showAds == true && isInterEnabled else { return false }
         print("Inter interval is \(interTimeoutInterval) count is \(interTriedCount)")
         // Check if ad was loaded more than n hours ago.
         if let openLoadTime = appOpenLoadTime {
@@ -76,8 +85,13 @@ public class AdsHandler {
         }
         return true
     }
-    func canShowAppOpenAd() -> Bool {
-        guard isAppOpenEnabled else { return false }
+    
+    public func canShowAds() -> Bool {
+        return (!isPro && showAds)
+    }
+    
+    public func canShowAppOpenAd() -> Bool {
+        guard isReachable && !isPro && showAds == true && isAppOpenEnabled else { return false }
         print("App open interval is \(appOpenTimeoutInterval)")
         // Check if ad was loaded more than n hours ago.
         if let interTime = interLoadTime {
@@ -92,14 +106,7 @@ public class AdsHandler {
         }
         return true
     }
-    
-    func canShowAds() -> Bool {
-        if isReachable && !isPro && showAds == true {
-            return true
-        }
-        return false
-    }
-        
+            
     private func configureA1Ads(_ customIds: AdsConfiguration? = nil) {
         let environment: AdsEnvironment = .production
         Ads.shared.configure(from: customIds,
