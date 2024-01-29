@@ -15,16 +15,15 @@ public class AdsHandler {
     private let notificationCenterAds: NotificationCenter = .default
     private var showAds = true
     private var isPro = false
-    private var adConfig = AdConfig(interInterval: 0, adsEnabled: false, interEnabled: false, interID: "", appOpenEnabled: false , appOpenID: "", bannerEnabled: false, bannerID: "", appOpenInterval: 0, appOpenInterInterval: 0, interClickInterval: 0)
-    private var interTriedCount = 0
+    private var adConfig = AdConfig()
+    public var interTriedCount = 0
     private var interMaxCount = 2
-    private var interLoadTime: Date?
+    public var interLoadTime: Date?
     private var interTimeoutInterval: TimeInterval = 10
-    private var appOpenLoadTime: Date?
+    public var appOpenLoadTime: Date?
     private var appOpenTimeoutInterval: TimeInterval = 10
     private var appOpenToInterInterval: TimeInterval = 10
-    private var loadTimeRating: Date?
-    private var isBannerEnabled = false
+    private var isBannerEnabled = true
     private var isAppOpenEnabled = true
     private var isInterEnabled = true
     

@@ -19,7 +19,7 @@ public struct AdConfig: Codable {
     public let appOpenInterval, appOpenInterInterval: Int
     public let interClickInterval: Int
 
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case interInterval = "inter_interval"
         case adsEnabled = "ads_enabled"
         case interEnabled = "inter_enabled"
@@ -32,6 +32,34 @@ public struct AdConfig: Codable {
         case appOpenInterInterval = "app_open_inter_interval"
         case interClickInterval = "inter_click_interval"
     }
+    
+    init() {
+        interInterval = 10
+        adsEnabled = true
+        interEnabled = true
+        interID = ""
+        appOpenEnabled = true
+        appOpenID = ""
+        bannerEnabled = true
+        bannerID = ""
+        appOpenInterval = 10
+        appOpenInterInterval = 10
+        interClickInterval = 2
+    }
+    
+    init(interInterval: Int, adsEnabled: Bool, interEnabled: Bool, interID: String, appOpenEnabled: Bool , appOpenID: String, bannerEnabled: Bool, bannerID: String, appOpenInterval: Int, appOpenInterInterval: Int, interClickInterval: Int) {
+        self.interInterval = interInterval
+        self.adsEnabled = adsEnabled
+        self.interEnabled = interEnabled
+        self.interID = interID
+        self.appOpenEnabled = appOpenEnabled
+        self.appOpenID = appOpenID
+        self.bannerEnabled = bannerEnabled
+        self.bannerID = bannerID
+        self.appOpenInterval = appOpenInterval
+        self.appOpenInterInterval = appOpenInterInterval
+        self.interClickInterval = interClickInterval
+    }
 }
 
 // MARK: - VersionConfig
@@ -39,7 +67,7 @@ public struct VersionConfig: Codable {
     public let forceTitle, forceMessage, optionalTitle, optionalMessage: String
     public let minVersion, stableVersion: String
 
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case forceTitle = "force_title"
         case forceMessage = "force_message"
         case optionalTitle = "optional_title"
