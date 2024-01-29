@@ -27,10 +27,10 @@ public class AdsHandler {
     private var isAppOpenEnabled = true
     private var isInterEnabled = true
     
-    public func configureAds(config: AdConfig, pro: Bool) {
+    public func configureAds(config: AdConfig = AdConfig(), pro: Bool) {
         if pro {
             Ads.shared.setDisabled(true)
-        } else {
+        } else if config.appOpenID != "", config.interID != "", config.bannerID != "" {
             showAds = config.adsEnabled
             interTimeoutInterval = TimeInterval(config.interInterval)
             appOpenTimeoutInterval = TimeInterval(config.appOpenInterval)
@@ -48,6 +48,10 @@ public class AdsHandler {
                 isPro = pro
                 adConfig = config
             }
+            Ads.shared.setDisabled(false)
+        } else {
+            isPro = pro
+            configureA1Ads()
             Ads.shared.setDisabled(false)
         }
     }

@@ -120,10 +120,8 @@ extension Ads: AdsType {
         } else {
             configuration = .debug()
         }
-        //mobileAds.requestConfiguration.testDeviceIdentifiers = [GADSimulatorID].compactMap { $0 } + testDeviceIdentifiers
         self.configuration = configuration
         self.requestBuilder = requestBuilder
-//        self.mediationConfigurator = mediationConfigurator
 
          // Create ads
         if let appOpenAdUnitId = configuration.appOpenAdUnitId {
@@ -139,21 +137,21 @@ extension Ads: AdsType {
                 request: requestBuilder.build
             )
         }
-//
+
         if let rewardedAdUnitId = configuration.rewardedAdUnitId {
             rewardedAd = AdsRewarded(
                 adUnitId: rewardedAdUnitId,
                 request: requestBuilder.build
             )
         }
-//
+
         if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
             rewardedInterstitialAd = AdsRewardedInterstitial(
                 adUnitId: rewardedInterstitialAdUnitId,
                 request: requestBuilder.build
             )
         }
-//
+
         if let nativeAdUnitId = configuration.nativeAdUnitId {
             nativeAd = AdsNative(
                 adUnitId: nativeAdUnitId,
@@ -198,7 +196,6 @@ extension Ads: AdsType {
                              onWillDismissScreen: (() -> Void)?,
                              onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, GADBannerView)? {
         guard !isDisabled else { return nil }
-//        guard hasConsent else { return nil }
 
         var adUnitId: String? {
             configuration?.bannerAdUnitId

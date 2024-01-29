@@ -33,7 +33,7 @@ public struct AdConfig: Codable {
         case interClickInterval = "inter_click_interval"
     }
     
-    init() {
+    public init() {
         interInterval = 10
         adsEnabled = true
         interEnabled = true
@@ -47,7 +47,7 @@ public struct AdConfig: Codable {
         interClickInterval = 2
     }
     
-    init(interInterval: Int, adsEnabled: Bool, interEnabled: Bool, interID: String, appOpenEnabled: Bool , appOpenID: String, bannerEnabled: Bool, bannerID: String, appOpenInterval: Int, appOpenInterInterval: Int, interClickInterval: Int) {
+    public init(interInterval: Int, adsEnabled: Bool, interEnabled: Bool, interID: String, appOpenEnabled: Bool , appOpenID: String, bannerEnabled: Bool, bannerID: String, appOpenInterval: Int, appOpenInterInterval: Int, interClickInterval: Int) {
         self.interInterval = interInterval
         self.adsEnabled = adsEnabled
         self.interEnabled = interEnabled
