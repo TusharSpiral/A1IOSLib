@@ -114,11 +114,12 @@ extension Ads: AdsType {
     /// - Warning:
     /// Returns .notRequired in the completion handler if consent has been disabled via Ads.plist isUMPDisabled entry.
     public func configure(from customIds: AdsConfiguration?,
-                          for environment: AdsEnvironment,
+                          //for environment: AdsEnvironment,
                           requestBuilder: AdsRequestBuilderType
                           ) {
         // Update configuration for selected environment
         let configuration: AdsConfiguration
+        /*
         switch environment {
         case .production:
             if let custom = customIds {
@@ -134,9 +135,15 @@ extension Ads: AdsType {
             }
             mobileAds.requestConfiguration.testDeviceIdentifiers = [GADSimulatorID].compactMap { $0 } + testDeviceIdentifiers
         }
-        
+        */
+        if let custom = customIds {
+            configuration = custom
+        } else {
+            configuration = .debug()
+        }
+        //mobileAds.requestConfiguration.testDeviceIdentifiers = [GADSimulatorID].compactMap { $0 } + testDeviceIdentifiers
         self.configuration = configuration
-        self.environment = environment
+        //self.environment = environment
         self.requestBuilder = requestBuilder
 //        self.mediationConfigurator = mediationConfigurator
 

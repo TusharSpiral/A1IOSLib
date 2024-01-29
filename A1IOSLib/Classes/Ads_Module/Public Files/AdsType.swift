@@ -39,7 +39,7 @@ public protocol AdsType: AnyObject {
     var isDisabled: Bool { get }
     
     func configure(from customIds: AdsConfiguration?,
-                   for environment: AdsEnvironment,
+                   //for environment: AdsEnvironment,
                    requestBuilder: AdsRequestBuilderType)
     
     func makeBannerAd(in viewController: UIViewController,

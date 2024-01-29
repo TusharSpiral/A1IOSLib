@@ -108,9 +108,7 @@ public class AdsHandler {
     }
             
     private func configureA1Ads(_ customIds: AdsConfiguration? = nil) {
-        let environment: AdsEnvironment = .production
         Ads.shared.configure(from: customIds,
-                             for: environment,
                              requestBuilder: AdsRequestBuilder())
 
         // Ads are now ready to be displayed
