@@ -27,7 +27,6 @@ protocol AppOpenAdManagerDelegate: AnyObject {
 }
 
 final class AppOpenAdManager: NSObject {
-    private let environment: AdsEnvironment
     private let adUnitId: String
     private let request: () -> GADRequest
 
@@ -54,8 +53,7 @@ final class AppOpenAdManager: NSObject {
 
   //static let shared = AppOpenAdManager()
     
-    init(environment: AdsEnvironment, adUnitId: String, request: @escaping () -> GADRequest) {
-        self.environment = environment
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
     }

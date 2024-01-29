@@ -7,8 +7,8 @@
 
 import Foundation
 
-public enum AdsEnvironment {
-    case production
-    case development(testDeviceIdentifiers: [String])
-}
+//public enum AdsEnvironment {
+//    case production
+//    case development(testDeviceIdentifiers: [String])
+//}
 

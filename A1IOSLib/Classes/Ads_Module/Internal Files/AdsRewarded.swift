@@ -23,7 +23,6 @@ final class AdsRewarded: NSObject {
 
     // MARK: - Properties
 
-    private let environment: AdsEnvironment
     private let adUnitId: String
     private let request: () -> GADRequest
     
@@ -35,8 +34,7 @@ final class AdsRewarded: NSObject {
     
     // MARK: - Initialization
     
-    init(environment: AdsEnvironment, adUnitId: String, request: @escaping () -> GADRequest) {
-        self.environment = environment
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
     }
@@ -100,9 +98,7 @@ extension AdsRewarded: AdsRewardedType {
 
 extension AdsRewarded: GADFullScreenContentDelegate {
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
-        if case .development = environment {
-            print("AdsRewarded did record impression for ad: \(ad)")
-        }
+        print("AdsRewarded did record impression for ad: \(ad)")
     }
 
     func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {

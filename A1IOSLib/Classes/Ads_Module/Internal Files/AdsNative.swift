@@ -22,7 +22,6 @@ final class AdsNative: NSObject {
 
     // MARK: - Properties
 
-    private let environment: AdsEnvironment
     private let adUnitId: String
     private let request: () -> GADRequest
 
@@ -34,8 +33,7 @@ final class AdsNative: NSObject {
     
     // MARK: - Initialization
 
-    init(environment: AdsEnvironment, adUnitId: String, request: @escaping () -> GADRequest) {
-        self.environment = environment
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
     }
@@ -72,15 +70,13 @@ extension AdsNative: AdsNativeType {
 
         // Set the ad unit id
         var adUnitId: String {
-            if case .development = environment {
-                return self.adUnitId
-            }
-            switch adUnitIdType {
-            case .plist:
-                return self.adUnitId
-            case .custom(let id):
-                return id
-            }
+            return self.adUnitId
+//            switch adUnitIdType {
+//            case .plist:
+//                return self.adUnitId
+//            case .custom(let id):
+//                return id
+//            }
         }
 
         // Create GADAdLoader

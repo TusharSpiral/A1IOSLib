@@ -26,7 +26,6 @@ public final class Ads: NSObject {
     private let rewardedInterstitialAdIntervalTracker: AdsIntervalTrackerType
 
     private var configuration: AdsConfiguration?
-    private var environment: AdsEnvironment = .production
     private var requestBuilder: AdsRequestBuilderType?
     private var appOpenAd: AdsAppOpenType?
     private var interstitialAd: AdsInterstitialType?
@@ -105,7 +104,6 @@ extension Ads: AdsType {
     /// Configure Ads
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
-    /// - parameter environment: The environment for ads to be displayed.
     /// - parameter requestBuilder: The GADRequest builder.
     /// - parameter mediationConfigurator: Optional configurator to update mediation networks COPPA/GDPR consent status.
     /// - parameter consentStatusDidChange: A handler that will be called everytime the consent status has changed.
@@ -114,28 +112,9 @@ extension Ads: AdsType {
     /// - Warning:
     /// Returns .notRequired in the completion handler if consent has been disabled via Ads.plist isUMPDisabled entry.
     public func configure(from customIds: AdsConfiguration?,
-                          //for environment: AdsEnvironment,
                           requestBuilder: AdsRequestBuilderType
                           ) {
-        // Update configuration for selected environment
         let configuration: AdsConfiguration
-        /*
-        switch environment {
-        case .production:
-            if let custom = customIds {
-                configuration = custom
-            } else {
-                configuration = .production()
-            }
-        case .development(let testDeviceIdentifiers):
-            if let custom = customIds {
-                configuration = custom
-            } else {
-                configuration = .debug()
-            }
-            mobileAds.requestConfiguration.testDeviceIdentifiers = [GADSimulatorID].compactMap { $0 } + testDeviceIdentifiers
-        }
-        */
         if let custom = customIds {
             configuration = custom
         } else {
@@ -143,14 +122,12 @@ extension Ads: AdsType {
         }
         //mobileAds.requestConfiguration.testDeviceIdentifiers = [GADSimulatorID].compactMap { $0 } + testDeviceIdentifiers
         self.configuration = configuration
-        //self.environment = environment
         self.requestBuilder = requestBuilder
 //        self.mediationConfigurator = mediationConfigurator
 
          // Create ads
         if let appOpenAdUnitId = configuration.appOpenAdUnitId {
             appOpenAd = AppOpenAdManager(
-                environment: environment,
                 adUnitId: appOpenAdUnitId,
                 request: requestBuilder.build
             )
@@ -158,7 +135,6 @@ extension Ads: AdsType {
         
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
             interstitialAd = AdsInterstitial(
-                environment: environment,
                 adUnitId: interstitialAdUnitId,
                 request: requestBuilder.build
             )
@@ -166,7 +142,6 @@ extension Ads: AdsType {
 //
         if let rewardedAdUnitId = configuration.rewardedAdUnitId {
             rewardedAd = AdsRewarded(
-                environment: environment,
                 adUnitId: rewardedAdUnitId,
                 request: requestBuilder.build
             )
@@ -174,7 +149,6 @@ extension Ads: AdsType {
 //
         if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
             rewardedInterstitialAd = AdsRewardedInterstitial(
-                environment: environment,
                 adUnitId: rewardedInterstitialAdUnitId,
                 request: requestBuilder.build
             )
@@ -182,7 +156,6 @@ extension Ads: AdsType {
 //
         if let nativeAdUnitId = configuration.nativeAdUnitId {
             nativeAd = AdsNative(
-                environment: environment,
                 adUnitId: nativeAdUnitId,
                 request: requestBuilder.build
             )
@@ -237,7 +210,6 @@ extension Ads: AdsType {
         }
 
         let bannerAd = AdsBanner(
-            environment: environment,
             isDisabled: { [weak self] in
                 self?.isDisabled ?? false
             },
@@ -388,11 +360,9 @@ extension Ads: AdsType {
                              onError: ((Error) -> Void)?,
                              onReceive: @escaping (GADNativeAd) -> Void) {
         guard !isDisabled else { return }
-//        guard hasConsent else { return }
 
         if nativeAd == nil, case .custom(let adUnitId) = adUnitIdType {
             nativeAd = AdsNative(
-                environment: environment,
                 adUnitId: adUnitId,
                 request: { [weak self] in
                     self?.requestBuilder?.build() ?? GADRequest()
@@ -445,9 +415,7 @@ private extension Ads {
         */
         mobileAds.start { [weak self] initializationStatus in
             guard let self = self else { return }
-            if case .development = self.environment {
-                print("Ads initialization status", initializationStatus.adapterStatusesByClassName)
-            }
+            print("Ads initialization status", initializationStatus.adapterStatusesByClassName)
             completion()
         }
     }

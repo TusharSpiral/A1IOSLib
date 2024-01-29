@@ -22,7 +22,6 @@ final class AdsRewardedInterstitial: NSObject {
 
     // MARK: - Properties
 
-    private let environment: AdsEnvironment
     private let adUnitId: String
     private let request: () -> GADRequest
     
@@ -34,8 +33,7 @@ final class AdsRewardedInterstitial: NSObject {
 
     // MARK: - Initialization
 
-    init(environment: AdsEnvironment, adUnitId: String, request: @escaping () -> GADRequest) {
-        self.environment = environment
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
     }
@@ -101,9 +99,7 @@ extension AdsRewardedInterstitial: AdsRewardedInterstitialType {
 
 extension AdsRewardedInterstitial: GADFullScreenContentDelegate {
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
-        if case .development = environment {
-            print("AdsRewardedInterstitial did record impression for ad: \(ad)")
-        }
+        print("AdsRewardedInterstitial did record impression for ad: \(ad)")
     }
 
     func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
