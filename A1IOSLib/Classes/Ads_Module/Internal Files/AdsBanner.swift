@@ -163,6 +163,7 @@ extension AdsBanner: GADBannerViewDelegate {
 
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
         EventManager.shared.logEvent(title: AdsKey.event_ad_banner_load_failed.rawValue)
+        EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_load_failed.rawValue, key: "error", value: error.localizedDescription)
         hide(bannerView, from: bannerView.rootViewController)
         onError?(error)
     }
@@ -316,6 +317,7 @@ private extension AdsBanner {
         animator?.addCompletion { [weak self, weak bannerAd] _ in
             bannerAd?.isHidden = true
             EventManager.shared.logEvent(title: AdsKey.event_ad_banner_show_failed.rawValue)
+            EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_show_failed.rawValue)
             self?.onClose?()
         }
 

@@ -96,6 +96,7 @@ final class AppOpenAdManager: NSObject {
         self.loadTime = nil
         print("App open ad failed to load with error: \(error.localizedDescription)")
           EventManager.shared.logEvent(title: AdsKey.event_ad_appopen_load_failed.rawValue)
+          EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_load_failed.rawValue, key: "error", value: error.localizedDescription)
           self.onError?(error)
         return
       }
@@ -175,6 +176,7 @@ extension AppOpenAdManager: GADFullScreenContentDelegate {
     //appOpenAd = nil
     isShowingAd = false
       EventManager.shared.logEvent(title: AdsKey.event_ad_appopen_show_failed.rawValue)
+      EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_show_failed.rawValue, key: "error", value: error.localizedDescription)
     print("App open ad failed to present with error: \(error.localizedDescription)")
     appOpenAdManagerAdDidComplete()
     loadAd()

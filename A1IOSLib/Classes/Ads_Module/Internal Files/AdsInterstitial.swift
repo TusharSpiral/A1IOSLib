@@ -60,6 +60,7 @@ extension AdsInterstitial: AdsInterstitialType {
 
             if let error = error {
                 EventManager.shared.logEvent(title: AdsKey.event_ad_inter_load_failed.rawValue)
+                EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_load_failed.rawValue, key: "error", value: error.localizedDescription)
                 self.onError?(error)
                 return
             }
@@ -85,6 +86,7 @@ extension AdsInterstitial: AdsInterstitialType {
         guard let interstitialAd = interstitialAd else {
             load()
             EventManager.shared.logEvent(title: AdsKey.event_ad_inter_show_failed.rawValue)
+            EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_show_failed.rawValue, key: "error", value: "Interstitial ad not loaded")
             onError?(AdsError.interstitialAdNotLoaded)
             return
         }
@@ -96,6 +98,7 @@ extension AdsInterstitial: AdsInterstitialType {
         } catch {
             load()
             EventManager.shared.logEvent(title: AdsKey.event_ad_inter_show_failed.rawValue)
+            EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_show_failed.rawValue, key: "error", value: "Interstitial ad can't present")
             onError?(error)
         }
     }
@@ -124,6 +127,8 @@ extension AdsInterstitial: GADFullScreenContentDelegate {
     }
 
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        EventManager.shared.logEvent(title: AdsKey.event_ad_inter_show_failed.rawValue)
+        EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_show_failed.rawValue, key: "error", value: error.localizedDescription)
         onError?(error)
     }
 }
