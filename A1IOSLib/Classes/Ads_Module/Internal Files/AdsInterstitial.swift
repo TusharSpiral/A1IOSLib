@@ -11,6 +11,7 @@ import GoogleMobileAds
 
 protocol AdsInterstitialType: AnyObject {
     var isReady: Bool { get }
+    var isShowing: Bool { get }
     func load()
     func stopLoading()
     func show(from viewController: UIViewController,
@@ -31,7 +32,8 @@ final class AdsInterstitial: NSObject {
     private var onError: ((Error) -> Void)?
     
     private var interstitialAd: GADInterstitialAd?
-    
+    private var isShowingInterAd = false
+
     // MARK: - Initialization
     
     init(adUnitId: String, request: @escaping () -> GADRequest) {
@@ -45,6 +47,10 @@ final class AdsInterstitial: NSObject {
 extension AdsInterstitial: AdsInterstitialType {
     var isReady: Bool {
         interstitialAd != nil
+    }
+    
+    var isShowing: Bool {
+        isShowingInterAd == true
     }
     
     func load() {
@@ -103,12 +109,14 @@ extension AdsInterstitial: GADFullScreenContentDelegate {
     }
 
     func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        isShowingInterAd = true
         onOpen?()
     }
 
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         // Nil out reference
         interstitialAd = nil
+        isShowingInterAd = false
         // Send callback
         onClose?()
         // Load the next ad so its ready for displaying

@@ -10,6 +10,7 @@ import GoogleMobileAds
 
 protocol AdsRewardedType: AnyObject {
     var isReady: Bool { get }
+    var isShowing: Bool { get }
     func load()
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
@@ -30,8 +31,9 @@ final class AdsRewarded: NSObject {
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
     
+    private var isShowingRewardedAd = false
     private var rewardedAd: GADRewardedAd?
-    
+
     // MARK: - Initialization
     
     init(adUnitId: String, request: @escaping () -> GADRequest) {
@@ -45,6 +47,10 @@ final class AdsRewarded: NSObject {
 extension AdsRewarded: AdsRewardedType {
     var isReady: Bool {
         rewardedAd != nil
+    }
+    
+    var isShowing: Bool {
+        isShowingRewardedAd
     }
     
     func load() {
@@ -102,11 +108,13 @@ extension AdsRewarded: GADFullScreenContentDelegate {
     }
 
     func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        isShowingRewardedAd = true
         onOpen?()
     }
 
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         // Nil out reference
+        isShowingRewardedAd = false
         rewardedAd = nil
         // Send callback
         onClose?()

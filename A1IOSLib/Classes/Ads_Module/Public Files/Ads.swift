@@ -79,15 +79,28 @@ extension Ads: AdsType {
     public var isInterstitialAdReady: Bool {
         interstitialAd?.isReady ?? false
     }
+    
+    /// Check if app open  ad is ready to be displayed.
+    public var isInterAdShowing: Bool {
+        interstitialAd?.isShowing ?? false
+    }
      
     /// Check if rewarded ad is ready to be displayed.
     public var isRewardedAdReady: Bool {
         rewardedAd?.isReady ?? false
     }
 
+    public var isRewardedAdShowing: Bool {
+        rewardedAd?.isShowing ?? false
+    }
+
     /// Check if rewarded interstitial ad is ready to be displayed.
     public var isRewardedInterstitialAdReady: Bool {
         rewardedInterstitialAd?.isReady ?? false
+    }
+
+    public var isRewardedInterstitialAdShowing: Bool {
+        rewardedInterstitialAd?.isShowing ?? false
     }
 
     /// Returns true if ads have been disabled.

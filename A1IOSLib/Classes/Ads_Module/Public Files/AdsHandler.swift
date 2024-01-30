@@ -66,11 +66,36 @@ public class AdsHandler {
         return a1Ads.isAppOpenAdShowing
     }
     
+    public func interAdAvailable() -> Bool {
+        return a1Ads.isInterstitialAdReady
+    }
+
+    public func interAdShowing() -> Bool {
+        return a1Ads.isInterAdShowing
+    }
+    
+    public func rewardedAdAvailable() -> Bool {
+        return a1Ads.isRewardedAdReady
+    }
+
+    public func rewardedAdShowing() -> Bool {
+        return a1Ads.isRewardedAdShowing
+    }
+
+    public func rewardedInterAdAvailable() -> Bool {
+        return a1Ads.isRewardedInterstitialAdReady
+    }
+
+    public func rewardedInterAdShowing() -> Bool {
+        return a1Ads.isRewardedInterstitialAdShowing
+    }
+
     public func canShowBannerAd() -> Bool {
         return isReachable && !isPro && isAdsEnabled && isBannerEnabled
     }
     
     public func canShowInterAd() -> Bool {
+        interTriedCount += 1
         guard isReachable && !isPro && isAdsEnabled && isInterEnabled else { return false }
         print("Inter interval is \(interTimeoutInterval) count is \(interTriedCount)")
         // Check if ad was loaded more than n hours ago.
