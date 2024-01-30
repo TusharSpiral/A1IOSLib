@@ -116,10 +116,6 @@ public class AdsHandler {
 
         // Ads are now ready to be displayed
         notificationCenterAds.post(name: .adsConfigureCompletion, object: nil)
-        Ads.shared.showAppOpenAd(from: UIViewController(), afterInterval: 0) {
-        } onClose: {
-        } onError: { error in
-        }
     }
 
 }

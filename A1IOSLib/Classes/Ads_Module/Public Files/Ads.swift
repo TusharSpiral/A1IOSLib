@@ -410,16 +410,15 @@ private extension Ads {
          take action before loading ads, ensure you do so before initializing the Mobile
          Ads SDK.
         */
-        mobileAds.start { [weak self] initializationStatus in
-            guard let self = self else { return }
+        mobileAds.start { initializationStatus in
             print("Ads initialization status", initializationStatus.adapterStatusesByClassName)
             completion()
         }
     }
     
     func loadAds() {
-        rewardedAd?.load()
         guard !isDisabled else { return }
+        rewardedAd?.load()
         interstitialAd?.load()
         rewardedInterstitialAd?.load()
         appOpenAd?.load()
