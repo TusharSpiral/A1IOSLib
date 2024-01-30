@@ -66,12 +66,12 @@ public enum AppUpdateKey: String {
 
 public enum AppErrorKey: String {
     // MARK: - App Error
-    case event_ad_error_load_failed
-    case event_ad_error_show_failed
-    case event_subs_error_purchase_failed
-    case event_app_error_conversion_failed
-    case event_app_error_file_open_failed
-    case event_app_error_pdf_conversion_click_failed
+    case event_ad_error_load_failed // added in commons
+    case event_ad_error_show_failed // added in commons
+    case event_subs_error_purchase_failed // added in commons
+    case event_app_error_conversion_failed // Need to add via app
+    case event_app_error_file_open_failed // Need to add via app
+    case event_app_error_pdf_conversion_click_failed // Need to add via app
     case event_app_error_purchase_click_failed
 }
 
