@@ -109,14 +109,10 @@ final class PlainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.bannerAd?.show(isLandscape: size.width > size.height)
-        })
     }
 }
 

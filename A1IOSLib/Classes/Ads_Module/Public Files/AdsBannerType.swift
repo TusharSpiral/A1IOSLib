@@ -8,16 +8,9 @@
 import Foundation
 
 public protocol AdsBannerType: AnyObject {
-    /// Show the banner ad.
-    ///
-    /// - parameter isLandscape: If true banner is sized for landscape, otherwise portrait.
-    func show(isLandscape: Bool)
-
-    /// Hide the banner ad.
-    func hide()
-
     /// Removes the banner from its superview.
     func remove()
     
+    /// Show the banner ad.
     func show()
 }

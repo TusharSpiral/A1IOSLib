@@ -237,7 +237,6 @@ extension Ads: AdsType {
             onDidDismissScreen: onDidDismissScreen
         )
         EventManager.shared.logEvent(title: AdsKey.event_ad_banner_loaded.rawValue)
-//        bannerAd.show(isLandscape: viewController.view.frame.width > viewController.view.frame.height)
         return (bannerAd, gadBannerView)
     }
     

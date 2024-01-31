@@ -120,7 +120,6 @@ final class DemoSelectionViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //makeBanner()
-        //bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
         //showAppOpenAd()
         checkAndShowPermissionPopup()
     }
@@ -139,9 +138,6 @@ final class DemoSelectionViewController: UITableViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.bannerAd?.show(isLandscape: size.width > size.height)
-        })
     }
         
     // MARK: - UITableViewDataSource
@@ -265,7 +261,6 @@ private extension DemoSelectionViewController {
         if bannerAd == nil {
             makeBanner()
         }
-        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
         tableView.reloadData()
     }
 
