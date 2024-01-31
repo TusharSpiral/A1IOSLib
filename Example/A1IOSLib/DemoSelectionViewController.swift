@@ -127,7 +127,7 @@ final class DemoSelectionViewController: UITableViewController {
 
     func showAppOpenAd() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.a1Ads.showAppOpenAd(from: self, afterInterval: 0) {
+            self.a1Ads.showAppOpenAd(from: self) {
                 
             } onClose: {
                 

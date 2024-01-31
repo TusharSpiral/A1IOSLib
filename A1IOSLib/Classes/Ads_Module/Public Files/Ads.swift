@@ -22,8 +22,6 @@ public final class Ads: NSObject {
     // MARK: - Properties
     
     private let mobileAds: GADMobileAds
-    private let interstitialAdIntervalTracker: AdsIntervalTrackerType
-    private let rewardedInterstitialAdIntervalTracker: AdsIntervalTrackerType
 
     private var configuration: AdsConfiguration?
     private var requestBuilder: AdsRequestBuilderType?
@@ -38,8 +36,6 @@ public final class Ads: NSObject {
     
     private override init() {
         mobileAds = .sharedInstance()
-        interstitialAdIntervalTracker = AdsIntervalTracker()
-        rewardedInterstitialAdIntervalTracker = AdsIntervalTracker()
         super.init()
         
     }
@@ -47,7 +43,7 @@ public final class Ads: NSObject {
 
 // MARK: - AdsType
 
-extension Ads: AdsType {    
+extension Ads: AdsType {
     
     public func getDebugScreen() -> DebugViewController? {
         let podBundle = Bundle(for:DebugViewController.self)
@@ -247,7 +243,7 @@ extension Ads: AdsType {
     
     // MARK: App Open Ads
     
-    public func showAppOpenAd(from viewController: UIViewController, afterInterval interval: Int?, onOpen: (() -> Void)?, onClose: (() -> Void)?, onError: ((Error) -> Void)?) {
+    public func showAppOpenAd(from viewController: UIViewController, onOpen: (() -> Void)?, onClose: (() -> Void)?, onError: ((Error) -> Void)?) {
         appOpenAd?.show(from: viewController,
                         onOpen: onOpen,
                         onClose: onClose,
@@ -259,21 +255,14 @@ extension Ads: AdsType {
     
 //    / Show interstitial ad
     /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
     /// - parameter onOpen: An optional callback when the ad was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
     public func showInterstitialAd(from viewController: UIViewController,
-                                   afterInterval interval: Int?,
                                    onOpen: (() -> Void)?,
                                    onClose: (() -> Void)?,
                                    onError: ((Error) -> Void)?) {
         guard !isDisabled else { return }
-//        guard hasConsent else { return }
-
-        if let interval = interval {
-            guard interstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
-        }
         
         interstitialAd?.show(
             from: viewController,
@@ -317,7 +306,6 @@ extension Ads: AdsType {
     /// Show rewarded interstitial ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
     /// - parameter onOpen: An optional callback when the ad was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
@@ -328,17 +316,11 @@ extension Ads: AdsType {
     /// and an option to skip the ad before it starts.
     /// https://support.google.com/admob/answer/9884467
     public func showRewardedInterstitialAd(from viewController: UIViewController,
-                                           afterInterval interval: Int?,
                                            onOpen: (() -> Void)?,
                                            onClose: (() -> Void)?,
                                            onError: ((Error) -> Void)?,
                                            onReward: @escaping (NSDecimalNumber) -> Void) {
         guard !isDisabled else { return }
-//        guard hasConsent else { return }
-
-        if let interval = interval {
-            guard rewardedInterstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
-        }
 
         rewardedInterstitialAd?.show(
             from: viewController,

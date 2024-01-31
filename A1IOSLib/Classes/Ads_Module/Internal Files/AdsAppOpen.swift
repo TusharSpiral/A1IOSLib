@@ -30,10 +30,6 @@ final class AppOpenAdManager: NSObject {
     private let adUnitId: String
     private let request: () -> GADRequest
 
-  /// Ad references in the app open beta will time out after four hours,
-  /// but this time limit may change in future beta versions. For details, see:
-  /// https://support.google.com/admob/answer/9341964?hl=en
-  let timeoutInterval: TimeInterval = 15
   /// The app open ad.
   var appOpenAd: GADAppOpenAd?
   /// Maintains a reference to the delegate.
@@ -58,17 +54,9 @@ final class AppOpenAdManager: NSObject {
         self.request = request
     }
 
-  private func wasLoadTimeLessThanNHoursAgo(timeoutInterval: TimeInterval) -> Bool {
-    // Check if ad was loaded more than n hours ago.
-    if let loadTime = loadTime {
-      return Date().timeIntervalSince(loadTime) < timeoutInterval
-    }
-    return false
-  }
-
   private func isAdAvailable() -> Bool {
     // Check if ad exists and can be shown.
-    return appOpenAd != nil && wasLoadTimeLessThanNHoursAgo(timeoutInterval: timeoutInterval)
+    return appOpenAd != nil
   }
 
   private func appOpenAdManagerAdDidComplete() {

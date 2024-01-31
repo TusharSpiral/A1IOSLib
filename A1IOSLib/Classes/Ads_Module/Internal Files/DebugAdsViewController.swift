@@ -150,7 +150,7 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func showAppOpen() {
-        Ads.shared.showAppOpenAd(from: self, afterInterval: 0) {
+        Ads.shared.showAppOpenAd(from: self) {
             
         } onClose: {
             
@@ -162,7 +162,6 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     func showInter() {
         Ads.shared.showInterstitialAd(
             from: self,
-            afterInterval: 0,
             onOpen: {
                 print(" interstitial ad did open")
             },
@@ -208,7 +207,6 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     func showRewardedInter() {
         Ads.shared.showRewardedInterstitialAd(
             from: self,
-            afterInterval: nil,
             onOpen: {
                 print(" rewarded interstitial ad did open")
             },
