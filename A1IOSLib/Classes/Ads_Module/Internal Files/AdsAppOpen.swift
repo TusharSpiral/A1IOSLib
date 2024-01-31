@@ -173,14 +173,16 @@ extension AppOpenAdManager: GADFullScreenContentDelegate {
     _ ad: GADFullScreenPresentingAd,
     didFailToPresentFullScreenContentWithError error: Error
   ) {
-    //appOpenAd = nil
-    isShowingAd = false
+      //appOpenAd = nil
+      isShowingAd = false
       EventManager.shared.logEvent(title: AdsKey.event_ad_appopen_show_failed.rawValue)
       EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_show_failed.rawValue, key: "error", value: error.localizedDescription)
-    print("App open ad failed to present with error: \(error.localizedDescription)")
-    appOpenAdManagerAdDidComplete()
-    loadAd()
-    onError?(error)
+      print("App open ad failed to present with error: \(error.localizedDescription)")
+      appOpenAdManagerAdDidComplete()
+      if appOpenAd == nil {
+          loadAd()
+      }
+      onError?(error)
   }
 }
 
