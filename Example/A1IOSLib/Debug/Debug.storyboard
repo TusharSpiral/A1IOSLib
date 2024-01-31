@@ -115,17 +115,26 @@
                                     <outlet property="delegate" destination="Y6W-OH-hqX" id="ivn-Gk-wlT"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IpW-GI-0UF">
+                                <rect key="frame" x="0.0" y="756" width="393" height="62"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="mmF-2x-7Jn" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="JaH-Mf-Lp9"/>
+                            <constraint firstItem="IpW-GI-0UF" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="L0B-sm-rJT"/>
+                            <constraint firstItem="IpW-GI-0UF" firstAttribute="top" secondItem="mmF-2x-7Jn" secondAttribute="bottom" constant="8" symbolic="YES" id="LyZ-xU-tZt"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="IpW-GI-0UF" secondAttribute="trailing" id="UFi-Xo-EEY"/>
                             <constraint firstItem="mmF-2x-7Jn" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="b4J-dX-jXI"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="IpW-GI-0UF" secondAttribute="bottom" id="bsN-1K-5rH"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="mmF-2x-7Jn" secondAttribute="bottom" constant="70" id="pgF-tL-Qqk"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="mmF-2x-7Jn" secondAttribute="trailing" id="th8-Ds-0gN"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bannerContainer" destination="IpW-GI-0UF" id="m7l-Mh-ypF"/>
                         <outlet property="debugTableView" destination="mmF-2x-7Jn" id="mQV-kE-MOw"/>
                     </connections>
                 </viewController>

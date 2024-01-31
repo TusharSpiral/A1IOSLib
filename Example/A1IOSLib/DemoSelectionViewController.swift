@@ -122,6 +122,7 @@ final class DemoSelectionViewController: UITableViewController {
         //makeBanner()
         //bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
         //showAppOpenAd()
+        checkAndShowPermissionPopup()
     }
 
     func showAppOpenAd() {
@@ -162,22 +163,20 @@ final class DemoSelectionViewController: UITableViewController {
             let row = sections[indexPath.section].rows(isRequiredToAskForConsent: false)[indexPath.row]
             cell.configure(title: row.title, accessoryType: row.accessoryType)
         } else {
-            let banner = a1Ads.makeBannerAd(
+            // show banner on any of the view you want to
+            let banner = Ads.shared.makeBannerAd(
                 in: self,
                 position: .bottom(isUsingSafeArea: true),
                 animation: .fade(duration: 1.5),
                 onOpen: { bannerView in
                     print(" banner ad did open")
-                    if let myBanner = bannerView {
-                        bannerView?.frame = CGRectMake(0, 0, myBanner.frame.width, myBanner.frame.height)
-                        cell.contentView.addSubview(myBanner)
-                    }
                 },
                 onClose: {
                     print(" banner ad did close")
                 },
                 onError: { error in
                     print(" banner ad error \(error)")
+                    self.bannerAd?.remove()
                 },
                 onWillPresentScreen: {
                     print(" banner ad was tapped and is about to present screen")
@@ -189,7 +188,13 @@ final class DemoSelectionViewController: UITableViewController {
                     print(" banner did dismiss screen")
                 }
             )
-            // show banner on any of the view you want to
+            DispatchQueue.main.async {
+                self.bannerAd = banner?.0
+                if let bannerView = banner?.1 {
+                    cell.contentView.addSubview(bannerView)
+                    self.bannerAd?.show()
+                }
+            }
 
         }
         return cell
@@ -303,5 +308,19 @@ private extension DemoSelectionViewController {
             self.present(alertController, animated: true)
         }
     }
+    
+    func checkAndShowPermissionPopup() {
+        if #available(iOS 14, *) {
+            let viewModel = TrackingViewModel()
+            if viewModel.shouldShowAppTrackingDialog() {
+                viewModel.requestAppTrackingPermission { (status) in
+                    viewModel.updateCurrentStatus()
+                }
+            } else {
+                print("IDFA", viewModel.getIDFA())
+            }
+        }
+    }
+
 }
 

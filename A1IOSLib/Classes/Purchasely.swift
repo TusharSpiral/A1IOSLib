@@ -210,6 +210,7 @@ extension PurchaselyManager: PLYUIDelegate {
             purchaselyViewController?.dismiss(animated: true) {
                 if let message = error?.localizedDescription, message != "Too many calls on /configuration" {
                     EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchasely_payment_failed.rawValue, key: "error", value: message)
+                    EventManager.shared.logEvent(title: AppErrorKey.event_subs_error_purchase_failed.rawValue, key: "error", value: message)
                     if message == "The network connection was lost." {
                         self.delegate?.alertAction(text: Localization.networkError)
                     } else {
