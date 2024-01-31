@@ -17,20 +17,6 @@ public struct AdsConfiguration: Decodable, Equatable {
 }
 
 public extension AdsConfiguration {
-    static func production(bundle: Bundle = .main) -> AdsConfiguration {
-        guard let url = bundle.url(forResource: "AdsUnitId", withExtension: "plist") else {
-            fatalError("AdsUnitId could not find AdsUnitId.plist in the main bundle.")
-        }
-
-        do {
-            let data = try Data(contentsOf: url)
-            let decoder = PropertyListDecoder()
-            return try decoder.decode(AdsConfiguration.self, from: data)
-        } catch {
-            fatalError("AdsUnitId decoding AdsUnitId.plist error: \(error).")
-        }
-    }
-
     // https://developers.google.com/admob/ios/test-ads
     static func debug() -> AdsConfiguration {
         AdsConfiguration(

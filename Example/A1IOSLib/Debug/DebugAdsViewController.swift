@@ -17,6 +17,7 @@ enum DebugAdsType {
 }
 class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var debugTableView: UITableView!
+    @IBOutlet weak var bannerContainer: UIView!
     private var bannerAd: AdsBannerType?
 
     var adsList = ["APP OPEN", "INTER", "REWARDED", "REWARDED INTER", "BANNER", "NATIVE"]
@@ -225,7 +226,8 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func showBanner() {
-       let banner = Ads.shared.makeBannerAd(
+        // show banner on any of the view you want to
+        let banner = Ads.shared.makeBannerAd(
             in: self,
             position: .bottom(isUsingSafeArea: true),
             animation: .fade(duration: 1.5),
@@ -237,6 +239,7 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
             },
             onError: { error in
                 print(" banner ad error \(error)")
+                self.bannerAd?.remove()
             },
             onWillPresentScreen: {
                 print(" banner ad was tapped and is about to present screen")
@@ -248,8 +251,13 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
                 print(" banner did dismiss screen")
             }
         )
-        // show banner on any of the view you want to
-
+        DispatchQueue.main.async {
+            self.bannerAd = banner?.0
+            if let bannerView = banner?.1 {
+                self.bannerContainer.addSubview(bannerView)
+                self.bannerAd?.show()
+            }
+        }
     }
 
     func showNative() {

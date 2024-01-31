@@ -27,7 +27,6 @@ protocol AppOpenAdManagerDelegate: AnyObject {
 }
 
 final class AppOpenAdManager: NSObject {
-    private let environment: AdsEnvironment
     private let adUnitId: String
     private let request: () -> GADRequest
 
@@ -54,8 +53,7 @@ final class AppOpenAdManager: NSObject {
 
   //static let shared = AppOpenAdManager()
     
-    init(environment: AdsEnvironment, adUnitId: String, request: @escaping () -> GADRequest) {
-        self.environment = environment
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
     }
@@ -98,6 +96,7 @@ final class AppOpenAdManager: NSObject {
         self.loadTime = nil
         print("App open ad failed to load with error: \(error.localizedDescription)")
           EventManager.shared.logEvent(title: AdsKey.event_ad_appopen_load_failed.rawValue)
+          EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_load_failed.rawValue, key: "error", value: error.localizedDescription)
           self.onError?(error)
         return
       }
@@ -107,6 +106,7 @@ final class AppOpenAdManager: NSObject {
       self.loadTime = Date()
         print("App open ad loaded successfully.")
         if self.showAdAfterLoad, let ads = self.appOpenAd, let viewController = self.viewController {
+            self.isShowingAd = true
             self.showAdAfterLoad = false
             ads.present(fromRootViewController: viewController)
             EventManager.shared.logEvent(title: AdsKey.event_ad_appopen_shown.rawValue)
@@ -173,13 +173,16 @@ extension AppOpenAdManager: GADFullScreenContentDelegate {
     _ ad: GADFullScreenPresentingAd,
     didFailToPresentFullScreenContentWithError error: Error
   ) {
-    appOpenAd = nil
-    isShowingAd = false
+      //appOpenAd = nil
+      isShowingAd = false
       EventManager.shared.logEvent(title: AdsKey.event_ad_appopen_show_failed.rawValue)
-    print("App open ad failed to present with error: \(error.localizedDescription)")
-    appOpenAdManagerAdDidComplete()
-    loadAd()
-    onError?(error)
+      EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_show_failed.rawValue, key: "error", value: error.localizedDescription)
+      print("App open ad failed to present with error: \(error.localizedDescription)")
+      appOpenAdManagerAdDidComplete()
+      if appOpenAd == nil {
+          loadAd()
+      }
+      onError?(error)
   }
 }
 

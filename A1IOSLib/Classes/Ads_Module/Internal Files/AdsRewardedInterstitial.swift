@@ -9,6 +9,7 @@ import GoogleMobileAds
 
 protocol AdsRewardedInterstitialType: AnyObject {
     var isReady: Bool { get }
+    var isShowing: Bool { get }
     func load()
     func stopLoading()
     func show(from viewController: UIViewController,
@@ -22,7 +23,6 @@ final class AdsRewardedInterstitial: NSObject {
 
     // MARK: - Properties
 
-    private let environment: AdsEnvironment
     private let adUnitId: String
     private let request: () -> GADRequest
     
@@ -31,11 +31,11 @@ final class AdsRewardedInterstitial: NSObject {
     private var onError: ((Error) -> Void)?
 
     private var rewardedInterstitialAd: GADRewardedInterstitialAd?
+    private var isShowingRewardedInterstitialAd = false
 
     // MARK: - Initialization
 
-    init(environment: AdsEnvironment, adUnitId: String, request: @escaping () -> GADRequest) {
-        self.environment = environment
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
     }
@@ -46,6 +46,10 @@ final class AdsRewardedInterstitial: NSObject {
 extension AdsRewardedInterstitial: AdsRewardedInterstitialType {
     var isReady: Bool {
         rewardedInterstitialAd != nil
+    }
+    
+    var isShowing: Bool {
+        isShowingRewardedInterstitialAd
     }
 
     func load() {
@@ -101,16 +105,16 @@ extension AdsRewardedInterstitial: AdsRewardedInterstitialType {
 
 extension AdsRewardedInterstitial: GADFullScreenContentDelegate {
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
-        if case .development = environment {
-            print("AdsRewardedInterstitial did record impression for ad: \(ad)")
-        }
+        print("AdsRewardedInterstitial did record impression for ad: \(ad)")
     }
 
     func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        isShowingRewardedInterstitialAd = true
         onOpen?()
     }
 
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        isShowingRewardedInterstitialAd = false
         // Nil out reference
         rewardedInterstitialAd = nil
         // Send callback

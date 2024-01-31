@@ -72,11 +72,12 @@ final class PlainViewController: UIViewController {
         view.backgroundColor = .white
         addSubviews()
 
-       let banner = a1Ads.makeBannerAd(
+        // show banner on any of the view you want to
+        let banner = a1Ads.makeBannerAd(
             in: self,
             position: .bottom(isUsingSafeArea: true),
-            animation: .slide(duration: 1.5),
-            onOpen: {_ in 
+            animation: .fade(duration: 1.5),
+            onOpen: { bannerView in
                 print(" banner ad did open")
             },
             onClose: {
@@ -84,6 +85,7 @@ final class PlainViewController: UIViewController {
             },
             onError: { error in
                 print(" banner ad error \(error)")
+                self.bannerAd?.remove()
             },
             onWillPresentScreen: {
                 print(" banner ad was tapped and is about to present screen")
@@ -95,7 +97,14 @@ final class PlainViewController: UIViewController {
                 print(" banner did dismiss screen")
             }
         )
-        // show banner on any of the view you want to
+        DispatchQueue.main.async {
+            self.bannerAd = banner?.0
+            if let bannerView = banner?.1 {
+                bannerView.frame = CGRectMake(0, self.view.frame.size.height - bannerView.frame.size.height - 20, bannerView.frame.size.width, bannerView.frame.size.height)
+                self.view.addSubview(bannerView)
+                self.bannerAd?.show()
+            }
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

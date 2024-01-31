@@ -26,11 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = UINavigationController()
         let demoSelectionViewController = DemoSelectionViewController(a1Ads: self.a1Ads)
         navigationController.setViewControllers([demoSelectionViewController], animated: true)
-        self.configureA1Ads(from: navigationController)
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        AdsHandler.shared.configureAds(pro: false)
         return true
     }
     
@@ -53,31 +53,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 }
-
-private extension AppDelegate {
-    func configureA1Ads(from viewController: UIViewController) {
-        /*
-        #if DEBUG
-        let environment: AdsEnvironment = .development(testDeviceIdentifiers: [])
-        #else
-        let environment:AdsEnvironment = .production
-        #endif
-        */
-        let environment: AdsEnvironment = .development(testDeviceIdentifiers: [])
-
-        a1Ads.configure(
-            from: nil,
-            for: environment,
-            requestBuilder: AdsRequestBuilder())
-            
-                // Ads are now ready to be displayed
-                self.notificationCenter.post(name: .adsConfigureCompletion, object: nil)
-    }
-}
-
-private final class AdsRequestBuilder: AdsRequestBuilderType {
-    func build() -> GADRequest {
-        GADRequest()
-    }
-}
-
