@@ -431,10 +431,10 @@ private extension Ads {
     
     func loadAds() {
         guard !isDisabled else { return }
-        rewardedAd?.load()
-        interstitialAd?.load()
-        rewardedInterstitialAd?.load()
         appOpenAd?.load()
+        interstitialAd?.load()
+        rewardedAd?.load()
+        rewardedInterstitialAd?.load()
     }
 }
 
