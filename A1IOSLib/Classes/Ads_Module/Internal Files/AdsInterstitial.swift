@@ -50,7 +50,7 @@ extension AdsInterstitial: AdsInterstitialType {
     }
     
     var isShowing: Bool {
-        isShowingInterAd == true
+        isShowingInterAd
     }
     
     func load() {

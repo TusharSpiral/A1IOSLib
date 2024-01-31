@@ -71,12 +71,6 @@ extension AdsNative: AdsNativeType {
         // Set the ad unit id
         var adUnitId: String {
             return self.adUnitId
-//            switch adUnitIdType {
-//            case .plist:
-//                return self.adUnitId
-//            case .custom(let id):
-//                return id
-//            }
         }
 
         // Create GADAdLoader
