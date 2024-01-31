@@ -18,7 +18,6 @@ final class AdsBanner: NSObject {
     // MARK: - Properties
 
     private let isDisabled: () -> Bool
-//    private let hasConsent: () -> Bool
     private let request: () -> GADRequest
 
     private var onOpen: ((GADBannerView?) -> Void)?
