@@ -22,8 +22,6 @@ public final class Ads: NSObject {
     // MARK: - Properties
     
     private let mobileAds: GADMobileAds
-    private let interstitialAdIntervalTracker: AdsIntervalTrackerType
-    private let rewardedInterstitialAdIntervalTracker: AdsIntervalTrackerType
 
     private var configuration: AdsConfiguration?
     private var requestBuilder: AdsRequestBuilderType?
@@ -38,8 +36,6 @@ public final class Ads: NSObject {
     
     private override init() {
         mobileAds = .sharedInstance()
-        interstitialAdIntervalTracker = AdsIntervalTracker()
-        rewardedInterstitialAdIntervalTracker = AdsIntervalTracker()
         super.init()
         
     }
@@ -47,7 +43,7 @@ public final class Ads: NSObject {
 
 // MARK: - AdsType
 
-extension Ads: AdsType {    
+extension Ads: AdsType {
     
     public func getDebugScreen() -> DebugViewController? {
         let podBundle = Bundle(for:DebugViewController.self)
@@ -124,48 +120,46 @@ extension Ads: AdsType {
     ///
     /// - Warning:
     /// Returns .notRequired in the completion handler if consent has been disabled via Ads.plist isUMPDisabled entry.
-    public func configure(from customIds: AdsConfiguration?,
+    public func configure(from adConfig: AdsConfiguration,
                           requestBuilder: AdsRequestBuilderType
                           ) {
         let configuration: AdsConfiguration
-        if let custom = customIds {
-            configuration = custom
-        } else {
-            configuration = .debug()
-        }
+        configuration = adConfig
         self.configuration = configuration
         self.requestBuilder = requestBuilder
 
          // Create ads
-        if let appOpenAdUnitId = configuration.appOpenAdUnitId {
+        let appOpenAdUnitId = configuration.appOpenID
+        if appOpenAdUnitId != "" {
+            let appOpenAdUnitId = configuration.appOpenID
             appOpenAd = AppOpenAdManager(
                 adUnitId: appOpenAdUnitId,
                 request: requestBuilder.build
             )
         }
-        
-        if let interstitialAdUnitId = configuration.interstitialAdUnitId {
+        let interstitialAdUnitId = configuration.interID
+        if interstitialAdUnitId != "" {
             interstitialAd = AdsInterstitial(
                 adUnitId: interstitialAdUnitId,
                 request: requestBuilder.build
             )
         }
-
-        if let rewardedAdUnitId = configuration.rewardedAdUnitId {
+        let rewardedAdUnitId = configuration.rewardedID
+        if rewardedAdUnitId != "" {
             rewardedAd = AdsRewarded(
                 adUnitId: rewardedAdUnitId,
                 request: requestBuilder.build
             )
         }
-
-        if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
+        let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialID
+        if rewardedInterstitialAdUnitId != "" {
             rewardedInterstitialAd = AdsRewardedInterstitial(
                 adUnitId: rewardedInterstitialAdUnitId,
                 request: requestBuilder.build
             )
         }
-
-        if let nativeAdUnitId = configuration.nativeAdUnitId {
+        let nativeAdUnitId = configuration.nativeID
+        if nativeAdUnitId != "" {
             nativeAd = AdsNative(
                 adUnitId: nativeAdUnitId,
                 request: requestBuilder.build
@@ -200,9 +194,7 @@ extension Ads: AdsType {
     /// - parameter onDidDismissScreen: An optional callback when the banner did dismiss a presented screen.
     /// - returns AdsBannerType to show, hide or remove the prepared banner ad.
     public func makeBannerAd(in viewController: UIViewController,
-                             position: AdsBannerAdPosition,
-                             animation: AdsBannerAdAnimation,
-                             onOpen: ((GADBannerView?) -> Void)?,
+                             onOpen: (() -> Void)?,
                              onClose: (() -> Void)?,
                              onError: ((Error) -> Void)?,
                              onWillPresentScreen: (() -> Void)?,
@@ -211,7 +203,7 @@ extension Ads: AdsType {
         guard !isDisabled else { return nil }
 
         var adUnitId: String? {
-            configuration?.bannerAdUnitId
+            configuration?.bannerID
         }
 
         guard let validAdUnitId = adUnitId else {
@@ -231,8 +223,6 @@ extension Ads: AdsType {
         let gadBannerView = bannerAd.prepare(
             withAdUnitId: validAdUnitId,
             in: viewController,
-            position: position,
-            animation: animation,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError,
@@ -241,13 +231,12 @@ extension Ads: AdsType {
             onDidDismissScreen: onDidDismissScreen
         )
         EventManager.shared.logEvent(title: AdsKey.event_ad_banner_loaded.rawValue)
-//        bannerAd.show(isLandscape: viewController.view.frame.width > viewController.view.frame.height)
         return (bannerAd, gadBannerView)
     }
     
     // MARK: App Open Ads
     
-    public func showAppOpenAd(from viewController: UIViewController, afterInterval interval: Int?, onOpen: (() -> Void)?, onClose: (() -> Void)?, onError: ((Error) -> Void)?) {
+    public func showAppOpenAd(from viewController: UIViewController, onOpen: (() -> Void)?, onClose: (() -> Void)?, onError: ((Error) -> Void)?) {
         appOpenAd?.show(from: viewController,
                         onOpen: onOpen,
                         onClose: onClose,
@@ -259,21 +248,14 @@ extension Ads: AdsType {
     
 //    / Show interstitial ad
     /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
     /// - parameter onOpen: An optional callback when the ad was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
     public func showInterstitialAd(from viewController: UIViewController,
-                                   afterInterval interval: Int?,
                                    onOpen: (() -> Void)?,
                                    onClose: (() -> Void)?,
                                    onError: ((Error) -> Void)?) {
         guard !isDisabled else { return }
-//        guard hasConsent else { return }
-
-        if let interval = interval {
-            guard interstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
-        }
         
         interstitialAd?.show(
             from: viewController,
@@ -317,7 +299,6 @@ extension Ads: AdsType {
     /// Show rewarded interstitial ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
     /// - parameter onOpen: An optional callback when the ad was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
@@ -328,17 +309,11 @@ extension Ads: AdsType {
     /// and an option to skip the ad before it starts.
     /// https://support.google.com/admob/answer/9884467
     public func showRewardedInterstitialAd(from viewController: UIViewController,
-                                           afterInterval interval: Int?,
                                            onOpen: (() -> Void)?,
                                            onClose: (() -> Void)?,
                                            onError: ((Error) -> Void)?,
                                            onReward: @escaping (NSDecimalNumber) -> Void) {
         guard !isDisabled else { return }
-//        guard hasConsent else { return }
-
-        if let interval = interval {
-            guard rewardedInterstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
-        }
 
         rewardedInterstitialAd?.show(
             from: viewController,

@@ -29,15 +29,15 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
         debugTableView.register(UINib(nibName: "DebugTextCell", bundle: nil), forCellReuseIdentifier: "DebugTextCell")
         // Do any additional setup after loading the view.
         idsText.append("\n\n\nApp Open Ad unit id\n")
-        idsText.append(Ads.shared.getConfiguration?.appOpenAdUnitId ?? "NA")
+        idsText.append(Ads.shared.getConfiguration?.appOpenID ?? "NA")
         idsText.append("\n\n\nInter Ad unit id\n")
-        idsText.append(Ads.shared.getConfiguration?.interstitialAdUnitId ?? "NA")
+        idsText.append(Ads.shared.getConfiguration?.interID ?? "NA")
         idsText.append("\n\n\nRewarded Ad unit id\n")
-        idsText.append(Ads.shared.getConfiguration?.rewardedAdUnitId ?? "NA")
+        idsText.append(Ads.shared.getConfiguration?.rewardedID ?? "NA")
         idsText.append("\n\n\nBanner Ad unit id\n")
-        idsText.append(Ads.shared.getConfiguration?.bannerAdUnitId ?? "NA")
+        idsText.append(Ads.shared.getConfiguration?.bannerID ?? "NA")
         idsText.append("\n\n\nNative Ad unit id\n")
-        idsText.append(Ads.shared.getConfiguration?.nativeAdUnitId ?? "NA")
+        idsText.append(Ads.shared.getConfiguration?.nativeID ?? "NA")
         idsText.append("\n\n\n")
     }
     
@@ -151,7 +151,7 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func showAppOpen() {
-        Ads.shared.showAppOpenAd(from: self, afterInterval: 0) {
+        Ads.shared.showAppOpenAd(from: self) {
             
         } onClose: {
             
@@ -163,7 +163,6 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     func showInter() {
         Ads.shared.showInterstitialAd(
             from: self,
-            afterInterval: 0,
             onOpen: {
                 print(" interstitial ad did open")
             },
@@ -209,7 +208,6 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     func showRewardedInter() {
         Ads.shared.showRewardedInterstitialAd(
             from: self,
-            afterInterval: nil,
             onOpen: {
                 print(" rewarded interstitial ad did open")
             },
@@ -229,9 +227,7 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
         // show banner on any of the view you want to
         let banner = Ads.shared.makeBannerAd(
             in: self,
-            position: .bottom(isUsingSafeArea: true),
-            animation: .fade(duration: 1.5),
-            onOpen: { bannerView in
+            onOpen: {
                 print(" banner ad did open")
             },
             onClose: {

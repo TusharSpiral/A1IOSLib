@@ -18,7 +18,7 @@ final class PlainViewController: UIViewController {
     
     private lazy var interstitialAdButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Show Interstitial ad (2 interval)", for: .normal)
+        button.setTitle("Show Interstitial ad", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(showInterstitialAdButtonPressed), for: .touchUpInside)
         return button
@@ -75,9 +75,7 @@ final class PlainViewController: UIViewController {
         // show banner on any of the view you want to
         let banner = a1Ads.makeBannerAd(
             in: self,
-            position: .bottom(isUsingSafeArea: true),
-            animation: .fade(duration: 1.5),
-            onOpen: { bannerView in
+            onOpen: {
                 print(" banner ad did open")
             },
             onClose: {
@@ -109,14 +107,10 @@ final class PlainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.bannerAd?.show(isLandscape: size.width > size.height)
-        })
     }
 }
 
@@ -136,7 +130,6 @@ private extension PlainViewController {
     @objc func showInterstitialAdButtonPressed() {
         a1Ads.showInterstitialAd(
             from: self,
-            afterInterval: 2,
             onOpen: {
                 print(" interstitial ad did open")
             },
@@ -182,7 +175,6 @@ private extension PlainViewController {
     @objc func showRewardedInterstitialAdButtonPressed() {
         a1Ads.showRewardedInterstitialAd(
             from: self,
-            afterInterval: nil,
             onOpen: {
                 print(" rewarded interstitial ad did open")
             },
