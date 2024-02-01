@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+/*
 public struct AdsConfiguration: Decodable, Equatable {
     public let appOpenAdUnitId: String?
     public let bannerAdUnitId: String?
@@ -41,3 +41,4 @@ public extension AdsConfiguration {
     }
 
 }
+*/

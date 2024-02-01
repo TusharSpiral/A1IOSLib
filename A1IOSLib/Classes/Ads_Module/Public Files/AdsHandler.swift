@@ -14,12 +14,12 @@ public class AdsHandler {
     public static var shared = AdsHandler()
     private let notificationCenterAds: NotificationCenter = .default
     private var isPro = false
-    private var adConfig = AdConfig()
+    private var adConfig = AdsConfiguration()
     public var interTriedCount = 0
     public var interLoadTime: Date?
     public var appOpenLoadTime: Date?
     
-    public func configureAds(config: AdConfig = AdConfig(), pro: Bool) {
+    public func configureAds(config: AdsConfiguration = AdsConfiguration(), pro: Bool) {
         if pro || !config.adsEnabled {
             adConfig = config
             isPro = pro
@@ -28,7 +28,7 @@ public class AdsHandler {
             if config.adsEnabled != adConfig.adsEnabled || config.appOpenID != adConfig.appOpenID || config.interID != adConfig.interID || config.bannerID != adConfig.bannerID || pro != isPro {
                 isPro = pro
                 adConfig = config
-                configureA1Ads(AdsConfiguration.customIds(bannerId: config.bannerID, appOpenId: config.appOpenID, interId: config.interID, rewardedId: "", rewardedInterId: "", nativeId: ""))
+                configureA1Ads()
             } else {
                 isPro = pro
                 adConfig = config
@@ -121,8 +121,8 @@ public class AdsHandler {
         return true
     }
             
-    private func configureA1Ads(_ customIds: AdsConfiguration? = nil) {
-        Ads.shared.configure(from: customIds,
+    private func configureA1Ads() {
+        Ads.shared.configure(from: adConfig,
                              requestBuilder: AdsRequestBuilder())
 
         // Ads are now ready to be displayed

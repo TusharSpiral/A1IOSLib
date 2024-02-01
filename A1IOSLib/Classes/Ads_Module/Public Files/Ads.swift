@@ -120,48 +120,46 @@ extension Ads: AdsType {
     ///
     /// - Warning:
     /// Returns .notRequired in the completion handler if consent has been disabled via Ads.plist isUMPDisabled entry.
-    public func configure(from customIds: AdsConfiguration?,
+    public func configure(from adConfig: AdsConfiguration,
                           requestBuilder: AdsRequestBuilderType
                           ) {
         let configuration: AdsConfiguration
-        if let custom = customIds {
-            configuration = custom
-        } else {
-            configuration = .debug()
-        }
+        configuration = adConfig
         self.configuration = configuration
         self.requestBuilder = requestBuilder
 
          // Create ads
-        if let appOpenAdUnitId = configuration.appOpenAdUnitId {
+        let appOpenAdUnitId = configuration.appOpenID
+        if appOpenAdUnitId != "" {
+            let appOpenAdUnitId = configuration.appOpenID
             appOpenAd = AppOpenAdManager(
                 adUnitId: appOpenAdUnitId,
                 request: requestBuilder.build
             )
         }
-        
-        if let interstitialAdUnitId = configuration.interstitialAdUnitId {
+        let interstitialAdUnitId = configuration.interID
+        if interstitialAdUnitId != "" {
             interstitialAd = AdsInterstitial(
                 adUnitId: interstitialAdUnitId,
                 request: requestBuilder.build
             )
         }
-
-        if let rewardedAdUnitId = configuration.rewardedAdUnitId {
+        let rewardedAdUnitId = configuration.rewardedID
+        if rewardedAdUnitId != "" {
             rewardedAd = AdsRewarded(
                 adUnitId: rewardedAdUnitId,
                 request: requestBuilder.build
             )
         }
-
-        if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
+        let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialID
+        if rewardedInterstitialAdUnitId != "" {
             rewardedInterstitialAd = AdsRewardedInterstitial(
                 adUnitId: rewardedInterstitialAdUnitId,
                 request: requestBuilder.build
             )
         }
-
-        if let nativeAdUnitId = configuration.nativeAdUnitId {
+        let nativeAdUnitId = configuration.nativeID
+        if nativeAdUnitId != "" {
             nativeAd = AdsNative(
                 adUnitId: nativeAdUnitId,
                 request: requestBuilder.build
@@ -205,7 +203,7 @@ extension Ads: AdsType {
         guard !isDisabled else { return nil }
 
         var adUnitId: String? {
-            configuration?.bannerAdUnitId
+            configuration?.bannerID
         }
 
         guard let validAdUnitId = adUnitId else {
