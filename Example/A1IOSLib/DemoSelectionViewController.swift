@@ -85,6 +85,7 @@ final class DemoSelectionViewController: UITableViewController {
     private let sections = Section.allCases
     private let notificationCenter: NotificationCenter = .default
     private var bannerAd: AdsBannerType?
+    private var shimmerView: ShimmerView?
 
     // MARK: - Initialization
     
@@ -120,14 +121,13 @@ final class DemoSelectionViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //makeBanner()
-        //bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
         //showAppOpenAd()
         checkAndShowPermissionPopup()
     }
 
     func showAppOpenAd() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.a1Ads.showAppOpenAd(from: self, afterInterval: 0) {
+            self.a1Ads.showAppOpenAd(from: self) {
                 
             } onClose: {
                 
@@ -139,9 +139,6 @@ final class DemoSelectionViewController: UITableViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.bannerAd?.show(isLandscape: size.width > size.height)
-        })
     }
         
     // MARK: - UITableViewDataSource
@@ -265,7 +262,6 @@ private extension DemoSelectionViewController {
         if bannerAd == nil {
             makeBanner()
         }
-        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
         tableView.reloadData()
     }
 
@@ -319,6 +315,22 @@ private extension DemoSelectionViewController {
             } else {
                 print("IDFA", viewModel.getIDFA())
             }
+        }
+    }
+    
+    func showBannerUI() {
+        if shimmerView == nil {
+            shimmerView = ShimmerView(frame: CGRectMake(0, 0, UIScreen.main.bounds.width, 61))
+            if let myView = shimmerView {
+                view.addSubview(myView)
+            }
+        }
+        shimmerView?.startAnimating()
+    }
+    
+    func hideBannerUI() {
+        if let myView = shimmerView {
+            myView.removeFromSuperview()
         }
     }
 

@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if rootViewController is DemoSelectionViewController {
                 return
             }
-            a1Ads.showAppOpenAd(from: rootViewController, afterInterval: 0) {
+            a1Ads.showAppOpenAd(from: rootViewController) {
                 
             } onClose: {
                 

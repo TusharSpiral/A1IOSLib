@@ -52,13 +52,11 @@ public protocol AdsType: AnyObject {
                       onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, GADBannerView)?
     
     func showAppOpenAd(from viewController: UIViewController,
-                      afterInterval interval: Int?,
                       onOpen: (() -> Void)?,
                       onClose: (() -> Void)?,
                       onError: ((Error) -> Void)?)
     
     func showInterstitialAd(from viewController: UIViewController,
-                            afterInterval interval: Int?,
                             onOpen: (() -> Void)?,
                             onClose: (() -> Void)?,
                             onError: ((Error) -> Void)?)
@@ -71,7 +69,6 @@ public protocol AdsType: AnyObject {
                         onReward: @escaping (NSDecimalNumber) -> Void)
     
     func showRewardedInterstitialAd(from viewController: UIViewController,
-                                    afterInterval interval: Int?,
                                     onOpen: (() -> Void)?,
                                     onClose: (() -> Void)?,
                                     onError: ((Error) -> Void)?,
