@@ -36,18 +36,6 @@ public struct AdsConfiguration: Codable {
         case interClickInterval = "inter_click_interval"
     }
     
-//    public init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        number = try? values.decode(String.self, forKey: .number)
-//        passenger = try? values.decode(Passenger.self, forKey: .passenger)
-//    }
-//    
-//    public func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(number, forKey: .number)
-//        try container.encode(passenger, forKey: .passenger)
-//    }
-    
     public init() {
         interInterval = 10
         adsEnabled = true
