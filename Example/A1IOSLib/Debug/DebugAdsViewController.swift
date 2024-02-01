@@ -227,8 +227,6 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
         // show banner on any of the view you want to
         let banner = Ads.shared.makeBannerAd(
             in: self,
-            position: .bottom(isUsingSafeArea: true),
-            animation: .fade(duration: 1.5),
             onOpen: { bannerView in
                 print(" banner ad did open")
             },

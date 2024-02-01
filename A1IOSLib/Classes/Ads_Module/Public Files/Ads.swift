@@ -196,8 +196,6 @@ extension Ads: AdsType {
     /// - parameter onDidDismissScreen: An optional callback when the banner did dismiss a presented screen.
     /// - returns AdsBannerType to show, hide or remove the prepared banner ad.
     public func makeBannerAd(in viewController: UIViewController,
-                             position: AdsBannerAdPosition,
-                             animation: AdsBannerAdAnimation,
                              onOpen: ((GADBannerView?) -> Void)?,
                              onClose: (() -> Void)?,
                              onError: ((Error) -> Void)?,
@@ -227,8 +225,6 @@ extension Ads: AdsType {
         let gadBannerView = bannerAd.prepare(
             withAdUnitId: validAdUnitId,
             in: viewController,
-            position: position,
-            animation: animation,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError,

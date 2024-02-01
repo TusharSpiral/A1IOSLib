@@ -7,13 +7,6 @@
 import GoogleMobileAds
 
 final class AdsBanner: NSObject {
-
-    // MARK: - Types
-
-    private enum Configuration {
-        static let visibleConstant: CGFloat = 0
-        static let hiddenConstant: CGFloat = 400
-    }
     
     // MARK: - Properties
 
@@ -28,10 +21,6 @@ final class AdsBanner: NSObject {
     private var onDidDismissScreen: (() -> Void)?
 
     private var bannerView: GADBannerView?
-    private var position: AdsBannerAdPosition = .bottom(isUsingSafeArea: true)
-    private var animation: AdsBannerAdAnimation = .none
-    private var bannerViewConstraint: NSLayoutConstraint?
-    private var animator: UIViewPropertyAnimator?
     
     // MARK: - Initialization
     
@@ -46,16 +35,12 @@ final class AdsBanner: NSObject {
     
     func prepare(withAdUnitId adUnitId: String,
                  in viewController: UIViewController,
-                 position: AdsBannerAdPosition,
-                 animation: AdsBannerAdAnimation,
                  onOpen: ((GADBannerView?) -> Void)?,
                  onClose: (() -> Void)?,
                  onError: ((Error) -> Void)?,
                  onWillPresentScreen: (() -> Void)?,
                  onWillDismissScreen: (() -> Void)?,
                  onDidDismissScreen: (() -> Void)?) -> GADBannerView {
-        self.position = position
-        self.animation = animation
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
@@ -99,7 +84,6 @@ extension AdsBanner: AdsBannerType {
         bannerView?.delegate = nil
         bannerView?.removeFromSuperview()
         bannerView = nil
-        bannerViewConstraint = nil
         onClose?()
     }
 }

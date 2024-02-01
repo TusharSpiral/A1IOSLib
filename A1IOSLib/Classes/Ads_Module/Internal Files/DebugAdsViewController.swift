@@ -225,8 +225,6 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     func showBanner() {
         let banner = Ads.shared.makeBannerAd(
             in: self,
-            position: .bottom(isUsingSafeArea: true),
-            animation: .fade(duration: 1.5),
             onOpen: { bannerView in
                 print(" banner ad did open")
             },

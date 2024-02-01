@@ -22,8 +22,6 @@ class MasterTabbarController: UITabBarController {
     func makeBanner() {
         let banner = Ads.shared.makeBannerAd(
             in: self,
-            position: .bottom(isUsingSafeArea: false),
-            animation: .fade(duration: 1.5),
             onOpen: { bannerView in
                 print(" banner ad did open")
                 if let banner = bannerView {
