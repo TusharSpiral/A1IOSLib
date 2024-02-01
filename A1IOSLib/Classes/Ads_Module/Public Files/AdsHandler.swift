@@ -16,32 +16,15 @@ public class AdsHandler {
     private var isPro = false
     private var adConfig = AdConfig()
     public var interTriedCount = 0
-    private var interMaxCount = 2
     public var interLoadTime: Date?
-    private var interTimeoutInterval: TimeInterval = 10
     public var appOpenLoadTime: Date?
-    private var appOpenTimeoutInterval: TimeInterval = 10
-    private var appOpenToInterInterval: TimeInterval = 10
-    private var isAdsEnabled = true
-    private var isBannerEnabled = true
-    private var isAppOpenEnabled = true
-    private var isInterEnabled = true
     
     public func configureAds(config: AdConfig = AdConfig(), pro: Bool) {
         if pro || !config.adsEnabled {
+            adConfig = config
             isPro = pro
-            isAdsEnabled = config.adsEnabled
             Ads.shared.setDisabled(true)
         } else if config.appOpenID != "", config.interID != "", config.bannerID != "" {
-            interTimeoutInterval = TimeInterval(config.interInterval)
-            appOpenTimeoutInterval = TimeInterval(config.appOpenInterval)
-            appOpenToInterInterval = TimeInterval(config.appOpenInterInterval)
-            isAdsEnabled = config.adsEnabled
-            isBannerEnabled = config.bannerEnabled
-            isInterEnabled = config.interEnabled
-            isAppOpenEnabled = config.appOpenEnabled
-            interMaxCount = config.interClickInterval
-            
             if config.adsEnabled != adConfig.adsEnabled || config.appOpenID != adConfig.appOpenID || config.interID != adConfig.interID || config.bannerID != adConfig.bannerID || pro != isPro {
                 isPro = pro
                 adConfig = config
@@ -52,6 +35,7 @@ public class AdsHandler {
             }
             Ads.shared.setDisabled(false)
         } else {
+            adConfig = config
             isPro = pro
             configureA1Ads()
             Ads.shared.setDisabled(false)
@@ -91,23 +75,23 @@ public class AdsHandler {
     }
 
     public func canShowBannerAd() -> Bool {
-        return isReachable && !isPro && isAdsEnabled && isBannerEnabled
+        return isReachable && !isPro && adConfig.adsEnabled && adConfig.bannerEnabled
     }
     
     public func canShowInterAd() -> Bool {
         interTriedCount += 1
-        guard isReachable && !isPro && isAdsEnabled && isInterEnabled else { return false }
-        print("Inter interval is \(interTimeoutInterval) count is \(interTriedCount)")
+        guard isReachable && !isPro && adConfig.adsEnabled && adConfig.interEnabled else { return false }
+        print("Inter interval is \(adConfig.interInterval) count is \(interTriedCount)")
         // Check if ad was loaded more than n hours ago.
         if let openLoadTime = appOpenLoadTime {
             print("Inter - App open diff \(Date().timeIntervalSince(openLoadTime))")
-            if Date().timeIntervalSince(openLoadTime) < appOpenToInterInterval {
+            if Date().timeIntervalSince(openLoadTime) < TimeInterval(adConfig.appOpenInterInterval) {
                 return false
             }
         }
         if let loadTime = interLoadTime {
             print("Inter diff \(Date().timeIntervalSince(loadTime))")
-            if Date().timeIntervalSince(loadTime) < interTimeoutInterval || interTriedCount < interMaxCount + 1 {
+            if Date().timeIntervalSince(loadTime) < TimeInterval(adConfig.interInterval) || interTriedCount < adConfig.interClickInterval + 1 {
                 return false
             } else {
                 interTriedCount = 0
@@ -117,22 +101,22 @@ public class AdsHandler {
     }
     
     public func canShowAds() -> Bool {
-        return (!isPro && isAdsEnabled)
+        return (!isPro && adConfig.adsEnabled)
     }
     
     public func canShowAppOpenAd() -> Bool {
-        guard isReachable && !isPro && isAdsEnabled && isAppOpenEnabled else { return false }
-        print("App open interval is \(appOpenTimeoutInterval)")
+        guard isReachable && !isPro && adConfig.adsEnabled && adConfig.appOpenEnabled else { return false }
+        print("App open interval is \(TimeInterval(adConfig.appOpenInterval))")
         // Check if ad was loaded more than n hours ago.
         if let interTime = interLoadTime {
             print("inter - App open diff \(Date().timeIntervalSince(interTime))")
-            if Date().timeIntervalSince(interTime) < appOpenToInterInterval {
+            if Date().timeIntervalSince(interTime) < TimeInterval(adConfig.appOpenInterInterval) {
                 return false
             }
         }
         if let loadTime = appOpenLoadTime {
             print("App open diff \(Date().timeIntervalSince(loadTime))")
-            return Date().timeIntervalSince(loadTime) > appOpenTimeoutInterval
+            return Date().timeIntervalSince(loadTime) > TimeInterval(adConfig.appOpenInterval)
         }
         return true
     }
