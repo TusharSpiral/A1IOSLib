@@ -163,9 +163,7 @@ final class DemoSelectionViewController: UITableViewController {
             // show banner on any of the view you want to
             let banner = Ads.shared.makeBannerAd(
                 in: self,
-                position: .bottom(isUsingSafeArea: true),
-                animation: .fade(duration: 1.5),
-                onOpen: { bannerView in
+                onOpen: {
                     print(" banner ad did open")
                 },
                 onClose: {
@@ -268,9 +266,7 @@ private extension DemoSelectionViewController {
     func makeBanner() {
         let banner = a1Ads.makeBannerAd(
             in: self,
-            position: .bottom(isUsingSafeArea: true),
-            animation: .fade(duration: 1.5),
-            onOpen: { bannerView in
+            onOpen: {
                 print(" banner ad did open")
             },
             onClose: {

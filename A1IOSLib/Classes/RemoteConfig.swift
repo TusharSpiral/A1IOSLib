@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - AdConfig
-public struct AdConfig: Codable {
+public struct AdsConfiguration: Codable {
     public let interInterval: Int
     public let adsEnabled, interEnabled: Bool
     public let interID: String
@@ -18,6 +18,9 @@ public struct AdConfig: Codable {
     public let bannerID: String
     public let appOpenInterval, appOpenInterInterval: Int
     public let interClickInterval: Int
+    public var rewardedID: String = ""
+    public var rewardedInterstitialID: String = ""
+    public var nativeID: String = ""
 
     enum CodingKeys: String, CodingKey {
         case interInterval = "inter_interval"
@@ -37,14 +40,17 @@ public struct AdConfig: Codable {
         interInterval = 10
         adsEnabled = true
         interEnabled = true
-        interID = ""
+        interID = "ca-app-pub-3940256099942544/4411468910"
         appOpenEnabled = true
-        appOpenID = ""
+        appOpenID = "ca-app-pub-3940256099942544/9257395921"
         bannerEnabled = true
-        bannerID = ""
+        bannerID = "ca-app-pub-3940256099942544/2934735716"
         appOpenInterval = 10
         appOpenInterInterval = 10
         interClickInterval = 2
+        rewardedID = "ca-app-pub-3940256099942544/1712485313"
+        rewardedInterstitialID = "ca-app-pub-3940256099942544/6978759866"
+        nativeID = "ca-app-pub-3940256099942544/3986624511"
     }
     
     public init(interInterval: Int, adsEnabled: Bool, interEnabled: Bool, interID: String, appOpenEnabled: Bool , appOpenID: String, bannerEnabled: Bool, bannerID: String, appOpenInterval: Int, appOpenInterInterval: Int, interClickInterval: Int) {

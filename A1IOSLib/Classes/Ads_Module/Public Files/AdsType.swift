@@ -38,13 +38,11 @@ public protocol AdsType: AnyObject {
     var isRewardedInterstitialAdReady: Bool { get }
     var isDisabled: Bool { get }
     
-    func configure(from customIds: AdsConfiguration?,
+    func configure(from adConfig: AdsConfiguration,
                    requestBuilder: AdsRequestBuilderType)
     
     func makeBannerAd(in viewController: UIViewController,
-                      position: AdsBannerAdPosition,
-                      animation: AdsBannerAdAnimation,
-                      onOpen: ((GADBannerView?) -> Void)?,
+                      onOpen: (() -> Void)?,
                       onClose: (() -> Void)?,
                       onError: ((Error) -> Void)?,
                       onWillPresentScreen: (() -> Void)?,

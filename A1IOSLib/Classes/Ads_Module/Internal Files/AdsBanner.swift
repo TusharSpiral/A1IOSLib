@@ -7,20 +7,13 @@
 import GoogleMobileAds
 
 final class AdsBanner: NSObject {
-
-    // MARK: - Types
-
-    private enum Configuration {
-        static let visibleConstant: CGFloat = 0
-        static let hiddenConstant: CGFloat = 400
-    }
     
     // MARK: - Properties
 
     private let isDisabled: () -> Bool
     private let request: () -> GADRequest
 
-    private var onOpen: ((GADBannerView?) -> Void)?
+    private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
     private var onWillPresentScreen: (() -> Void)?
@@ -28,10 +21,6 @@ final class AdsBanner: NSObject {
     private var onDidDismissScreen: (() -> Void)?
 
     private var bannerView: GADBannerView?
-    private var position: AdsBannerAdPosition = .bottom(isUsingSafeArea: true)
-    private var animation: AdsBannerAdAnimation = .none
-    private var bannerViewConstraint: NSLayoutConstraint?
-    private var animator: UIViewPropertyAnimator?
     
     // MARK: - Initialization
     
@@ -46,16 +35,12 @@ final class AdsBanner: NSObject {
     
     func prepare(withAdUnitId adUnitId: String,
                  in viewController: UIViewController,
-                 position: AdsBannerAdPosition,
-                 animation: AdsBannerAdAnimation,
-                 onOpen: ((GADBannerView?) -> Void)?,
+                 onOpen: (() -> Void)?,
                  onClose: (() -> Void)?,
                  onError: ((Error) -> Void)?,
                  onWillPresentScreen: (() -> Void)?,
                  onWillDismissScreen: (() -> Void)?,
                  onDidDismissScreen: (() -> Void)?) -> GADBannerView {
-        self.position = position
-        self.animation = animation
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
@@ -99,7 +84,6 @@ extension AdsBanner: AdsBannerType {
         bannerView?.delegate = nil
         bannerView?.removeFromSuperview()
         bannerView = nil
-        bannerViewConstraint = nil
         onClose?()
     }
 }
@@ -113,7 +97,7 @@ extension AdsBanner: GADBannerViewDelegate {
     }
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-        onOpen?(bannerView)
+        onOpen?()
         print("AdsBanner did receive ad from: \(bannerView.responseInfo?.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "not found")")
     }
 
