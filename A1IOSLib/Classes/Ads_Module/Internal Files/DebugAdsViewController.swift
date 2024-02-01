@@ -225,7 +225,7 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     func showBanner() {
         let banner = Ads.shared.makeBannerAd(
             in: self,
-            onOpen: { bannerView in
+            onOpen: {
                 print(" banner ad did open")
             },
             onClose: {

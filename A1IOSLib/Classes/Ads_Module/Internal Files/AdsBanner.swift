@@ -13,7 +13,7 @@ final class AdsBanner: NSObject {
     private let isDisabled: () -> Bool
     private let request: () -> GADRequest
 
-    private var onOpen: ((GADBannerView?) -> Void)?
+    private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
     private var onWillPresentScreen: (() -> Void)?
@@ -35,7 +35,7 @@ final class AdsBanner: NSObject {
     
     func prepare(withAdUnitId adUnitId: String,
                  in viewController: UIViewController,
-                 onOpen: ((GADBannerView?) -> Void)?,
+                 onOpen: (() -> Void)?,
                  onClose: (() -> Void)?,
                  onError: ((Error) -> Void)?,
                  onWillPresentScreen: (() -> Void)?,
@@ -97,7 +97,7 @@ extension AdsBanner: GADBannerViewDelegate {
     }
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-        onOpen?(bannerView)
+        onOpen?()
         print("AdsBanner did receive ad from: \(bannerView.responseInfo?.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "not found")")
     }
 

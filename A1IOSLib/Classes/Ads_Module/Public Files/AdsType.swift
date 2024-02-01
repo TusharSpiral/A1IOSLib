@@ -42,7 +42,7 @@ public protocol AdsType: AnyObject {
                    requestBuilder: AdsRequestBuilderType)
     
     func makeBannerAd(in viewController: UIViewController,
-                      onOpen: ((GADBannerView?) -> Void)?,
+                      onOpen: (() -> Void)?,
                       onClose: (() -> Void)?,
                       onError: ((Error) -> Void)?,
                       onWillPresentScreen: (() -> Void)?,

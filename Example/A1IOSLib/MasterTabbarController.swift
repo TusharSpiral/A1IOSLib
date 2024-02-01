@@ -22,12 +22,8 @@ class MasterTabbarController: UITabBarController {
     func makeBanner() {
         let banner = Ads.shared.makeBannerAd(
             in: self,
-            onOpen: { bannerView in
+            onOpen: {
                 print(" banner ad did open")
-                if let banner = bannerView {
-                    banner.removeFromSuperview()
-                    self.adBannerOnTabBar(banner: banner)
-                }
             },
             onClose: {
                 print(" banner ad did close")

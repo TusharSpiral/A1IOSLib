@@ -75,7 +75,7 @@ final class PlainViewController: UIViewController {
         // show banner on any of the view you want to
         let banner = a1Ads.makeBannerAd(
             in: self,
-            onOpen: { bannerView in
+            onOpen: {
                 print(" banner ad did open")
             },
             onClose: {
