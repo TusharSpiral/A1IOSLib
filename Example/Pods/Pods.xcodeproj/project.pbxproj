@@ -499,7 +499,6 @@
 		DE51A1B3DD978C261CBB00B6BF566E5C /* FBLPromise+Retry.h in Headers */ = {isa = PBXBuildFile; fileRef = E791615959DDE488462D25F7DBAF328E /* FBLPromise+Retry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DE9102666B436384E48F19ECCF1E81F0 /* FIRComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 8AD145FC8EE951ACCD36FE86092981D0 /* FIRComponent.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		DF5FF4D7E91EE87A649196315DB6AC4E /* FIRInstallationsAuthTokenResult.h in Headers */ = {isa = PBXBuildFile; fileRef = CBA3190C23D6ED09E1331D8F946F6603 /* FIRInstallationsAuthTokenResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DF7C43C0B3564394C15727088CFA40BA /* AdsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A630D2030513406B104539DB8D2B859 /* AdsConfiguration.swift */; };
 		E08A8953BD3F45B0C8CBA0458AC46EA4 /* GoogleUtilities-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D48B62AD32626D89578397C25A9D9D93 /* GoogleUtilities-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E0FDA66636BFCA5CC5F25D4C28B72B2C /* RCNDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = E58AFDFD200FFA5767EB45C1076B4FC4 /* RCNDevice.m */; };
 		E2D2BD24A7F0F2C39EBCF11EEE515B47 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4966B99EB3E46F16923EE0EC147D312D /* Value.swift */; };
@@ -1212,7 +1211,6 @@
 		5908EDA610E5D5F2037EEEBB6A9D983A /* CachedResponseHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CachedResponseHandler.swift; path = Source/CachedResponseHandler.swift; sourceTree = "<group>"; };
 		59440C394D144FF71ED504AF8CD27533 /* YandexMobileMetrica.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = YandexMobileMetrica.xcframework; path = static/YandexMobileMetrica.xcframework; sourceTree = "<group>"; };
 		5A2C3889980F7A13475882BBC8474184 /* pb_encode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pb_encode.h; sourceTree = "<group>"; };
-		5A630D2030513406B104539DB8D2B859 /* AdsConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdsConfiguration.swift; sourceTree = "<group>"; };
 		5A815EC207E0856D3A25A8E931096B55 /* FIRComponentContainer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRComponentContainer.h; path = FirebaseCore/Extension/FIRComponentContainer.h; sourceTree = "<group>"; };
 		5B013EF973A823DAFA0E7D555394A645 /* FirebaseABTesting-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FirebaseABTesting-dummy.m"; sourceTree = "<group>"; };
 		5B7A384331991E5393C5A6C2DAA9310B /* Alamofire-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Alamofire-Info.plist"; sourceTree = "<group>"; };
@@ -1902,7 +1900,6 @@
 			children = (
 				F8356EB7E92D974BADB36E4931D4671E /* AdsAppOpen.swift */,
 				A0E6FD321BB562A61A33D24BE4587417 /* AdsBanner.swift */,
-				5A630D2030513406B104539DB8D2B859 /* AdsConfiguration.swift */,
 				259398281DEE40425579B48798009E55 /* AdsInterstitial.swift */,
 				BF988B63D62BF87FFC6F19D828091E94 /* AdsNative.swift */,
 				01161A954C7B9362962C3CC163ACA018 /* AdsRewarded.swift */,
@@ -4398,7 +4395,6 @@
 				8C522790CC105BE2263753E1696891C1 /* AdsAppOpen.swift in Sources */,
 				29C405EE7E43B672CFEA0D24AC6AA848 /* AdsBanner.swift in Sources */,
 				4F781E3F4B15707DD62F32631C95EC80 /* AdsBannerType.swift in Sources */,
-				DF7C43C0B3564394C15727088CFA40BA /* AdsConfiguration.swift in Sources */,
 				F9DB72418344DED98EEB8BBBF566137C /* AdsError.swift in Sources */,
 				A7DB2B8ABBFCB48EC08B062EBD0D97F0 /* AdsHandler.swift in Sources */,
 				3A4EEEA47D3A488FCA22D9A03BF610E5 /* AdsInterstitial.swift in Sources */,
