@@ -18,15 +18,6 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		6281B3152B427D98008773A0 /* MasterTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6281B3142B427D98008773A0 /* MasterTabbarController.swift */; };
-		628EC3892B3D447600D7C46B /* NativeAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628EC3872B3D447600D7C46B /* NativeAdViewController.swift */; };
-		628EC38A2B3D447600D7C46B /* AdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 628EC3882B3D447600D7C46B /* AdView.xib */; };
-		628EC3932B3D448000D7C46B /* DebugTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 628EC38C2B3D448000D7C46B /* DebugTextCell.xib */; };
-		628EC3942B3D448000D7C46B /* DebugTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 628EC38D2B3D448000D7C46B /* DebugTableViewCell.xib */; };
-		628EC3952B3D448000D7C46B /* DebugTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628EC38E2B3D448000D7C46B /* DebugTextCell.swift */; };
-		628EC3962B3D448000D7C46B /* DebugTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628EC38F2B3D448000D7C46B /* DebugTableViewCell.swift */; };
-		628EC3972B3D448000D7C46B /* DebugAdsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628EC3902B3D448000D7C46B /* DebugAdsViewController.swift */; };
-		628EC3982B3D448000D7C46B /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628EC3912B3D448000D7C46B /* DebugViewController.swift */; };
-		628EC3992B3D448000D7C46B /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 628EC3922B3D448000D7C46B /* Debug.storyboard */; };
 		927F1EEFAA9D77291FA06BCD /* Pods_A1IOSLib_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2FF3232CD8E87A0FC2553E /* Pods_A1IOSLib_Tests.framework */; };
 		93C5B0274CE9E683DFD3FFAB /* Pods_A1IOSLib_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C9EC288BDC258EED04CDEB /* Pods_A1IOSLib_Example.framework */; };
 		BD7394A12AAB318F007FC77F /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7394A02AAB318F007FC77F /* EventHandler.swift */; };
@@ -61,15 +52,6 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		6281B3142B427D98008773A0 /* MasterTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTabbarController.swift; sourceTree = "<group>"; };
-		628EC3872B3D447600D7C46B /* NativeAdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeAdViewController.swift; sourceTree = "<group>"; };
-		628EC3882B3D447600D7C46B /* AdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdView.xib; sourceTree = "<group>"; };
-		628EC38C2B3D448000D7C46B /* DebugTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugTextCell.xib; sourceTree = "<group>"; };
-		628EC38D2B3D448000D7C46B /* DebugTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugTableViewCell.xib; sourceTree = "<group>"; };
-		628EC38E2B3D448000D7C46B /* DebugTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTextCell.swift; sourceTree = "<group>"; };
-		628EC38F2B3D448000D7C46B /* DebugTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTableViewCell.swift; sourceTree = "<group>"; };
-		628EC3902B3D448000D7C46B /* DebugAdsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugAdsViewController.swift; sourceTree = "<group>"; };
-		628EC3912B3D448000D7C46B /* DebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
-		628EC3922B3D448000D7C46B /* Debug.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Debug.storyboard; sourceTree = "<group>"; };
 		63C9EC288BDC258EED04CDEB /* Pods_A1IOSLib_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_A1IOSLib_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A9C9E797635CA673894EAE2 /* A1IOSLib.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = A1IOSLib.podspec; path = ../A1IOSLib.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9775822E1DA875245C45A617 /* Pods-A1IOSLib_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A1IOSLib_Example.release.xcconfig"; path = "Target Support Files/Pods-A1IOSLib_Example/Pods-A1IOSLib_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -130,8 +112,6 @@
 		188717C62B160F6F00459DF0 /* Details */ = {
 			isa = PBXGroup;
 			children = (
-				628EC38B2B3D448000D7C46B /* Debug */,
-				188717C82B160F9500459DF0 /* Native */,
 				188717C72B160F8600459DF0 /* Plain */,
 			);
 			name = Details;
@@ -143,15 +123,6 @@
 				188717C22B1603E100459DF0 /* PlainViewController.swift */,
 			);
 			name = Plain;
-			sourceTree = "<group>";
-		};
-		188717C82B160F9500459DF0 /* Native */ = {
-			isa = PBXGroup;
-			children = (
-				628EC3882B3D447600D7C46B /* AdView.xib */,
-				628EC3872B3D447600D7C46B /* NativeAdViewController.swift */,
-			);
-			name = Native;
 			sourceTree = "<group>";
 		};
 		607FACC71AFB9204008FA782 = {
@@ -227,20 +198,6 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		628EC38B2B3D448000D7C46B /* Debug */ = {
-			isa = PBXGroup;
-			children = (
-				628EC38C2B3D448000D7C46B /* DebugTextCell.xib */,
-				628EC38D2B3D448000D7C46B /* DebugTableViewCell.xib */,
-				628EC38E2B3D448000D7C46B /* DebugTextCell.swift */,
-				628EC38F2B3D448000D7C46B /* DebugTableViewCell.swift */,
-				628EC3902B3D448000D7C46B /* DebugAdsViewController.swift */,
-				628EC3912B3D448000D7C46B /* DebugViewController.swift */,
-				628EC3922B3D448000D7C46B /* Debug.storyboard */,
-			);
-			path = Debug;
-			sourceTree = "<group>";
-		};
 		CA9220DB0D7963B972F17419 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,6 +221,7 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				AD9C11F209863949276DA788 /* [CP] Embed Pods Frameworks */,
+				1C2C40A938DA87637B6D19E1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -341,14 +299,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				628EC38A2B3D447600D7C46B /* AdView.xib in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				188717B72B15EC1F00459DF0 /* AdsUnitId.plist in Resources */,
-				628EC3932B3D448000D7C46B /* DebugTextCell.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
-				628EC3992B3D448000D7C46B /* Debug.storyboard in Resources */,
-				628EC3942B3D448000D7C46B /* DebugTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +316,30 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1C2C40A938DA87637B6D19E1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-A1IOSLib_Example/Pods-A1IOSLib_Example-resources.sh",
+				"${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/Debug.storyboardc",
+				"${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/AdView.nib",
+				"${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTableViewCell.nib",
+				"${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTextCell.nib",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Debug.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AdView.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DebugTableViewCell.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DebugTextCell.nib",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-A1IOSLib_Example/Pods-A1IOSLib_Example-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		82F51E0EDE26E9D42126000C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -465,16 +443,11 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				BD7394A12AAB318F007FC77F /* EventHandler.swift in Sources */,
-				628EC3982B3D448000D7C46B /* DebugViewController.swift in Sources */,
-				628EC3952B3D448000D7C46B /* DebugTextCell.swift in Sources */,
 				188717B52B15E76D00459DF0 /* BasicCellTableViewCell.swift in Sources */,
 				188717B22B15E67E00459DF0 /* DemoSelectionViewController.swift in Sources */,
-				628EC3972B3D448000D7C46B /* DebugAdsViewController.swift in Sources */,
 				6281B3152B427D98008773A0 /* MasterTabbarController.swift in Sources */,
-				628EC3892B3D447600D7C46B /* NativeAdViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				188717C32B1603E100459DF0 /* PlainViewController.swift in Sources */,
-				628EC3962B3D448000D7C46B /* DebugTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

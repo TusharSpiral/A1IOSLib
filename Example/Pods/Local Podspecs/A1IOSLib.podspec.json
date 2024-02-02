@@ -20,7 +20,11 @@
   },
   "swift_versions": "5.0",
   "static_framework": true,
-  "source_files": "A1IOSLib/**/*.{swift, xib}",
+  "resources": [
+    "A1IOSLib/**/*.{storyboard}",
+    "A1IOSLib/**/*.{xib}"
+  ],
+  "source_files": "A1IOSLib/**/*.{swift}",
   "dependencies": {
     "Alamofire": [
 

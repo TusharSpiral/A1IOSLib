@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import A1IOSLib
 
 extension Bundle {
     var applicationName: String {
@@ -46,10 +45,51 @@ extension Bundle {
 public class DebugViewController: UIViewController {
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var adsFlagLabel: UILabel!
+    
+    // MARK: - Initializers
+
+//    public required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        commonInit()
+//    }
+//
+//    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+//        commonInit()
+//    }
+//
+//    // MARK: - Common Initialization
+//
+//    private func commonInit() {
+////        let bundle = Bundle(for: DebugViewController.self)
+////        print(bundle)
+////        if let bundlePath = bundle.resourcePath,
+////           let bundleContents = try? FileManager.default.contentsOfDirectory(atPath: bundlePath) {
+////            print(bundlePath)
+////            print("Bundle Contents: \(bundleContents)")
+////        }
+//        if let bundlePath = Bundle(for: DebugViewController.self).resourcePath,
+//           let bundleContents = try? FileManager.default.contentsOfDirectory(atPath: bundlePath) {
+//            print(bundleContents)
+//            let storyboards = bundlePath + "/Base.lproj"
+//            if let bundleContents = try? FileManager.default.contentsOfDirectory(atPath: storyboards) {
+//                print(bundleContents)
+//            }
+//        }
+//        let storyboard = UIStoryboard(name: "Debug", bundle: nil)
+//        if let viewController = storyboard.instantiateInitialViewController() as? DebugViewController {
+//            // Optionally, you can configure the view controller before presenting or pushing
+//            // For example: viewController.property = value
+//            // Then present or push the view controller
+////            present(viewController, animated: true, completion: nil)
+//        }
+//    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         let name = Bundle.main.applicationName
         let version = Bundle.main.fullVersion
+        guard versionLabel != nil, adsFlagLabel != nil else { return }
 #if DEBUG
     print("I'm running in DEBUG mode")
         versionLabel.text = "Version Name = \(name)-\(version)-internal"

@@ -234,7 +234,7 @@ final class DemoSelectionViewController: UITableViewController {
 //                }
                 break
             case .nativeAd:
-                viewController = NativeAdViewController(a1Ads: a1Ads)
+                viewController = NativeAdViewController()
             case .updateConsent:
                 break
                 

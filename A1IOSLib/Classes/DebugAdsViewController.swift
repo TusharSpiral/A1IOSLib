@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import A1IOSLib
+
 enum DebugAdsType {
     case appOpen
     case inter
