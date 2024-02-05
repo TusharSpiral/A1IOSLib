@@ -53,6 +53,23 @@ public enum AdsKey: String {
     
 }
 
+public enum AdaptyKey: String {
+    
+    // MARK: - First Time Application Event
+    case event_app_first_open
+    
+    // MARK: - Adapty
+    case event_subs_paywall_load_started
+    case event_subs_paywall_load_failed
+    case event_subs_paywall_show_requested
+    case event_subs_paywall_screen_shown
+    case event_subs_paywall_payment_failed
+    case event_subs_paywall_cross_clicked
+    case event_subs_paywall_monthly_plan_selected
+    case event_subs_paywall_yearly_plan_selected
+    case event_subs_purchase_acknowledged
+}
+
 public enum AppUpdateKey: String {
     // MARK: - App Update
     case event_force_update_home_pop_up_loaded
