@@ -17,15 +17,15 @@ public class AppOpenSplashViewController: UIViewController {
     public var appOpenAdDidComplete:()->() = {}
     /// Number of seconds remaining to show the app open ad.
     /// This simulates the time needed to load the app.
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var splashImageView: UIImageView!
-    var secondsRemaining: Int = 3
+    @IBOutlet private weak var label: UILabel!
+    @IBOutlet private weak var splashImageView: UIImageView!
+    private var secondsRemaining: Int = 3
     /// The countdown timer.
-    var countdownTimer: Timer?
+    private var countdownTimer: Timer?
     /// Text that indicates the number of seconds left to show an app open ad.
     ///
-    var type: AppOpenSplashType = .normal
-    var splashImageName: String = "welcome"
+    private var type: AppOpenSplashType = .normal
+    private var splashImageName: String = "welcome"
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +35,7 @@ public class AppOpenSplashViewController: UIViewController {
         startTimer()
     }
     
-    @objc func decrementCounter() {
+    @objc private func decrementCounter() {
         secondsRemaining -= 1
         if secondsRemaining > 0 {
             label.text = "App is done loading in: \(secondsRemaining)"
@@ -57,7 +57,7 @@ public class AppOpenSplashViewController: UIViewController {
         }
     }
     
-    func startTimer() {
+    private func startTimer() {
         label.text = "App is done loading in: \(secondsRemaining)"
         countdownTimer = Timer.scheduledTimer(
             timeInterval: 1.0,
@@ -67,7 +67,7 @@ public class AppOpenSplashViewController: UIViewController {
             repeats: true)
     }
     
-    func startMainScreen() {
+    private func startMainScreen() {
         if type == .foreground {
             self.dismiss(animated: false) {
                 print("Dismissed splash")
@@ -77,7 +77,7 @@ public class AppOpenSplashViewController: UIViewController {
         }
     }
     
-    struct Constants {
+    private struct Constants {
         static let reuseIdentifier = String(describing: AppOpenSplashViewController.self)
         static let storyboardName = "Splash"
     }
