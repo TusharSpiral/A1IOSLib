@@ -80,4 +80,22 @@ public struct VersionConfig: Codable {
         case optionalMessage = "optional_message"
         case minVersion, stableVersion
     }
+    
+    public init() {
+        self.forceTitle = ""
+        self.forceMessage = ""
+        self.optionalTitle = ""
+        self.optionalMessage = ""
+        self.minVersion = ""
+        self.stableVersion = ""
+    }
+    
+    public init(forceTitle: String, forceMessage: String, optionalTitle: String, optionalMessage: String, minVersion: String, stableVersion: String) {
+        self.forceTitle = forceTitle
+        self.forceMessage = forceMessage
+        self.optionalTitle = optionalTitle
+        self.optionalMessage = optionalMessage
+        self.minVersion = minVersion
+        self.stableVersion = stableVersion
+    }
 }
