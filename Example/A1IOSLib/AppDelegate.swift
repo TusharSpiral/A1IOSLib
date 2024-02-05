@@ -44,21 +44,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return
             }
             if AdsHandler.shared.canShowAppOpenAd() && !AdsHandler.shared.appOpenAdShowing() {
-                if AdsHandler.shared.appOpenAdAvailable() {
-                    a1Ads.showAppOpenAd(from: rootViewController) {
-                    } onClose: {
-                    } onError: { error in
+                if let vc = visibleViewController(rootViewController: window?.rootViewController) {
+                    if AdsHandler.shared.appOpenAdAvailable() {
+                        Ads.shared.showAppOpenAd(from: vc) {
+                        } onClose: {
+                        } onError: { error in
+                        }
+                    } else {
+                        let splashViewController = AppOpenSplashViewController.buildViewController(imageName: "welcome")
+                        vc.presentVC(splashViewController, animated: false)
                     }
-                } else {
-                    let splashViewController = AppOpenSplashViewController.buildViewController(imageName: "welcome")
-                    splashViewController.appOpenAdDidComplete = {
-                        let navigationController = UINavigationController()
-                        let demoSelectionViewController = DemoSelectionViewController(a1Ads: self.a1Ads)
-                        navigationController.setViewControllers([demoSelectionViewController], animated: true)
-                        AdsHandler.shared.configureAds(pro: false)
-                        self.window?.rootViewController = navigationController
-                    }
-                    window?.rootViewController = splashViewController
                 }
             }
         }
@@ -82,4 +77,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return rootViewController
     }
 
+}
+
+extension UIViewController {
+    func presentVC(_ vc: UIViewController, animated: Bool, style:UIModalPresentationStyle = .fullScreen, completion: (() -> Void)? = nil) {
+        vc.modalPresentationStyle = style
+        self.present(vc, animated: animated, completion: completion)
+    }
 }
