@@ -11,7 +11,7 @@
         <!--App Open Splash View Controller-->
         <scene sceneID="JHH-ud-7ic">
             <objects>
-                <viewController storyboardIdentifier="AppOpenSplashViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RPW-bV-Rfz" customClass="AppOpenSplashViewController" customModule="A1Office" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AppOpenSplashViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RPW-bV-Rfz" customClass="AppOpenSplashViewController" customModule="A1IOSLib" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rrf-1b-gqe">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -19,30 +19,17 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N3d-FN-SWb">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             </imageView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4d6-bW-W0v">
-                                <rect key="frame" x="0.0" y="590" width="393" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="tjN-8s-nxT"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3Qn-CG-aAN"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="N3d-FN-SWb" secondAttribute="bottom" id="Mup-o8-TVl"/>
-                            <constraint firstItem="3Qn-CG-aAN" firstAttribute="bottom" secondItem="4d6-bW-W0v" secondAttribute="bottom" constant="198" id="NFk-r9-QRr"/>
-                            <constraint firstItem="4d6-bW-W0v" firstAttribute="leading" secondItem="3Qn-CG-aAN" secondAttribute="leading" id="NnG-SL-sMZ"/>
                             <constraint firstItem="N3d-FN-SWb" firstAttribute="top" secondItem="rrf-1b-gqe" secondAttribute="top" id="RMA-hB-dTn"/>
-                            <constraint firstItem="3Qn-CG-aAN" firstAttribute="trailing" secondItem="4d6-bW-W0v" secondAttribute="trailing" id="eSe-0i-nl6"/>
                             <constraint firstItem="N3d-FN-SWb" firstAttribute="leading" secondItem="3Qn-CG-aAN" secondAttribute="leading" id="wGe-ge-Ku4"/>
                             <constraint firstItem="3Qn-CG-aAN" firstAttribute="trailing" secondItem="N3d-FN-SWb" secondAttribute="trailing" id="y1G-EO-eai"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="label" destination="4d6-bW-W0v" id="XYE-ri-GXI"/>
                         <outlet property="splashImageView" destination="N3d-FN-SWb" id="Kdd-jn-7cL"/>
                     </connections>
                 </viewController>
