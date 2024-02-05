@@ -26,11 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = UINavigationController()
         let demoSelectionViewController = DemoSelectionViewController(a1Ads: self.a1Ads)
         navigationController.setViewControllers([demoSelectionViewController], animated: true)
+        AdsHandler.shared.configureAds(pro: false)
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-        AdsHandler.shared.configureAds(pro: false)
         return true
     }
     
@@ -43,13 +43,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if rootViewController is DemoSelectionViewController {
                 return
             }
-            a1Ads.showAppOpenAd(from: rootViewController) {
-                
-            } onClose: {
-                
-            } onError: { error in
-                
+            if AdsHandler.shared.canShowAppOpenAd() && !AdsHandler.shared.appOpenAdShowing() {
+                if AdsHandler.shared.appOpenAdAvailable() {
+                    a1Ads.showAppOpenAd(from: rootViewController) {
+                    } onClose: {
+                    } onError: { error in
+                    }
+                } else {
+                    let splashViewController = AppOpenSplashViewController.buildViewController(imageName: "welcome")
+                    splashViewController.appOpenAdDidComplete = {
+                        let navigationController = UINavigationController()
+                        let demoSelectionViewController = DemoSelectionViewController(a1Ads: self.a1Ads)
+                        navigationController.setViewControllers([demoSelectionViewController], animated: true)
+                        AdsHandler.shared.configureAds(pro: false)
+                        self.window?.rootViewController = navigationController
+                    }
+                    window?.rootViewController = splashViewController
+                }
             }
         }
     }
+    
+    func visibleViewController(rootViewController:UIViewController?) -> UIViewController? {
+        if rootViewController == nil { return nil }
+        
+        if rootViewController is UINavigationController {
+            let rootNavControler:UINavigationController = rootViewController as! UINavigationController
+            return visibleViewController(rootViewController:rootNavControler.visibleViewController)
+        }
+        else if rootViewController is UITabBarController {
+            let rootTabControler:UITabBarController = rootViewController as! UITabBarController
+            return visibleViewController(rootViewController:rootTabControler.selectedViewController)
+        }
+        else if (rootViewController?.presentedViewController != nil) {
+            return visibleViewController(rootViewController:rootViewController?.presentedViewController)
+        }
+        
+        return rootViewController
+    }
+
 }

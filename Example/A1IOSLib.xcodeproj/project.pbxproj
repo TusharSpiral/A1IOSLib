@@ -324,6 +324,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-A1IOSLib_Example/Pods-A1IOSLib_Example-resources.sh",
 				"${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/Debug.storyboardc",
+				"${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/Splash.storyboardc",
 				"${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/AdView.nib",
 				"${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTableViewCell.nib",
 				"${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTextCell.nib",
@@ -331,6 +332,7 @@
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Debug.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Splash.storyboardc",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AdView.nib",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DebugTableViewCell.nib",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DebugTextCell.nib",

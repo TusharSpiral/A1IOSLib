@@ -212,32 +212,11 @@ final class DemoSelectionViewController: UITableViewController {
                 let plainViewController = PlainViewController(a1Ads: a1Ads)
                 viewController = plainViewController
             case .viewControllerInsideTabBar:
-                let storyboard = UIStoryboard(name: "Debug", bundle: nil)
-                if let vc = storyboard.instantiateViewController(withIdentifier: "DebugViewController") as? DebugViewController {
-                    navigationController?.pushViewController(vc, animated: true)
-                }
-            case .tabBarController:
-//                if let vc = a1Ads.getDebugScreen() {
-//                    navigationController?.pushViewController(vc, animated: true)
-//                }
-//                let vc = DebugViewController()
-//                navigationController?.pushViewController(vc, animated: true)
-                //let bundleName = Bundle(for: EventHandler.self)
-//                dump()
-//                let storyboard = UIStoryboard(name: "Debug", bundle: A1IOSLib.nibBundle?.bundleURL)
-//                if let vc = storyboard.instantiateViewController(withIdentifier: "DebugViewController") as? DebugViewController {
-//                    self.navigationController?.pushViewController(vc, animated: true)
-//                }
-//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                if let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabbarController") as? MasterTabbarController {
-//                    navigationController?.pushViewController(vc, animated: true)
-//                }
-                break
+                viewController = DebugViewController.buildViewController()
+            case .tabBarController: break
             case .nativeAd:
                 viewController = NativeAdViewController()
-            case .updateConsent:
-                break
-                
+            case .updateConsent: break
             case .disable:
                 a1Ads.setDisabled(true)
                 bannerAd?.remove()

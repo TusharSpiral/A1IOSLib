@@ -81,5 +81,4 @@ public protocol AdsType: AnyObject {
     
     func setDisabled(_ isDisabled: Bool)
     
-//    func getDebugScreen() -> MyViewController?
 }

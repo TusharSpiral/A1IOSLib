@@ -72,4 +72,17 @@ public class DebugViewController: UIViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
+    struct Constants {
+        static let reuseIdentifier = String(describing: DebugViewController.self)
+        static let storyboardName = "Debug"
+    }
+    
+    public static func buildViewController() -> DebugViewController {
+        if let controller = UIStoryboard(name: Constants.storyboardName,
+                                         bundle: .main).instantiateViewController(withIdentifier: Constants.reuseIdentifier) as? DebugViewController {
+            return controller
+        }
+        return DebugViewController()
+    }
 }
