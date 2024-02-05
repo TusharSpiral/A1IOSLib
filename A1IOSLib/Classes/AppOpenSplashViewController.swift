@@ -29,7 +29,17 @@ public class AppOpenSplashViewController: UIViewController {
     
     @objc private func decrementCounter() {
         secondsRemaining -= 1
-        if secondsRemaining <= 0 {
+        if AdsHandler.shared.appOpenAdAvailable() {
+            countdownTimer?.invalidate()
+            AdsHandler.shared.a1Ads.showAppOpenAd(from: self) {
+            } onClose: {
+                AdsHandler.shared.appOpenLoadTime = Date()
+                self.startMainScreen()
+            } onError: { error in
+                AdsHandler.shared.appOpenLoadTime = nil
+                self.startMainScreen()
+            }
+        } else if secondsRemaining <= 0 {
             countdownTimer?.invalidate()
             if AdsHandler.shared.appOpenAdAvailable() {
                 AdsHandler.shared.a1Ads.showAppOpenAd(from: self) {
