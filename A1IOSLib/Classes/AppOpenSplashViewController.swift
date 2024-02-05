@@ -31,18 +31,18 @@ public class AppOpenSplashViewController: UIViewController {
         secondsRemaining -= 1
         if AdsHandler.shared.appOpenAdAvailable() {
             countdownTimer?.invalidate()
-            stopTimerAndShowAppOpenAd()
+            showAppOpenAd()
         } else if secondsRemaining <= 0 {
             countdownTimer?.invalidate()
             if AdsHandler.shared.appOpenAdAvailable() {
-                stopTimerAndShowAppOpenAd()
+                showAppOpenAd()
             } else {
                 startMainScreen()
             }
         }
     }
     
-    private func stopTimerAndShowAppOpenAd() {
+    private func showAppOpenAd() {
         AdsHandler.shared.a1Ads.showAppOpenAd(from: self) {
         } onClose: {
             AdsHandler.shared.appOpenLoadTime = Date()
