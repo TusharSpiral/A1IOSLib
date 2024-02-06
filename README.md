@@ -16,40 +16,47 @@ Initiate ads using default configuration and after that fetch remote config and 
 Second launch onwards
 Initiate ads using persistant storage configuration using remote config and after that fetch remote config and save configuration in persistant storage and update the ad units, show / hide ad formats and update intervals accordingly
 
-        AdsHandler.shared.configureAds(config: getAdConfig() pro: AppUserDefaults.isPro)
+    AdsHandler.shared.configureAds(config: getAdConfig() pro: AppUserDefaults.isPro)
+    fetchConfig()
+    
+    func fetchConfig() {
         FirebaseHandler.getRemoteConfig { [weak self] (result) in
             if let settings = self {
                 switch result {
                 case .success(let result):
-                    saveConfigInUserDefaults(result: result)
-                    AdsHandler.shared.configureAds(config: getAdConfig() pro: AppUserDefaults.isPro)
+                    settings.saveConfigInUserDefaults(result: result)
+                    AdsHandler.shared.configureAds(config: settings.getAdConfig(), pro: false)
                 case .failure(let error):
                     print("getRemoteConfig Failure: \(error.localizedDescription)")
                 }
             }
         }
-        
-        func saveConfigInUserDefaults(result: FirebaseConfig) {
-            let adConfig = result.adConfig
-            UserDefaults.standard.setValue(adConfig.interInterval, forKey: "interInterval")
-            UserDefaults.standard.setValue(adConfig.appOpenInterval, forKey: "appOpenInterval")
-            UserDefaults.standard.setValue(adConfig.appOpenInterInterval, forKey: "appOpenInterInterval")
-            UserDefaults.standard.setValue(adConfig.interClickInterval, forKey: "interClickInterval")
+    }
+    
+    func saveConfigInUserDefaults(result: FirebaseConfig) {
+        let adConfig = result.adConfig
+        UserDefaults.standard.setValue(adConfig.interInterval, forKey: "interInterval")
+        UserDefaults.standard.setValue(adConfig.appOpenInterval, forKey: "appOpenInterval")
+        UserDefaults.standard.setValue(adConfig.appOpenInterInterval, forKey: "appOpenInterInterval")
+        UserDefaults.standard.setValue(adConfig.interClickInterval, forKey: "interClickInterval")
 
-            UserDefaults.standard.setValue(adConfig.adsEnabled, forKey: "adsEnabled")
-            UserDefaults.standard.setValue(adConfig.interEnabled, forKey: "interEnabled")
-            UserDefaults.standard.setValue(adConfig.appOpenEnabled, forKey: "appOpenEnabled")
-            UserDefaults.standard.setValue(adConfig.bannerEnabled, forKey: "bannerEnabled")
+        UserDefaults.standard.setValue(adConfig.adsEnabled, forKey: "adsEnabled")
+        UserDefaults.standard.setValue(adConfig.interEnabled, forKey: "interEnabled")
+        UserDefaults.standard.setValue(adConfig.appOpenEnabled, forKey: "appOpenEnabled")
+        UserDefaults.standard.setValue(adConfig.bannerEnabled, forKey: "bannerEnabled")
 
-            UserDefaults.standard.setValue(adConfig.appOpenID, forKey: "appOpenID")
-            UserDefaults.standard.setValue(adConfig.interID, forKey: "interID")
-            UserDefaults.standard.setValue(adConfig.bannerID, forKey: "bannerID")
-            UserDefaults.standard.synchronize()
-        }
+        UserDefaults.standard.setValue(adConfig.appOpenID, forKey: "appOpenID")
+        UserDefaults.standard.setValue(adConfig.interID, forKey: "interID")
+        UserDefaults.standard.setValue(adConfig.bannerID, forKey: "bannerID")
+        UserDefaults.standard.synchronize()
+    }
 
-        func getAdConfig() -> AdsConfiguration {
+    func getAdConfig() -> AdsConfiguration {
+        if let appOpenID = UserDefaults.standard.string(forKey: "appOpenID"), !appOpenID.isEmpty, let bannerID = UserDefaults.standard.string(forKey: "bannerID"), !bannerID.isEmpty, let interID = UserDefaults.standard.string(forKey: "interID"), !interID.isEmpty {
             return AdsConfiguration(interInterval: UserDefaults.standard.integer(forKey: "interInterval"), adsEnabled: UserDefaults.standard.bool(forKey: "adsEnabled"), interEnabled: UserDefaults.standard.bool(forKey: "interEnabled"), interID: UserDefaults.standard.string(forKey: "interID") ?? "", appOpenEnabled: UserDefaults.standard.bool(forKey: "appOpenEnabled") , appOpenID: UserDefaults.standard.string(forKey: "appOpenID") ?? "", bannerEnabled: UserDefaults.standard.bool(forKey: "bannerEnabled"), bannerID: UserDefaults.standard.string(forKey: "bannerID") ?? "", appOpenInterval: UserDefaults.standard.integer(forKey: "appOpenInterval"), appOpenInterInterval: UserDefaults.standard.integer(forKey: "appOpenInterInterval"), interClickInterval: UserDefaults.standard.integer(forKey: "interClickInterval"))
         }
+        return AdsConfiguration()
+    }
 
         
 2. Scene delegate sceneWillEnterForeground method
@@ -169,7 +176,6 @@ Provide app store url and version config after fetching from remote config and s
             if let settings = self {
                 switch result {
                 case .success(let result):
-                    saveVersionConfigInLocalStorage()
                     AppUpdate.shared.configureAppUpdate(url: APP_STORE_URL, config: result.versionConfig)
                 case .failure(let error):
                     print("getRemoteConfig Failure: \(error.localizedDescription)")
@@ -178,7 +184,7 @@ Provide app store url and version config after fetching from remote config and s
         }
         
 2. Scene delegate sceneWillEnterForeground method - check for force update only
-        if AppManager.shared.isFirstLaunch == false {
+        if isFreshLaunch == false {
             AppUpdate.shared.checkUpdate(canCheckOptionalUpdate: false)
         }
 

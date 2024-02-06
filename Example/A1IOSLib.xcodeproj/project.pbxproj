@@ -17,6 +17,8 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		625396E52B724D7D008329D2 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625396E42B724D7D008329D2 /* FirebaseHandler.swift */; };
+		625396E72B724E29008329D2 /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625396E62B724E29008329D2 /* AppUserDefaults.swift */; };
 		6281B3152B427D98008773A0 /* MasterTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6281B3142B427D98008773A0 /* MasterTabbarController.swift */; };
 		927F1EEFAA9D77291FA06BCD /* Pods_A1IOSLib_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2FF3232CD8E87A0FC2553E /* Pods_A1IOSLib_Tests.framework */; };
 		93C5B0274CE9E683DFD3FFAB /* Pods_A1IOSLib_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C9EC288BDC258EED04CDEB /* Pods_A1IOSLib_Example.framework */; };
@@ -51,6 +53,8 @@
 		607FACE51AFB9204008FA782 /* A1IOSLib_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = A1IOSLib_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		625396E42B724D7D008329D2 /* FirebaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
+		625396E62B724E29008329D2 /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
 		6281B3142B427D98008773A0 /* MasterTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTabbarController.swift; sourceTree = "<group>"; };
 		63C9EC288BDC258EED04CDEB /* Pods_A1IOSLib_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_A1IOSLib_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A9C9E797635CA673894EAE2 /* A1IOSLib.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = A1IOSLib.podspec; path = ../A1IOSLib.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -151,6 +155,8 @@
 			children = (
 				188717B02B15E65100459DF0 /* AdsExample */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				625396E42B724D7D008329D2 /* FirebaseHandler.swift */,
+				625396E62B724E29008329D2 /* AppUserDefaults.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				BD7394A02AAB318F007FC77F /* EventHandler.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -447,9 +453,11 @@
 				BD7394A12AAB318F007FC77F /* EventHandler.swift in Sources */,
 				188717B52B15E76D00459DF0 /* BasicCellTableViewCell.swift in Sources */,
 				188717B22B15E67E00459DF0 /* DemoSelectionViewController.swift in Sources */,
+				625396E72B724E29008329D2 /* AppUserDefaults.swift in Sources */,
 				6281B3152B427D98008773A0 /* MasterTabbarController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				188717C32B1603E100459DF0 /* PlainViewController.swift in Sources */,
+				625396E52B724D7D008329D2 /* FirebaseHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

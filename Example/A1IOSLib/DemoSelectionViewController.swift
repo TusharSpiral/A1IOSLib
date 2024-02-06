@@ -123,6 +123,7 @@ final class DemoSelectionViewController: UITableViewController {
         //makeBanner()
         //showAppOpenAd()
         checkAndShowPermissionPopup()
+        AppUpdate.shared.checkUpdate()
     }
 
     func showAppOpenAd() {

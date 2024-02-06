@@ -14,24 +14,66 @@ extension Notification.Name {
     static let adsConfigureCompletion = Notification.Name("AdsConfigureCompletion")
 }
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     private let a1Ads: AdsType = Ads.shared
     private let notificationCenter: NotificationCenter = .default
+    var isFreshLaunch = false
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        isFreshLaunch = true
         EventHandler.shared.configureEventHandler()
         // Override point for customization after application launch.
         let navigationController = UINavigationController()
         let demoSelectionViewController = DemoSelectionViewController(a1Ads: self.a1Ads)
         navigationController.setViewControllers([demoSelectionViewController], animated: true)
-        AdsHandler.shared.configureAds(pro: false)
+        AdsHandler.shared.configureAds(config: getAdConfig(), pro: AppUserDefaults.isPro)
+        //fetchConfig()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         return true
+    }
+    
+    func fetchConfig() {
+        FirebaseHandler.getRemoteConfig { [weak self] (result) in
+            if let settings = self {
+                switch result {
+                case .success(let result):
+                    settings.saveConfigInUserDefaults(result: result)
+                    AdsHandler.shared.configureAds(config: settings.getAdConfig(), pro: AppUserDefaults.isPro)
+                    AppUpdate.shared.configureAppUpdate(url: "https://apps.apple.com/us/app/xls-sheets-view-edit-xls/id1672553988", config: result.versionConfig)
+                case .failure(let error):
+                    print("getRemoteConfig Failure: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func saveConfigInUserDefaults(result: FirebaseConfig) {
+        let adConfig = result.adConfig
+        UserDefaults.standard.setValue(adConfig.interInterval, forKey: "interInterval")
+        UserDefaults.standard.setValue(adConfig.appOpenInterval, forKey: "appOpenInterval")
+        UserDefaults.standard.setValue(adConfig.appOpenInterInterval, forKey: "appOpenInterInterval")
+        UserDefaults.standard.setValue(adConfig.interClickInterval, forKey: "interClickInterval")
+
+        UserDefaults.standard.setValue(adConfig.adsEnabled, forKey: "adsEnabled")
+        UserDefaults.standard.setValue(adConfig.interEnabled, forKey: "interEnabled")
+        UserDefaults.standard.setValue(adConfig.appOpenEnabled, forKey: "appOpenEnabled")
+        UserDefaults.standard.setValue(adConfig.bannerEnabled, forKey: "bannerEnabled")
+
+        UserDefaults.standard.setValue(adConfig.appOpenID, forKey: "appOpenID")
+        UserDefaults.standard.setValue(adConfig.interID, forKey: "interID")
+        UserDefaults.standard.setValue(adConfig.bannerID, forKey: "bannerID")
+        UserDefaults.standard.synchronize()
+    }
+
+    func getAdConfig() -> AdsConfiguration {
+        if let appOpenID = UserDefaults.standard.string(forKey: "appOpenID"), !appOpenID.isEmpty, let bannerID = UserDefaults.standard.string(forKey: "bannerID"), !bannerID.isEmpty, let interID = UserDefaults.standard.string(forKey: "interID"), !interID.isEmpty {
+            return AdsConfiguration(interInterval: UserDefaults.standard.integer(forKey: "interInterval"), adsEnabled: UserDefaults.standard.bool(forKey: "adsEnabled"), interEnabled: UserDefaults.standard.bool(forKey: "interEnabled"), interID: UserDefaults.standard.string(forKey: "interID") ?? "", appOpenEnabled: UserDefaults.standard.bool(forKey: "appOpenEnabled") , appOpenID: UserDefaults.standard.string(forKey: "appOpenID") ?? "", bannerEnabled: UserDefaults.standard.bool(forKey: "bannerEnabled"), bannerID: UserDefaults.standard.string(forKey: "bannerID") ?? "", appOpenInterval: UserDefaults.standard.integer(forKey: "appOpenInterval"), appOpenInterInterval: UserDefaults.standard.integer(forKey: "appOpenInterInterval"), interClickInterval: UserDefaults.standard.integer(forKey: "interClickInterval"))
+        }
+        return AdsConfiguration()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -42,6 +84,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Do not show app open ad if the current view controller is DemoSelectionViewController.
             if rootViewController is DemoSelectionViewController {
                 return
+            }
+            if isFreshLaunch == false {
+                AppUpdate.shared.checkUpdate(canCheckOptionalUpdate: false)
+            } else {
+                isFreshLaunch = false
             }
             if AdsHandler.shared.canShowAppOpenAd() && !AdsHandler.shared.appOpenAdShowing() {
                 if let vc = visibleViewController(rootViewController: window?.rootViewController) {
