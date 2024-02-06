@@ -10,6 +10,12 @@ import UIKit
 import A1IOSLib
 import GoogleMobileAds
 
+enum LoadPageType {
+    case none
+    case shareIntent
+    case onboarding
+}
+
 extension Notification.Name {
     static let adsConfigureCompletion = Notification.Name("AdsConfigureCompletion")
 }
@@ -17,11 +23,19 @@ extension Notification.Name {
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    var loadPageType: LoadPageType = .none
     private let a1Ads: AdsType = Ads.shared
     private let notificationCenter: NotificationCenter = .default
     var isFreshLaunch = false
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         isFreshLaunch = true
+        let onboardingDone = UserDefaults.standard.bool(forKey: "onboardingDone")
+        if !onboardingDone {
+            UserDefaults.standard.set(true, forKey: "onboardingDone")
+            UserDefaults.standard.synchronize()
+            loadPageType = .onboarding
+            
+        }
         EventHandler.shared.configureEventHandler()
         // Override point for customization after application launch.
         let navigationController = UINavigationController()
@@ -90,7 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else {
                 isFreshLaunch = false
             }
-            if AdsHandler.shared.canShowAppOpenAd() && !AdsHandler.shared.appOpenAdShowing() {
+            if AdsHandler.shared.canShowAppOpenAd()  {
                 if let vc = visibleViewController(rootViewController: window?.rootViewController) {
                     if AdsHandler.shared.appOpenAdAvailable() {
                         Ads.shared.showAppOpenAd(from: vc) {

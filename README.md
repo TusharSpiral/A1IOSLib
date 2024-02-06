@@ -61,11 +61,6 @@ Initiate ads using persistant storage configuration using remote config and afte
         
 2. Scene delegate sceneWillEnterForeground method
 Show app open ad on visible view controller - If ad available then show directly otherwise add spalsh screen with 3 seconds timer, check ad availability every second. If not received ad in 3 seconds then skip app open ad and remove splash screen.
-We are avoiding app open ad showing for below conditions
-    1. The first launch of app - as per apple guidelines we should allow user to use the app before showing app open ad.
-    2. If opening app via share intent
-    3. If app open ad showing already - two ads shouldn't overlap
-    4. If Inter ad showing already - two ads shouldn't overlap
 
         func visibleViewController(rootViewController:UIViewController?) -> UIViewController? {
             if rootViewController == nil { return nil }
@@ -85,7 +80,7 @@ We are avoiding app open ad showing for below conditions
             return rootViewController
         }
 
-        if AdsHandler.shared.canShowAppOpenAd(), AppManager.shared.loadPageType != .onboarding, AppManager.shared.loadPageType != .shareIntent {
+        if AdsHandler.shared.canShowAppOpenAd()  {
             if let vc = visibleViewController(rootViewController: window?.rootViewController) {
                 if AdsHandler.shared.appOpenAdAvailable() {
                     Ads.shared.showAppOpenAd(from: vc) {
@@ -98,6 +93,7 @@ We are avoiding app open ad showing for below conditions
                 }
             }
         }
+        
 3. Show inter ad preferred from screen navigation, tab change, paywall closing, creatng new document etc.
 you will receive inter ad as full screen ad and will be presented on provided controller
     func showInterAd() {
