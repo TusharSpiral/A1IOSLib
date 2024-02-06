@@ -98,7 +98,7 @@ final class PlainViewController: UIViewController {
         DispatchQueue.main.async {
             self.bannerAd = banner?.0
             if let bannerView = banner?.1 {
-                bannerView.frame = CGRectMake(0, self.view.frame.size.height - bannerView.frame.size.height - 20, bannerView.frame.size.width, bannerView.frame.size.height)
+                bannerView.frame = CGRectMake(0, UIScreen.main.bounds.height - bannerView.frame.size.height - self.view.safeAreaInsets.bottom, bannerView.frame.size.width, bannerView.frame.size.height)
                 self.view.addSubview(bannerView)
                 self.bannerAd?.show()
             }

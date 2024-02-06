@@ -246,6 +246,14 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
         )
         
         // show banner on any of the view you want to 
+        DispatchQueue.main.async {
+            self.bannerAd = banner?.0
+            if let bannerView = banner?.1 {
+                bannerView.frame = CGRectMake(0, UIScreen.main.bounds.height - bannerView.frame.size.height - self.view.safeAreaInsets.bottom, bannerView.frame.size.width, bannerView.frame.size.height)
+                self.view.addSubview(bannerView)
+                self.bannerAd?.show()
+            }
+        }
     }
 
     func showNative() {
