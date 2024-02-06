@@ -178,7 +178,9 @@ Provide app store url and version config after fetching from remote config and s
         }
         
 2. Scene delegate sceneWillEnterForeground method - check for force update only
-        AppUpdate.shared.checkUpdate(canCheckOptionalUpdate: false)
+        if AppManager.shared.isFirstLaunch == false {
+            AppUpdate.shared.checkUpdate(canCheckOptionalUpdate: false)
+        }
 
 3. Home screen view will appear method - check for force and optional update
     AppUpdate.shared.checkUpdate()
