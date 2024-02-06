@@ -16,18 +16,41 @@ Initiate ads using default configuration and after that fetch remote config and 
 Second launch onwards
 Initiate ads using persistant storage configuration using remote config and after that fetch remote config and save configuration in persistant storage and update the ad units, show / hide ad formats and update intervals accordingly
 
-        AdsHandler.shared.configureAds(config:AppUserDefaults.getAdConfig() pro: AppUserDefaults.isPro)
+        AdsHandler.shared.configureAds(config: getAdConfig() pro: AppUserDefaults.isPro)
         FirebaseHandler.getRemoteConfig { [weak self] (result) in
             if let settings = self {
                 switch result {
                 case .success(let result):
                     saveConfigInUserDefaults(result: result)
-                    AdsHandler.shared.configureAds(config:AppUserDefaults.getAdConfig() pro: AppUserDefaults.isPro)
+                    AdsHandler.shared.configureAds(config: getAdConfig() pro: AppUserDefaults.isPro)
                 case .failure(let error):
                     print("getRemoteConfig Failure: \(error.localizedDescription)")
                 }
             }
         }
+        
+        func saveConfigInUserDefaults(result: FirebaseConfig) {
+            let adConfig = result.adConfig
+            UserDefaults.standard.setValue(adConfig.interInterval, forKey: "interInterval")
+            UserDefaults.standard.setValue(adConfig.appOpenInterval, forKey: "appOpenInterval")
+            UserDefaults.standard.setValue(adConfig.appOpenInterInterval, forKey: "appOpenInterInterval")
+            UserDefaults.standard.setValue(adConfig.interClickInterval, forKey: "interClickInterval")
+
+            UserDefaults.standard.setValue(adConfig.adsEnabled, forKey: "adsEnabled")
+            UserDefaults.standard.setValue(adConfig.interEnabled, forKey: "interEnabled")
+            UserDefaults.standard.setValue(adConfig.appOpenEnabled, forKey: "appOpenEnabled")
+            UserDefaults.standard.setValue(adConfig.bannerEnabled, forKey: "bannerEnabled")
+
+            UserDefaults.standard.setValue(adConfig.appOpenID, forKey: "appOpenID")
+            UserDefaults.standard.setValue(adConfig.interID, forKey: "interID")
+            UserDefaults.standard.setValue(adConfig.bannerID, forKey: "bannerID")
+            UserDefaults.standard.synchronize()
+        }
+
+        func getAdConfig() -> AdsConfiguration {
+            return AdsConfiguration(interInterval: UserDefaults.standard.integer(forKey: "interInterval"), adsEnabled: UserDefaults.standard.bool(forKey: "adsEnabled"), interEnabled: UserDefaults.standard.bool(forKey: "interEnabled"), interID: UserDefaults.standard.string(forKey: "interID") ?? "", appOpenEnabled: UserDefaults.standard.bool(forKey: "appOpenEnabled") , appOpenID: UserDefaults.standard.string(forKey: "appOpenID") ?? "", bannerEnabled: UserDefaults.standard.bool(forKey: "bannerEnabled"), bannerID: UserDefaults.standard.string(forKey: "bannerID") ?? "", appOpenInterval: UserDefaults.standard.integer(forKey: "appOpenInterval"), appOpenInterInterval: UserDefaults.standard.integer(forKey: "appOpenInterInterval"), interClickInterval: UserDefaults.standard.integer(forKey: "interClickInterval"))
+        }
+
         
 2. Scene delegate sceneWillEnterForeground method
 Show app open ad on visible view controller - If ad available then show directly otherwise add spalsh screen with 3 seconds timer, check ad availability every second. If not received ad in 3 seconds then skip app open ad and remove splash screen.
@@ -141,18 +164,19 @@ you will receive inter ad as full screen ad and will be presented on provided co
 
 Module 2. How to use force update feature?
 1. AppDelegate.swift didFinishLaunchingWithOptions method
-Provide app store url and version config after fetching from remote config
+Provide app store url and version config after fetching from remote config and save version config in local for the current session
         FirebaseHandler.getRemoteConfig { [weak self] (result) in
             if let settings = self {
                 switch result {
                 case .success(let result):
-                    saveConfigInUserDefaults(result: result)
-                AppUpdate.shared.configureAppUpdate(url: APP_STORE_URL, config: versionConfig)
+                    saveVersionConfigInLocalStorage()
+                    AppUpdate.shared.configureAppUpdate(url: APP_STORE_URL, config: result.versionConfig)
                 case .failure(let error):
                     print("getRemoteConfig Failure: \(error.localizedDescription)")
                 }
             }
         }
+        
 2. Scene delegate sceneWillEnterForeground method - check for force update only
         AppUpdate.shared.checkUpdate(canCheckOptionalUpdate: false)
 
