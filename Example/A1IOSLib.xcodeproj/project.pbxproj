@@ -19,6 +19,7 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		625396E52B724D7D008329D2 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625396E42B724D7D008329D2 /* FirebaseHandler.swift */; };
 		625396E72B724E29008329D2 /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625396E62B724E29008329D2 /* AppUserDefaults.swift */; };
+		625396E92B726AAA008329D2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 625396E82B726AAA008329D2 /* GoogleService-Info.plist */; };
 		6281B3152B427D98008773A0 /* MasterTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6281B3142B427D98008773A0 /* MasterTabbarController.swift */; };
 		927F1EEFAA9D77291FA06BCD /* Pods_A1IOSLib_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2FF3232CD8E87A0FC2553E /* Pods_A1IOSLib_Tests.framework */; };
 		93C5B0274CE9E683DFD3FFAB /* Pods_A1IOSLib_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C9EC288BDC258EED04CDEB /* Pods_A1IOSLib_Example.framework */; };
@@ -55,6 +56,7 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		625396E42B724D7D008329D2 /* FirebaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
 		625396E62B724E29008329D2 /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
+		625396E82B726AAA008329D2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "A1IOSLib/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6281B3142B427D98008773A0 /* MasterTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTabbarController.swift; sourceTree = "<group>"; };
 		63C9EC288BDC258EED04CDEB /* Pods_A1IOSLib_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_A1IOSLib_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A9C9E797635CA673894EAE2 /* A1IOSLib.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = A1IOSLib.podspec; path = ../A1IOSLib.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -132,6 +134,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				625396E82B726AAA008329D2 /* GoogleService-Info.plist */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for A1IOSLib */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -307,6 +310,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				625396E92B726AAA008329D2 /* GoogleService-Info.plist in Resources */,
 				188717B72B15EC1F00459DF0 /* AdsUnitId.plist in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
@@ -606,11 +610,13 @@
 			baseConfigurationReference = FDF198C8418197D73FBF716A /* Pods-A1IOSLib_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GX9HM4N3W6;
 				INFOPLIST_FILE = A1IOSLib/Info.plist;
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "App needs analytics identifier to deliver personalised information and services to you.";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -624,11 +630,13 @@
 			baseConfigurationReference = 9775822E1DA875245C45A617 /* Pods-A1IOSLib_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GX9HM4N3W6;
 				INFOPLIST_FILE = A1IOSLib/Info.plist;
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "App needs analytics identifier to deliver personalised information and services to you.";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -9,7 +9,7 @@
 import UIKit
 import A1IOSLib
 import GoogleMobileAds
-
+import FirebaseCore
 enum LoadPageType {
     case none
     case shareIntent
@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let demoSelectionViewController = DemoSelectionViewController(a1Ads: self.a1Ads)
         navigationController.setViewControllers([demoSelectionViewController], animated: true)
         AdsHandler.shared.configureAds(config: getAdConfig(), pro: AppUserDefaults.isPro)
-        //fetchConfig()
+        fetchConfig()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
         window?.rootViewController = navigationController
@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func fetchConfig() {
+        FirebaseApp.configure()
         FirebaseHandler.getRemoteConfig { [weak self] (result) in
             if let settings = self {
                 switch result {

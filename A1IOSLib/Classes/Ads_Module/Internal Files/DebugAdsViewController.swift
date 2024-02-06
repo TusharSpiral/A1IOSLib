@@ -19,8 +19,8 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var debugTableView: UITableView!
     private var bannerAd: AdsBannerType?
 
-    var adsList = ["APP OPEN", "INTER", "REWARDED", "REWARDED INTER", "BANNER", "NATIVE"]
-    var adsType: [DebugAdsType] = [.appOpen, .inter, .rewarded, .rewardedInter, .banner, .native]
+    var adsList = ["APP OPEN", "INTER", "BANNER", "REWARDED", "REWARDED INTER", "NATIVE"]
+    var adsType: [DebugAdsType] = [.appOpen, .inter, .banner, .rewarded, .rewardedInter, .native]
     var idsText = "ADMOB\t\t\t\tInitialized = true"
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,15 +28,41 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
         debugTableView.register(UINib(nibName: "DebugTextCell", bundle: nil), forCellReuseIdentifier: "DebugTextCell")
         // Do any additional setup after loading the view.
         idsText.append("\n\n\nApp Open Ad unit id\n")
-        idsText.append(Ads.shared.getConfiguration?.appOpenID ?? "NA")
+        if let appOpenID = Ads.shared.getConfiguration?.appOpenID, !appOpenID.isEmpty  {
+            idsText.append(appOpenID)
+        } else {
+            idsText.append("NA")
+        }
         idsText.append("\n\n\nInter Ad unit id\n")
-        idsText.append(Ads.shared.getConfiguration?.interID ?? "NA")
-        idsText.append("\n\n\nRewarded Ad unit id\n")
-        idsText.append(Ads.shared.getConfiguration?.rewardedID ?? "NA")
+        if let interID = Ads.shared.getConfiguration?.interID, !interID.isEmpty  {
+            idsText.append(interID)
+        } else {
+            idsText.append("NA")
+        }
         idsText.append("\n\n\nBanner Ad unit id\n")
-        idsText.append(Ads.shared.getConfiguration?.bannerID ?? "NA")
+        if let bannerID = Ads.shared.getConfiguration?.bannerID, !bannerID.isEmpty  {
+            idsText.append(bannerID)
+        } else {
+            idsText.append("NA")
+        }
+        idsText.append("\n\n\nRewarded Ad unit id\n")
+        if let rewardedID = Ads.shared.getConfiguration?.rewardedID, !rewardedID.isEmpty  {
+            idsText.append(rewardedID)
+        } else {
+            idsText.append("NA")
+        }
+        idsText.append("\n\n\nRewarded Inter Ad unit id\n")
+        if let rewardedInterstitialID = Ads.shared.getConfiguration?.rewardedInterstitialID, !rewardedInterstitialID.isEmpty  {
+            idsText.append(rewardedInterstitialID)
+        } else {
+            idsText.append("NA")
+        }
         idsText.append("\n\n\nNative Ad unit id\n")
-        idsText.append(Ads.shared.getConfiguration?.nativeID ?? "NA")
+        if let nativeID = Ads.shared.getConfiguration?.nativeID, !nativeID.isEmpty  {
+            idsText.append(nativeID)
+        } else {
+            idsText.append("NA")
+        }
         idsText.append("\n\n\n")
     }
     
@@ -150,6 +176,7 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func showAppOpen() {
+        guard let appOpenID = Ads.shared.getConfiguration?.appOpenID, !appOpenID.isEmpty  else { return }
         Ads.shared.showAppOpenAd(from: self) {
             
         } onClose: {
@@ -160,6 +187,7 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func showInter() {
+        guard let interID = Ads.shared.getConfiguration?.interID, !interID.isEmpty  else { return }
         Ads.shared.showInterstitialAd(
             from: self,
             onOpen: {
@@ -175,6 +203,7 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func showRewarded() {
+        guard let rewardedID = Ads.shared.getConfiguration?.rewardedID, !rewardedID.isEmpty  else { return }
         Ads.shared.showRewardedAd(
             from: self,
             onOpen: {
@@ -205,6 +234,7 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func showRewardedInter() {
+        guard let rewardedInterstitialID = Ads.shared.getConfiguration?.rewardedInterstitialID, !rewardedInterstitialID.isEmpty  else { return }
         Ads.shared.showRewardedInterstitialAd(
             from: self,
             onOpen: {
@@ -223,6 +253,7 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func showBanner() {
+        guard let bannerID = Ads.shared.getConfiguration?.bannerID, !bannerID.isEmpty  else { return }
         let banner = Ads.shared.makeBannerAd(
             in: self,
             onOpen: {
@@ -257,6 +288,7 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func showNative() {
+        guard let nativeID = Ads.shared.getConfiguration?.nativeID, !nativeID.isEmpty  else { return }
         let nativeviewController = NativeAdViewController()
         navigationController?.pushViewController(nativeviewController, animated: true)
     }
