@@ -81,7 +81,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if !appOpenID.isEmpty, !bannerID.isEmpty, !interID.isEmpty {
             
-            return AdsConfiguration(interInterval: UserDefaults.standard.integer(forKey: "interInterval"), adsEnabled: UserDefaults.standard.bool(forKey: "adsEnabled"), interEnabled: UserDefaults.standard.bool(forKey: "interEnabled"), interID: interID, appOpenEnabled: UserDefaults.standard.bool(forKey: "appOpenEnabled") , appOpenID: appOpenID, bannerEnabled: UserDefaults.standard.bool(forKey: "bannerEnabled"), bannerID: bannerID, appOpenInterval: UserDefaults.standard.integer(forKey: "appOpenInterval"), appOpenInterInterval: UserDefaults.standard.integer(forKey: "appOpenInterInterval"), interClickInterval: UserDefaults.standard.integer(forKey: "interClickInterval"))
+            return AdsConfiguration(
+                interInterval: AppUserDefaults.interInterval,
+                adsEnabled: AppUserDefaults.adsEnabled,
+                interEnabled: AppUserDefaults.interEnabled,
+                interID: interID,
+                appOpenEnabled: AppUserDefaults.appOpenEnabled,
+                appOpenID: appOpenID,
+                bannerEnabled: AppUserDefaults.bannerEnabled,
+                bannerID: bannerID,
+                appOpenInterval: AppUserDefaults.appOpenInterval,
+                appOpenInterInterval: AppUserDefaults.appOpenInterInterval,
+                interClickInterval: AppUserDefaults.interClickInterval
+            )
             
         }
         
