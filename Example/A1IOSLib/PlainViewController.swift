@@ -76,7 +76,7 @@ final class PlainViewController: UIViewController {
     
     func showBanner() {
         guard AdsHandler.shared.canShowBannerAd() else { return }
-        let shimmer = ShimmerView(frame: CGRectMake(0, UIScreen.main.bounds.height - 150, UIScreen.main.bounds.width, 62))
+        let shimmer = ShimmerView(frame: CGRectMake(0, UIScreen.main.bounds.height - 94, UIScreen.main.bounds.width, 62))
         view.addSubview(shimmer)
         shimmer.startAnimating()
         
