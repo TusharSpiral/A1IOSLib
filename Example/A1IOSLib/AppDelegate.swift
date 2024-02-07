@@ -10,11 +10,6 @@ import UIKit
 import A1IOSLib
 import GoogleMobileAds
 import FirebaseCore
-enum LoadPageType {
-    case none
-    case shareIntent
-    case onboarding
-}
 
 extension Notification.Name {
     static let adsConfigureCompletion = Notification.Name("AdsConfigureCompletion")
@@ -23,19 +18,12 @@ extension Notification.Name {
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    var loadPageType: LoadPageType = .none
     private let a1Ads: AdsType = Ads.shared
     private let notificationCenter: NotificationCenter = .default
     var isFreshLaunch = false
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         isFreshLaunch = true
-        let onboardingDone = UserDefaults.standard.bool(forKey: "onboardingDone")
-        if !onboardingDone {
-            UserDefaults.standard.set(true, forKey: "onboardingDone")
-            UserDefaults.standard.synchronize()
-            loadPageType = .onboarding
-            
-        }
         EventHandler.shared.configureEventHandler()
         // Override point for customization after application launch.
         let navigationController = UINavigationController()
@@ -67,27 +55,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func saveConfigInUserDefaults(result: FirebaseConfig) {
+        
         let adConfig = result.adConfig
-        UserDefaults.standard.setValue(adConfig.interInterval, forKey: "interInterval")
-        UserDefaults.standard.setValue(adConfig.appOpenInterval, forKey: "appOpenInterval")
-        UserDefaults.standard.setValue(adConfig.appOpenInterInterval, forKey: "appOpenInterInterval")
-        UserDefaults.standard.setValue(adConfig.interClickInterval, forKey: "interClickInterval")
-
-        UserDefaults.standard.setValue(adConfig.adsEnabled, forKey: "adsEnabled")
-        UserDefaults.standard.setValue(adConfig.interEnabled, forKey: "interEnabled")
-        UserDefaults.standard.setValue(adConfig.appOpenEnabled, forKey: "appOpenEnabled")
-        UserDefaults.standard.setValue(adConfig.bannerEnabled, forKey: "bannerEnabled")
-
-        UserDefaults.standard.setValue(adConfig.appOpenID, forKey: "appOpenID")
-        UserDefaults.standard.setValue(adConfig.interID, forKey: "interID")
-        UserDefaults.standard.setValue(adConfig.bannerID, forKey: "bannerID")
-        UserDefaults.standard.synchronize()
+        
+        AppUserDefaults.interInterval = adConfig.interInterval
+        AppUserDefaults.appOpenInterval = adConfig.appOpenInterval
+        AppUserDefaults.appOpenInterInterval = adConfig.appOpenInterInterval
+        AppUserDefaults.interClickInterval = adConfig.interClickInterval
+        
+        AppUserDefaults.adsEnabled = adConfig.adsEnabled
+        AppUserDefaults.interEnabled = adConfig.interEnabled
+        AppUserDefaults.appOpenEnabled = adConfig.appOpenEnabled
+        AppUserDefaults.bannerEnabled = adConfig.bannerEnabled
+        
+        AppUserDefaults.appOpenID = adConfig.appOpenID
+        AppUserDefaults.interID = adConfig.interID
+        AppUserDefaults.bannerID = adConfig.bannerID
     }
 
     func getAdConfig() -> AdsConfiguration {
-        if let appOpenID = UserDefaults.standard.string(forKey: "appOpenID"), !appOpenID.isEmpty, let bannerID = UserDefaults.standard.string(forKey: "bannerID"), !bannerID.isEmpty, let interID = UserDefaults.standard.string(forKey: "interID"), !interID.isEmpty {
+        
+        let appOpenID = AppUserDefaults.appOpenID
+        let bannerID = AppUserDefaults.bannerID
+        let interID = AppUserDefaults.interID
+        
+        if !appOpenID.isEmpty, !bannerID.isEmpty, !interID.isEmpty {
+            
             return AdsConfiguration(interInterval: UserDefaults.standard.integer(forKey: "interInterval"), adsEnabled: UserDefaults.standard.bool(forKey: "adsEnabled"), interEnabled: UserDefaults.standard.bool(forKey: "interEnabled"), interID: interID, appOpenEnabled: UserDefaults.standard.bool(forKey: "appOpenEnabled") , appOpenID: appOpenID, bannerEnabled: UserDefaults.standard.bool(forKey: "bannerEnabled"), bannerID: bannerID, appOpenInterval: UserDefaults.standard.integer(forKey: "appOpenInterval"), appOpenInterInterval: UserDefaults.standard.integer(forKey: "appOpenInterInterval"), interClickInterval: UserDefaults.standard.integer(forKey: "interClickInterval"))
+            
         }
+        
         return AdsConfiguration()
     }
     

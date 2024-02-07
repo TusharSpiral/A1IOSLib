@@ -28,40 +28,43 @@ struct UserDefault<T> {
 struct AppUserDefaults {
     @UserDefault(UserDefaults.key.isPro, defaultValue: false)
     static var isPro : Bool // this value is set inside AdsHandler.setPro() func
-    
-    @UserDefault(UserDefaults.key.showPurchaslyScreen, defaultValue: false)
-    static var showPurchaslyScreen : Bool
-    
-    @UserDefault(UserDefaults.key.hideTabBarBanner, defaultValue: true)
-    static var hideTabBarBanner : Bool
-    
-    @UserDefault(UserDefaults.key.ratingCount, defaultValue: 0)
-    static var ratingCount : Int
-    
-    @UserDefault(UserDefaults.key.isUserLogin, defaultValue: false)
-    static var isUserLogin : Bool
-    
-    @UserDefault(UserDefaults.key.isUserLoginToDropBox, defaultValue: false)
-    static var isUserLoginToDropBox : Bool
-    
-    @UserDefault(UserDefaults.key.isUserLoginToGoogleDrive, defaultValue: false)
-    static var isUserLoginToGoogleDrive : Bool
-    
-    @UserDefault(UserDefaults.key.isFreshLaunching, defaultValue: true)
-    static var isFreshLaunching : Bool
-
+    @UserDefault(UserDefaults.key.interInterval, defaultValue: 10)
+    static var interInterval : Int
+    @UserDefault(UserDefaults.key.appOpenInterval, defaultValue: 10)
+    static var appOpenInterval : Int
+    @UserDefault(UserDefaults.key.appOpenInterInterval, defaultValue: 10)
+    static var appOpenInterInterval : Int
+    @UserDefault(UserDefaults.key.interClickInterval, defaultValue: 2)
+    static var interClickInterval : Int
+    @UserDefault(UserDefaults.key.adsEnabled, defaultValue: true)
+    static var adsEnabled : Bool
+    @UserDefault(UserDefaults.key.interEnabled, defaultValue: true)
+    static var interEnabled : Bool
+    @UserDefault(UserDefaults.key.appOpenEnabled, defaultValue: true)
+    static var appOpenEnabled : Bool
+    @UserDefault(UserDefaults.key.bannerEnabled, defaultValue: true)
+    static var bannerEnabled : Bool
+    @UserDefault(UserDefaults.key.appOpenID, defaultValue: "")
+    static var appOpenID : String
+    @UserDefault(UserDefaults.key.interID, defaultValue: "")
+    static var interID : String
+    @UserDefault(UserDefaults.key.bannerID, defaultValue: "")
+    static var bannerID : String
 }
 
 extension UserDefaults {
     public enum key {
         static let isPro = "isPro"
-        static let showPurchaslyScreen = "showPurchaslyScreen"
-        static let hideTabBarBanner = "ErrorBannerLoad"
-        static let ratingCount = "RatingCount"
-        static let isUserLogin = "isUserLogin"
-        static let isUserLoginToDropBox = "isUserLoginToDropBox"
-        static let isUserLoginToGoogleDrive = "isUserLoginToGoogleDrive"
-        static let isFreshLaunching = "isFreshLaunching"
-
+        static let interInterval = "interInterval"
+        static let appOpenInterval = "appOpenInterval"
+        static let appOpenInterInterval = "appOpenInterInterval"
+        static let interClickInterval = "interClickInterval"
+        static let adsEnabled = "adsEnabled"
+        static let interEnabled = "interEnabled"
+        static let appOpenEnabled = "appOpenEnabled"
+        static let bannerEnabled = "bannerEnabled"
+        static let appOpenID = "appOpenID"
+        static let interID = "interID"
+        static let bannerID = "bannerID"
     }
 }
