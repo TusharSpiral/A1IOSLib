@@ -27,6 +27,10 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
         debugTableView.register(UINib(nibName: "DebugTableViewCell", bundle: nil), forCellReuseIdentifier: "DebugCell")
         debugTableView.register(UINib(nibName: "DebugTextCell", bundle: nil), forCellReuseIdentifier: "DebugTextCell")
         // Do any additional setup after loading the view.
+        fillAdUnits()
+    }
+    
+    func fillAdUnits() {
         idsText.append("\n\n\nApp Open Ad unit id\n")
         if let appOpenID = Ads.shared.getConfiguration?.appOpenID, !appOpenID.isEmpty  {
             idsText.append(appOpenID)
@@ -65,7 +69,6 @@ class DebugAdsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         idsText.append("\n\n\n")
     }
-    
 
     /*
     // MARK: - Navigation
