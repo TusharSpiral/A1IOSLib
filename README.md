@@ -123,10 +123,10 @@ you will receive inter ad as full screen ad and will be presented on provided co
     }
 
 4. Show banner ad - you will receive banner ad view you can add on containerView placed anywhere on screen.
-    Add Shimmer on banner ad container:
-        Create ad container view using ShimmerView class
-        call containerView.startAnimating() method if want to start animate
-        call containerView.stopAnimating() method if want to stop animate
+    Add Shimmer for banner ad:
+        Create shimmer view using ShimmerView class and add on screen
+        call startAnimating() method if want to start animate
+        call stopAnimating() method if want to hide shimmer
         
     Show banner on containerView
     func showBanner() {
