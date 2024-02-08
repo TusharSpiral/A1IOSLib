@@ -45,22 +45,6 @@ public final class Ads: NSObject {
 
 extension Ads: AdsType {
     
-    public func getDebugScreen() -> DebugViewController? {
-        let podBundle = Bundle(for:DebugViewController.self)
-           if let bundleURL = podBundle.url(forResource: "A1IOSLib", withExtension: "bundle") {
-               if let bundle = Bundle(url: bundleURL) {
-                   let storyboard = UIStoryboard(name: "Debug", bundle: bundle)
-                   return storyboard.instantiateInitialViewController()
-               } else {
-                   assertionFailure("Could not load the bundle")
-               }
-           } else {
-               assertionFailure("Could not create a path to the bundle")
-           }
-        return nil
-
-    }
-
     /// Check if app open  ad is ready to be displayed.
     public var isAppOpenAdReady: Bool {
         appOpenAd?.isReady ?? false

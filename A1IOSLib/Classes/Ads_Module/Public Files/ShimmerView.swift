@@ -40,7 +40,7 @@ public class ShimmerView: UIView {
     }
     
     public func startAnimating() {
-        
+        isHidden = false
         gradientLayer = addGradientLayer()
         let animation = addAnimation()
        
@@ -49,5 +49,6 @@ public class ShimmerView: UIView {
 
     public func stopAnimating() {
         gradientLayer?.removeAllAnimations()
+        isHidden = true
     }
 }

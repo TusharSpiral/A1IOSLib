@@ -71,7 +71,15 @@ final class PlainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         addSubviews()
-
+        showBanner()
+    }
+    
+    func showBanner() {
+        guard AdsHandler.shared.canShowBannerAd() else { return }
+        let shimmer = ShimmerView(frame: CGRectMake(0, UIScreen.main.bounds.height - 94, UIScreen.main.bounds.width, 62))
+        view.addSubview(shimmer)
+        shimmer.startAnimating()
+        
         // show banner on any of the view you want to
         let banner = a1Ads.makeBannerAd(
             in: self,
@@ -98,11 +106,16 @@ final class PlainViewController: UIViewController {
         DispatchQueue.main.async {
             self.bannerAd = banner?.0
             if let bannerView = banner?.1 {
-                bannerView.frame = CGRectMake(0, self.view.frame.size.height - bannerView.frame.size.height - 20, bannerView.frame.size.width, bannerView.frame.size.height)
+                bannerView.frame = CGRectMake(0, UIScreen.main.bounds.height - bannerView.frame.size.height - self.view.safeAreaInsets.bottom, bannerView.frame.size.width, bannerView.frame.size.height)
                 self.view.addSubview(bannerView)
                 self.bannerAd?.show()
+                self.perform(#selector(PlainViewController.hideShimmer), with: shimmer, afterDelay: 1.0)
             }
         }
+    }
+    
+    @objc func hideShimmer(shimmer: ShimmerView) {
+        shimmer.stopAnimating()
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import A1IOSLib
 
 extension Bundle {
     var applicationName: String {
@@ -46,10 +45,12 @@ extension Bundle {
 public class DebugViewController: UIViewController {
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var adsFlagLabel: UILabel!
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         let name = Bundle.main.applicationName
         let version = Bundle.main.fullVersion
+        guard versionLabel != nil, adsFlagLabel != nil else { return }
 #if DEBUG
     print("I'm running in DEBUG mode")
         versionLabel.text = "Version Name = \(name)-\(version)-internal"
@@ -65,21 +66,23 @@ public class DebugViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     @IBAction func adsAction(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Debug", bundle: nil)
         if let vc = storyboard.instantiateViewController(withIdentifier: "DebugAdsViewController") as? DebugAdsViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-
+    
+    struct Constants {
+        static let reuseIdentifier = String(describing: DebugViewController.self)
+        static let storyboardName = "Debug"
+    }
+    
+    public static func buildViewController() -> DebugViewController {
+        if let controller = UIStoryboard(name: Constants.storyboardName,
+                                         bundle: .main).instantiateViewController(withIdentifier: Constants.reuseIdentifier) as? DebugViewController {
+            return controller
+        }
+        return DebugViewController()
+    }
 }

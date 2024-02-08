@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMobileAds
 
-final class NativeAdViewController: UIViewController {
+public class NativeAdViewController: UIViewController {
 
     // MARK: - Properties
 
@@ -22,7 +22,7 @@ final class NativeAdViewController: UIViewController {
 //        super.init(nibName: nil, bundle: nil)
 //    }
 
-    init() {
+    public init() {
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -38,7 +38,7 @@ final class NativeAdViewController: UIViewController {
 
     // MARK: - Life Cycle
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
 
