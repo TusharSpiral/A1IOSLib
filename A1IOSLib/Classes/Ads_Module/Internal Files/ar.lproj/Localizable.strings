@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "يبدو أن الاتصال بالإنترنت غير متصل.";
+"NETWORK_ERROR" = "تم فقدان الاتصال بالشبكة.";
+"PRICE_ERROR" = "حدث خطأ أثناء جلب الأسعار - يرجى المحاولة مرة أخرى";
+"FETCH_PLANS_ERROR" = "غير قادر على جلب خطط الاشتراك.";
+"UPDATE_NOW" = "تحديث الان";
+"MAYBE_LATER" = "ربما في وقت لاحق";
+"ALERT" = "يُحذًِر";
+"OK" = "نعم";
+"CANCEL" = "يلغي";
+"FORCE_TITLE" = "تحديث التطبيق مطلوب";
+"FORCE_MESSAGE" = "إصدار جديد متوفر. يرجى تحديث التطبيق الخاص بك قبل المتابعة.";
+"OPTIONAL_TITLE" = "تحديث التطبيق متاح";
+"OPTIONAL_MESSAGE" = "لقد قمنا بدمج العديد من التحسينات المبتكرة في هذا التحديث الأخير.";

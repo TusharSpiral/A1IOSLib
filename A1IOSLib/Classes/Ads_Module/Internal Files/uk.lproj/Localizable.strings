@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Здається, з’єднання з Інтернетом відсутнє.";
+"NETWORK_ERROR" = "З’єднання з мережею було втрачено.";
+"PRICE_ERROR" = "Під час отримання цін сталася помилка. Повторіть спробу";
+"FETCH_PLANS_ERROR" = "Не вдалося отримати плани підписки.";
+"UPDATE_NOW" = "Оновити зараз";
+"MAYBE_LATER" = "Можливо пізніше";
+"ALERT" = "Попередження";
+"OK" = "В порядку";
+"CANCEL" = "Скасувати";
+"FORCE_TITLE" = "Потрібне оновлення програми";
+"FORCE_MESSAGE" = "Доступна нова версія. Перш ніж продовжити, оновіть програму.";
+"OPTIONAL_TITLE" = "Доступне оновлення програми";
+"OPTIONAL_MESSAGE" = "У цьому останньому оновленні ми включили кілька інноваційних удосконалень.";

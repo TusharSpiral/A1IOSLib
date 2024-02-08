@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Čini se da je internetska veza izvan mreže.";
+"NETWORK_ERROR" = "Mrežna veza je izgubljena.";
+"PRICE_ERROR" = "Došlo je do pogreške prilikom dohvaćanja cijena - pokušajte ponovo";
+"FETCH_PLANS_ERROR" = "Nije moguće dohvatiti planove pretplate.";
+"UPDATE_NOW" = "Ažurirati sada";
+"MAYBE_LATER" = "Možda kasnije";
+"ALERT" = "uzbuna";
+"OK" = "U redu";
+"CANCEL" = "Otkazati";
+"FORCE_TITLE" = "Potrebno je ažuriranje aplikacije";
+"FORCE_MESSAGE" = "Dostupna je nova verzija. Ažurirajte svoju aplikaciju prije nastavka.";
+"OPTIONAL_TITLE" = "Dostupno ažuriranje aplikacije";
+"OPTIONAL_MESSAGE" = "Uključili smo nekoliko inovativnih poboljšanja u ovo najnovije ažuriranje.";

@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "נראה שהחיבור לאינטרנט אינו מקוון.";
+"NETWORK_ERROR" = "החיבור לרשת אבד.";
+"PRICE_ERROR" = "אירעה שגיאה באחזור מחירים - אנא נסה שוב";
+"FETCH_PLANS_ERROR" = "לא ניתן להביא תוכניות מנוי.";
+"UPDATE_NOW" = "עדכן כעת";
+"MAYBE_LATER" = "אולי אחר כך";
+"ALERT" = "עֵרָנִי";
+"OK" = "בסדר";
+"CANCEL" = "לְבַטֵל";
+"FORCE_TITLE" = "נדרש עדכון אפליקציה";
+"FORCE_MESSAGE" = "גרסה חדשה זמינה. אנא עדכן את האפליקציה שלך לפני שתמשיך.";
+"OPTIONAL_TITLE" = "עדכון אפליקציה זמין";
+"OPTIONAL_MESSAGE" = "שילבנו מספר שיפורים חדשניים בעדכון האחרון הזה.";

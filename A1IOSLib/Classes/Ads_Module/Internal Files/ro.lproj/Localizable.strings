@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Conexiunea la internet pare să fie offline.";
+"NETWORK_ERROR" = "Conexiunea la rețea a fost pierdută.";
+"PRICE_ERROR" = "A apărut o eroare la preluarea prețurilor - vă rugăm să încercați din nou";
+"FETCH_PLANS_ERROR" = "Nu se pot prelua planurile de abonament.";
+"UPDATE_NOW" = "Actualizează acum";
+"MAYBE_LATER" = "Poate mai târziu";
+"ALERT" = "Alerta";
+"OK" = "Bine";
+"CANCEL" = "Anulare";
+"FORCE_TITLE" = "Este necesară actualizarea aplicației";
+"FORCE_MESSAGE" = "Este disponibilă o nouă versiune. Actualizați aplicația înainte de a continua.";
+"OPTIONAL_TITLE" = "Actualizare aplicație disponibilă";
+"OPTIONAL_MESSAGE" = "Am încorporat câteva îmbunătățiri inovatoare în această ultimă actualizare.";

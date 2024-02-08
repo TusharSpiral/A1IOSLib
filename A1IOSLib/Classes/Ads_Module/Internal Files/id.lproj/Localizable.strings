@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Koneksi internet tampaknya offline.";
+"NETWORK_ERROR" = "Koneksi jaringan terputus.";
+"PRICE_ERROR" = "Terjadi kesalahan saat mengambil harga - coba lagi";
+"FETCH_PLANS_ERROR" = "Tidak dapat mengambil paket berlangganan.";
+"UPDATE_NOW" = "Memperbarui sekarang";
+"MAYBE_LATER" = "Mungkin nanti";
+"ALERT" = "Peringatan";
+"OK" = "Oke";
+"CANCEL" = "Membatalkan";
+"FORCE_TITLE" = "Pembaruan aplikasi diperlukan";
+"FORCE_MESSAGE" = "Versi baru telah tersedia. Harap perbarui aplikasi Anda sebelum melanjutkan.";
+"OPTIONAL_TITLE" = "Pembaruan aplikasi tersedia";
+"OPTIONAL_MESSAGE" = "Kami telah memasukkan beberapa peningkatan inovatif dalam pembaruan terbaru ini.";

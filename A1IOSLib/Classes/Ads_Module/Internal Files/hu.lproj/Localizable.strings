@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Úgy tűnik, hogy az internetkapcsolat offline állapotban van.";
+"NETWORK_ERROR" = "A hálózati kapcsolat megszakadt.";
+"PRICE_ERROR" = "Hiba történt az árak lekérésekor – próbálja újra";
+"FETCH_PLANS_ERROR" = "Nem sikerült lekérni az előfizetési csomagokat.";
+"UPDATE_NOW" = "Frissítse most";
+"MAYBE_LATER" = "Talán később";
+"ALERT" = "Éber";
+"OK" = "Rendben";
+"CANCEL" = "Megszünteti";
+"FORCE_TITLE" = "Alkalmazásfrissítés szükséges";
+"FORCE_MESSAGE" = "Új verzió érhető el. Kérjük, frissítse alkalmazását a folytatás előtt.";
+"OPTIONAL_TITLE" = "Alkalmazásfrissítés elérhető";
+"OPTIONAL_MESSAGE" = "A legújabb frissítésbe számos innovatív fejlesztést építettünk be.";

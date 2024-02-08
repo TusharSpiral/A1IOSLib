@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "La connexió a Internet sembla estar fora de línia.";
+"NETWORK_ERROR" = "S'ha perdut la connexió de xarxa.";
+"PRICE_ERROR" = "S'ha produït un error en obtenir els preus. Torneu-ho a provar";
+"FETCH_PLANS_ERROR" = "No es poden obtenir els plans de subscripció.";
+"UPDATE_NOW" = "Actualitzar ara";
+"MAYBE_LATER" = "Potser després";
+"ALERT" = "Alerta";
+"OK" = "D'acord";
+"CANCEL" = "Cancel · lar";
+"FORCE_TITLE" = "Cal actualitzar l'aplicació";
+"FORCE_MESSAGE" = "Hi ha disponible una nova versió. Actualitza l'aplicació abans de continuar.";
+"OPTIONAL_TITLE" = "Actualització de l'aplicació disponible";
+"OPTIONAL_MESSAGE" = "Hem incorporat diverses millores innovadores en aquesta darrera actualització.";

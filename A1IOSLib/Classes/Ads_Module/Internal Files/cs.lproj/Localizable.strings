@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Zdá se, že připojení k internetu je offline.";
+"NETWORK_ERROR" = "Síťové připojení bylo ztraceno.";
+"PRICE_ERROR" = "Při načítání cen došlo k chybě – zkuste to prosím znovu";
+"FETCH_PLANS_ERROR" = "Nelze načíst plány předplatného.";
+"UPDATE_NOW" = "Nyní aktualizovat";
+"MAYBE_LATER" = "Možná později";
+"ALERT" = "Upozornění";
+"OK" = "OK";
+"CANCEL" = "zrušení";
+"FORCE_TITLE" = "Je vyžadována aktualizace aplikace";
+"FORCE_MESSAGE" = "K dispozici je nová verze. Než budete pokračovat, aktualizujte aplikaci.";
+"OPTIONAL_TITLE" = "K dispozici je aktualizace aplikace";
+"OPTIONAL_MESSAGE" = "Do této nejnovější aktualizace jsme začlenili několik inovativních vylepšení.";

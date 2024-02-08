@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Подключение к Интернету отсутствует.";
+"NETWORK_ERROR" = "Сетевое соединение было потеряно.";
+"PRICE_ERROR" = "При получении цен произошла ошибка. Повторите попытку.";
+"FETCH_PLANS_ERROR" = "Не удалось получить планы подписки.";
+"UPDATE_NOW" = "Обновить сейчас";
+"MAYBE_LATER" = "Может быть позже";
+"ALERT" = "Тревога";
+"OK" = "Хорошо";
+"CANCEL" = "Отмена";
+"FORCE_TITLE" = "Требуется обновление приложения";
+"FORCE_MESSAGE" = "Доступна новая версия. Пожалуйста, обновите приложение, прежде чем продолжить.";
+"OPTIONAL_TITLE" = "Доступно обновление приложения";
+"OPTIONAL_MESSAGE" = "В это последнее обновление мы включили несколько инновационных улучшений.";

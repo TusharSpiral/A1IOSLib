@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Internett-tilkoblingen ser ut til å være frakoblet.";
+"NETWORK_ERROR" = "Nettverkstilkoblingen ble brutt.";
+"PRICE_ERROR" = "Det oppsto en feil under henting av priser - prøv igjen";
+"FETCH_PLANS_ERROR" = "Kan ikke hente abonnementsplaner.";
+"UPDATE_NOW" = "Oppdater nå";
+"MAYBE_LATER" = "Kanskje senere";
+"ALERT" = "Varsling";
+"OK" = "Ok";
+"CANCEL" = "Avbryt";
+"FORCE_TITLE" = "Appoppdatering kreves";
+"FORCE_MESSAGE" = "En ny versjon er tilgjengelig. Oppdater appen din før du fortsetter.";
+"OPTIONAL_TITLE" = "Appoppdatering tilgjengelig";
+"OPTIONAL_MESSAGE" = "Vi har innlemmet flere innovative forbedringer i denne siste oppdateringen.";

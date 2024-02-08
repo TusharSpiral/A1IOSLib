@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Kết nối Internet dường như ngoại tuyến.";
+"NETWORK_ERROR" = "Kết nối mạng bị mất.";
+"PRICE_ERROR" = "Đã xảy ra lỗi khi tìm nạp giá - vui lòng thử lại";
+"FETCH_PLANS_ERROR" = "Không thể tìm nạp các gói đăng ký.";
+"UPDATE_NOW" = "Cập nhật bây giờ";
+"MAYBE_LATER" = "Có lẽ sau này";
+"ALERT" = "Báo động";
+"OK" = "Được rồi";
+"CANCEL" = "Hủy bỏ";
+"FORCE_TITLE" = "Yêu cầu cập nhật ứng dụng";
+"FORCE_MESSAGE" = "Một phiên bản mới có sẵn. Vui lòng cập nhật ứng dụng của bạn trước khi tiếp tục.";
+"OPTIONAL_TITLE" = "Đã có bản cập nhật ứng dụng";
+"OPTIONAL_MESSAGE" = "Chúng tôi đã kết hợp một số cải tiến sáng tạo trong bản cập nhật mới nhất này.";

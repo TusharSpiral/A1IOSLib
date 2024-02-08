@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
   spec.static_framework = true
   spec.ios.deployment_target  = '14.0'
   spec.resources = ["A1IOSLib/**/*.{storyboard}", "A1IOSLib/**/*.{xib}"]
-  spec.source_files = "A1IOSLib/**/*.{swift}"
+  spec.source_files = ["A1IOSLib/**/*.{swift}", "A1IOSLib/**/*.{strings}"]
   spec.dependency 'Alamofire'
   spec.dependency 'Purchasely', '4.2.0'
   spec.dependency 'FirebaseAnalytics'

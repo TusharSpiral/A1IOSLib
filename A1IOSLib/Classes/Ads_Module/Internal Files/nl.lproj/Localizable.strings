@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "De internetverbinding lijkt offline te zijn.";
+"NETWORK_ERROR" = "De netwerkverbinding is verbroken.";
+"PRICE_ERROR" = "Er is een fout opgetreden bij het ophalen van de prijzen. Probeer het opnieuw";
+"FETCH_PLANS_ERROR" = "Kan abonnementen niet ophalen.";
+"UPDATE_NOW" = "Update nu";
+"MAYBE_LATER" = "Misschien later";
+"ALERT" = "Waarschuw";
+"OK" = "OK";
+"CANCEL" = "Annuleren";
+"FORCE_TITLE" = "App-update vereist";
+"FORCE_MESSAGE" = "Er is een nieuwe versie beschikbaar. Update uw app voordat u doorgaat.";
+"OPTIONAL_TITLE" = "App-update beschikbaar";
+"OPTIONAL_MESSAGE" = "We hebben verschillende innovatieve verbeteringen in deze nieuwste update opgenomen.";

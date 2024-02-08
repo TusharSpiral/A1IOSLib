@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "İnternet bağlantısı çevrimdışı görünüyor.";
+"NETWORK_ERROR" = "Ağ bağlantısı kesildi.";
+"PRICE_ERROR" = "Fiyatlar alınırken bir hata oluştu - lütfen tekrar deneyin";
+"FETCH_PLANS_ERROR" = "Abonelik planları getirilemiyor.";
+"UPDATE_NOW" = "Şimdi güncelle";
+"MAYBE_LATER" = "Belki sonra";
+"ALERT" = "Uyarı";
+"OK" = "Tamam";
+"CANCEL" = "İptal etmek";
+"FORCE_TITLE" = "Uygulama güncellemesi gerekli";
+"FORCE_MESSAGE" = "Yeni bir sürüm mevcut. Devam etmeden önce lütfen uygulamanızı güncelleyin.";
+"OPTIONAL_TITLE" = "Uygulama güncellemesi mevcut";
+"OPTIONAL_MESSAGE" = "Bu son güncellemeye çeşitli yenilikçi geliştirmeler ekledik.";

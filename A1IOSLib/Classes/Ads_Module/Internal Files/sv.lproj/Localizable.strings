@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Internetanslutningen verkar vara offline.";
+"NETWORK_ERROR" = "Nätverksanslutningen förlorades.";
+"PRICE_ERROR" = "Det uppstod ett fel när priserna skulle hämtas - försök igen";
+"FETCH_PLANS_ERROR" = "Det går inte att hämta prenumerationsplaner.";
+"UPDATE_NOW" = "Uppdatera nu";
+"MAYBE_LATER" = "Kanske senare";
+"ALERT" = "Varna";
+"OK" = "Ok";
+"CANCEL" = "Annullera";
+"FORCE_TITLE" = "Appuppdatering krävs";
+"FORCE_MESSAGE" = "En ny version finns tillgänglig. Uppdatera din app innan du fortsätter.";
+"OPTIONAL_TITLE" = "Appuppdatering tillgänglig";
+"OPTIONAL_MESSAGE" = "Vi har införlivat flera innovativa förbättringar i den här senaste uppdateringen.";

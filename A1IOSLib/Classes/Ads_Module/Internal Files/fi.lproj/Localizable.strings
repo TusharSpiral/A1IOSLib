@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Internet-yhteys näyttää olevan offline-tilassa.";
+"NETWORK_ERROR" = "Verkkoyhteys katkesi.";
+"PRICE_ERROR" = "Hintoja haettaessa tapahtui virhe – yritä uudelleen";
+"FETCH_PLANS_ERROR" = "Tilaussuunnitelmia ei voi noutaa.";
+"UPDATE_NOW" = "Päivitä nyt";
+"MAYBE_LATER" = "Ehkä myöhemmin";
+"ALERT" = "Varoitus";
+"OK" = "Ok";
+"CANCEL" = "Peruuttaa";
+"FORCE_TITLE" = "Sovelluspäivitys vaaditaan";
+"FORCE_MESSAGE" = "Uusi versio on saatavilla. Päivitä sovelluksesi ennen kuin jatkat.";
+"OPTIONAL_TITLE" = "Sovelluspäivitys saatavilla";
+"OPTIONAL_MESSAGE" = "Olemme sisällyttäneet tähän viimeisimpään päivitykseen useita innovatiivisia parannuksia.";

@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "Połączenie internetowe wydaje się być offline.";
+"NETWORK_ERROR" = "Połączenie sieciowe zostało utracone.";
+"PRICE_ERROR" = "Wystąpił błąd podczas pobierania cen. Spróbuj ponownie";
+"FETCH_PLANS_ERROR" = "Nie można pobrać planów subskrypcji.";
+"UPDATE_NOW" = "Aktualizuj teraz";
+"MAYBE_LATER" = "Może później";
+"ALERT" = "Alarm";
+"OK" = "OK";
+"CANCEL" = "Anulować";
+"FORCE_TITLE" = "Wymagana aktualizacja aplikacji";
+"FORCE_MESSAGE" = "Dostępna jest nowa wersja. Przed kontynuowaniem zaktualizuj swoją aplikację.";
+"OPTIONAL_TITLE" = "Dostępna aktualizacja aplikacji";
+"OPTIONAL_MESSAGE" = "W najnowszej aktualizacji wprowadziliśmy kilka innowacyjnych ulepszeń.";

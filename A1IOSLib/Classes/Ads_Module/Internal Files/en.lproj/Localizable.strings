@@ -12,3 +12,10 @@
 "FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
 "UPDATE_NOW" = "Update Now";
 "MAYBE_LATER" = "Maybe Later";
+"ALERT" = "Alert";
+"OK" = "Ok";
+"CANCEL" = "Cancel";
+"FORCE_TITLE" = "App update required";
+"FORCE_MESSAGE" = "A new version is available. Please update your app before proceeding.";
+"OPTIONAL_TITLE" = "App update available";
+"OPTIONAL_MESSAGE" = "We have incorporated several innovative enhancements in this latest update.";

@@ -6,9 +6,16 @@
   
 */
 
-"INTERNET_ERROR" = "Internet connection appears to be offline.";
-"NETWORK_ERROR" = "The network connection was lost.";
-"PRICE_ERROR" = "There was an error fetching prices - please try again";
-"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
-"UPDATE_NOW" = "Update Now";
-"MAYBE_LATER" = "Maybe Later";
+"INTERNET_ERROR" = "การเชื่อมต่ออินเทอร์เน็ตดูเหมือนจะออฟไลน์";
+"NETWORK_ERROR" = "การเชื่อมต่อเครือข่ายขาดหายไป";
+"PRICE_ERROR" = "เกิดข้อผิดพลาดในการเรียกราคา - โปรดลองอีกครั้ง";
+"FETCH_PLANS_ERROR" = "ไม่สามารถดึงข้อมูลแผนการสมัครสมาชิกได้";
+"UPDATE_NOW" = "อัปเดตทันที";
+"MAYBE_LATER" = "ไว้ก่อน";
+"ALERT" = "เตือน";
+"OK" = "ตกลง";
+"CANCEL" = "ยกเลิก";
+"FORCE_TITLE" = "จำเป็นต้องอัปเดตแอป";
+"FORCE_MESSAGE" = "มีเวอร์ชันใหม่ให้ใช้งานแล้ว โปรดอัปเดตแอปของคุณก่อนดำเนินการต่อ";
+"OPTIONAL_TITLE" = "มีการอัปเดตแอป";
+"OPTIONAL_MESSAGE" = "เราได้รวมการปรับปรุงเชิงนวัตกรรมหลายประการไว้ในการอัปเดตล่าสุดนี้";
