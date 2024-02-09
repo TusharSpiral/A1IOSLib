@@ -135,6 +135,7 @@ extension AppOpenAdManager: GADFullScreenContentDelegate {
     print("App open ad was dismissed.")
       // Send callback
       onClose?()
+      AdsHandler.shared.appOpenLoadTime = Date()
       // Load the next ad so its ready for displaying
       loadAd()
   }
