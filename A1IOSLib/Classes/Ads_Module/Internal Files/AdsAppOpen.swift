@@ -59,11 +59,7 @@ final class AppOpenAdManager: NSObject {
       EventManager.shared.logEvent(title: AdsKey.event_ad_appopen_load_start.rawValue)
     isLoadingAd = true
     print("Start loading app open ad.")
-    GADAppOpenAd.load(
-      withAdUnitID: adUnitId,
-      request: request(),
-      orientation: UIInterfaceOrientation.portrait
-    ) { ad, error in
+    GADAppOpenAd.load(withAdUnitID: adUnitId, request: request()) { appOpenAd, error in
       self.isLoadingAd = false
       if let error = error {
         self.appOpenAd = nil
@@ -74,7 +70,7 @@ final class AppOpenAdManager: NSObject {
         return
       }
         EventManager.shared.logEvent(title: AdsKey.event_ad_appopen_loaded.rawValue)
-      self.appOpenAd = ad
+      self.appOpenAd = appOpenAd
       self.appOpenAd?.fullScreenContentDelegate = self
         print("App open ad loaded successfully.")
         if self.showAdAfterLoad, let ads = self.appOpenAd, let viewController = self.viewController {
