@@ -25,7 +25,7 @@ final class AppOpenAdManager: NSObject {
     private let request: () -> GADRequest
 
   /// The app open ad.
-  var appOpenAd: GADAppOpenAd?
+  private var appOpenAd: GADAppOpenAd?
   /// Maintains a reference to the delegate.
   /// Keeps track of if an app open ad is loading.
   var isLoadingAd = false
