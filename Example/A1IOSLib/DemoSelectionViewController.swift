@@ -120,10 +120,8 @@ final class DemoSelectionViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //makeBanner()
-        //showAppOpenAd()
-        checkAndShowPermissionPopup()
-        AppUpdate.shared.checkUpdate()
+//        checkAndShowPermissionPopup()
+//        AppUpdate.shared.checkUpdate()
     }
 
     func showAppOpenAd() {

@@ -47,7 +47,7 @@ public protocol AdsType: AnyObject {
                       onError: ((Error) -> Void)?,
                       onWillPresentScreen: (() -> Void)?,
                       onWillDismissScreen: (() -> Void)?,
-                      onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, GADBannerView)?
+                      onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, UIView)?
     
     func showAppOpenAd(from viewController: UIViewController,
                       onOpen: (() -> Void)?,

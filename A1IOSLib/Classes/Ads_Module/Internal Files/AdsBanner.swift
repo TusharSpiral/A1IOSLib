@@ -21,6 +21,8 @@ final class AdsBanner: NSObject {
     private var onDidDismissScreen: (() -> Void)?
 
     private var bannerView: GADBannerView?
+    private var shimmer: ShimmerView = ShimmerView()
+    private var bannerContainer: UIView = UIView()
     
     // MARK: - Initialization
     
@@ -40,7 +42,7 @@ final class AdsBanner: NSObject {
                  onError: ((Error) -> Void)?,
                  onWillPresentScreen: (() -> Void)?,
                  onWillDismissScreen: (() -> Void)?,
-                 onDidDismissScreen: (() -> Void)?) -> GADBannerView {
+                 onDidDismissScreen: (() -> Void)?) -> UIView {
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
@@ -62,8 +64,14 @@ final class AdsBanner: NSObject {
 
         // Set the banner view delegate
         bannerView.delegate = self
-
-        return bannerView
+        bannerContainer = UIView()
+        bannerContainer.frame = bannerView.frame
+        shimmer = ShimmerView()
+        shimmer.frame = bannerView.frame
+        bannerContainer.addSubview(shimmer)
+        shimmer.startAnimating()
+        bannerContainer.addSubview(bannerView)
+        return bannerContainer
     }
 }
 
@@ -98,6 +106,7 @@ extension AdsBanner: GADBannerViewDelegate {
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         onOpen?()
+        shimmer.stopAnimating()
         print("AdsBanner did receive ad from: \(bannerView.responseInfo?.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "not found")")
     }
 
@@ -105,6 +114,7 @@ extension AdsBanner: GADBannerViewDelegate {
         EventManager.shared.logEvent(title: AdsKey.event_ad_banner_load_failed.rawValue)
         EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_load_failed.rawValue, key: "error", value: error.localizedDescription)
         onError?(error)
+        shimmer.stopAnimating()
     }
 
     // Click-Time lifecycle events

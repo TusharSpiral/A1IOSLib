@@ -183,7 +183,7 @@ extension Ads: AdsType {
                              onError: ((Error) -> Void)?,
                              onWillPresentScreen: (() -> Void)?,
                              onWillDismissScreen: (() -> Void)?,
-                             onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, GADBannerView)? {
+                             onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, UIView)? {
         guard !isDisabled else { return nil }
 
         var adUnitId: String? {

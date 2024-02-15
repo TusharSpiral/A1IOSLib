@@ -122,6 +122,7 @@ extension AdsInterstitial: GADFullScreenContentDelegate {
         isShowingInterAd = false
         // Send callback
         onClose?()
+        AdsHandler.shared.interLoadTime = Date()
         // Load the next ad so its ready for displaying
         load()
     }
