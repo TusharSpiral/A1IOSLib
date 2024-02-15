@@ -25,7 +25,7 @@ final class AppOpenAdManager: NSObject {
     private let request: () -> GADRequest
 
   /// The app open ad.
-  var appOpenAd: GADAppOpenAd?
+  private var appOpenAd: GADAppOpenAd?
   /// Maintains a reference to the delegate.
   /// Keeps track of if an app open ad is loading.
   var isLoadingAd = false
@@ -59,12 +59,9 @@ final class AppOpenAdManager: NSObject {
       EventManager.shared.logEvent(title: AdsKey.event_ad_appopen_load_start.rawValue)
     isLoadingAd = true
     print("Start loading app open ad.")
-    GADAppOpenAd.load(
-      withAdUnitID: adUnitId,
-      request: request(),
-      orientation: UIInterfaceOrientation.portrait
-    ) { ad, error in
-      self.isLoadingAd = false
+    GADAppOpenAd.load(withAdUnitID: adUnitId, request: request()) { [weak self] (ad, error) in
+        guard let self else {return}
+        self.isLoadingAd = false
       if let error = error {
         self.appOpenAd = nil
         print("App open ad failed to load with error: \(error.localizedDescription)")
