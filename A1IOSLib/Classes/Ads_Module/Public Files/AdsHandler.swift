@@ -56,6 +56,10 @@ public class AdsHandler {
         return a1Ads.isAppOpenAdShowing
     }
     
+    public func appOpenAdLoading() -> Bool {
+        return a1Ads.isAppOpenAdLoading
+    }
+    
     public func interAdAvailable() -> Bool {
         return a1Ads.isInterstitialAdReady
     }

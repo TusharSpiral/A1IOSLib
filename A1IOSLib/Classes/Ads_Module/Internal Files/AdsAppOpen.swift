@@ -12,6 +12,7 @@ import GoogleMobileAds
 protocol AdsAppOpenType: AnyObject {
     var isReady: Bool { get }
     var isShowing: Bool { get }
+    var isLoading: Bool { get }
     func load()
     func stopLoading()
     func show(from viewController: UIViewController,
@@ -160,6 +161,10 @@ extension AppOpenAdManager: AdsAppOpenType {
     
     var isShowing: Bool {
         return isShowingAd
+    }
+
+    var isLoading: Bool {
+        return isLoadingAd
     }
 
     func load() {
