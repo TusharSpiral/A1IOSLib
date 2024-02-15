@@ -44,6 +44,14 @@ public final class Ads: NSObject {
 // MARK: - AdsType
 
 extension Ads: AdsType {
+    public var isAppOpenAdSplashShowing: Bool {
+        get {
+            appOpenAd?.isAppOpenSplash ?? false
+        }
+        set {
+            appOpenAd?.isAppOpenSplash = newValue
+        }
+    }
     
     /// Check if app open  ad is ready to be displayed.
     public var isAppOpenAdReady: Bool {

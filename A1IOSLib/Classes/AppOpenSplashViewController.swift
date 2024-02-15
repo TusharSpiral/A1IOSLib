@@ -24,6 +24,7 @@ public class AppOpenSplashViewController: UIViewController {
         if splashImageView != nil {
             splashImageView.image = UIImage(named: splashImageName)
         }
+        AdsHandler.shared.setAppOpenAdSplashShowing(true)
         startTimer()
     }
     
@@ -64,6 +65,7 @@ public class AppOpenSplashViewController: UIViewController {
     
     private func startMainScreen() {
         self.dismiss(animated: false) {
+            AdsHandler.shared.setAppOpenAdSplashShowing(false)
             print("Dismissed splash")
         }
     }
