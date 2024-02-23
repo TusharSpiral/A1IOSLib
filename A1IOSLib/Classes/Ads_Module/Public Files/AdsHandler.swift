@@ -48,12 +48,24 @@ public class AdsHandler {
         }
     }
     
+    public func appOpenAdSplashShowing() -> Bool {
+        return a1Ads.isAppOpenAdSplashShowing
+    }
+
+    public func setAppOpenAdSplashShowing(_ value: Bool) {
+        a1Ads.isAppOpenAdSplashShowing = value
+    }
+
     public func appOpenAdAvailable() -> Bool {
         return a1Ads.isAppOpenAdReady
     }
     
     public func appOpenAdShowing() -> Bool {
         return a1Ads.isAppOpenAdShowing
+    }
+    
+    public func appOpenAdLoading() -> Bool {
+        return a1Ads.isAppOpenAdLoading
     }
     
     public func interAdAvailable() -> Bool {

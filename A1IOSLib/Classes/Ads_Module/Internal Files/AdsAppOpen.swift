@@ -10,8 +10,10 @@ import Foundation
 import GoogleMobileAds
 
 protocol AdsAppOpenType: AnyObject {
+    var isAppOpenSplash: Bool { get set }
     var isReady: Bool { get }
     var isShowing: Bool { get }
+    var isLoading: Bool { get }
     func load()
     func stopLoading()
     func show(from viewController: UIViewController,
@@ -31,6 +33,7 @@ final class AppOpenAdManager: NSObject {
   var isLoadingAd = false
   /// Keeps track of if an app open ad is showing.
   var isShowingAd = false
+  var isAppOpenAdSplash = false
   /// Keeps track of the time when an app open ad was loaded to discard expired ad.
     private var viewController: UIViewController?
     private var showAdAfterLoad = false
@@ -154,12 +157,25 @@ extension AppOpenAdManager: GADFullScreenContentDelegate {
 }
 
 extension AppOpenAdManager: AdsAppOpenType {
+    var isAppOpenSplash: Bool {
+        get {
+            return isAppOpenAdSplash
+        }
+        set {
+            isAppOpenAdSplash = newValue
+        }
+    }
+        
     var isReady: Bool {
         return isAdAvailable()
     }
     
     var isShowing: Bool {
         return isShowingAd
+    }
+
+    var isLoading: Bool {
+        return isLoadingAd
     }
 
     func load() {

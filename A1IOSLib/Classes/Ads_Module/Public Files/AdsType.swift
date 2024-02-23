@@ -32,6 +32,7 @@ public protocol AdsRequestBuilderType: AnyObject {
 }
 
 public protocol AdsType: AnyObject {
+    var isAppOpenAdSplashShowing: Bool { get set }
     var isAppOpenAdReady: Bool { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
