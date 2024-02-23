@@ -54,7 +54,7 @@ public class AppUpdate {
             DispatchQueue.main.async { [weak self] in
                 self?.isPopupShowing = true
                 EventManager.shared.logEvent(title: AppUpdateKey.event_force_update_home_pop_up_shown.rawValue)
-                Utility.showAlert(title:config.forceTitle, message:config.forceMessage, defaultTitle: "Update Now", defaultHandler: handler)
+                Utility.showAlert(title:Localization.forceTitle, message:Localization.forceMessage, defaultTitle: Localization.updateNow, defaultHandler: handler)
             }
             return true
         } else {
@@ -86,7 +86,7 @@ public class AppUpdate {
             DispatchQueue.main.async { [weak self] in
                 self?.isPopupShowing = true
                 EventManager.shared.logEvent(title: AppUpdateKey.event_optional_update_home_pop_up_shown.rawValue)
-                Utility.showAlert(title: config.optionalTitle, message: config.optionalMessage, defaultTitle: "Maybe Later", defaultHandler: handler, isCancel: true, cancelTitle: "Update Now", cancelHandler: handler1)
+                Utility.showAlert(title: Localization.optionalTitle, message: Localization.optionalMessage, defaultTitle: Localization.maybeLater, defaultHandler: handler, isCancel: true, cancelTitle: Localization.updateNow, cancelHandler: handler1)
             }
             return true
         } else {

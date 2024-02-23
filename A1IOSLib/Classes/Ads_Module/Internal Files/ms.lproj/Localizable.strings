@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  Pods
+
+  Created by Navnidhi Sharma on 07/02/24.
+  
+*/
+
+"INTERNET_ERROR" = "Sambungan Internet kelihatan di luar talian.";
+"NETWORK_ERROR" = "Sambungan rangkaian terputus.";
+"PRICE_ERROR" = "Berlaku ralat semasa mengambil harga - sila cuba lagi";
+"FETCH_PLANS_ERROR" = "Tidak dapat mengambil pelan langganan.";
+"UPDATE_NOW" = "Mengemas kini sekarang";
+"MAYBE_LATER" = "Mungkin kemudian";
+"ALERT" = "Amaran";
+"OK" = "Okey";
+"CANCEL" = "Batal";
+"FORCE_TITLE" = "Kemas kini apl diperlukan";
+"FORCE_MESSAGE" = "Versi baharu tersedia. Sila kemas kini apl anda sebelum meneruskan.";
+"OPTIONAL_TITLE" = "Kemas kini apl tersedia";
+"OPTIONAL_MESSAGE" = "Kami telah memasukkan beberapa peningkatan inovatif dalam kemas kini terbaharu ini.";

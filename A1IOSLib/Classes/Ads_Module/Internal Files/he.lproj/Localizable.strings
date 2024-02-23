@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  Pods
+
+  Created by Navnidhi Sharma on 07/02/24.
+  
+*/
+
+"INTERNET_ERROR" = "נראה שהחיבור לאינטרנט אינו מקוון.";
+"NETWORK_ERROR" = "החיבור לרשת אבד.";
+"PRICE_ERROR" = "אירעה שגיאה באחזור מחירים - אנא נסה שוב";
+"FETCH_PLANS_ERROR" = "לא ניתן להביא תוכניות מנוי.";
+"UPDATE_NOW" = "עדכן כעת";
+"MAYBE_LATER" = "אולי אחר כך";
+"ALERT" = "עֵרָנִי";
+"OK" = "בסדר";
+"CANCEL" = "לְבַטֵל";
+"FORCE_TITLE" = "נדרש עדכון אפליקציה";
+"FORCE_MESSAGE" = "גרסה חדשה זמינה. אנא עדכן את האפליקציה שלך לפני שתמשיך.";
+"OPTIONAL_TITLE" = "עדכון אפליקציה זמין";
+"OPTIONAL_MESSAGE" = "שילבנו מספר שיפורים חדשניים בעדכון האחרון הזה.";
