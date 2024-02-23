@@ -24,7 +24,10 @@
     "A1IOSLib/**/*.{storyboard}",
     "A1IOSLib/**/*.{xib}"
   ],
-  "source_files": "A1IOSLib/**/*.{swift}",
+  "source_files": [
+    "A1IOSLib/**/*.{swift}",
+    "A1IOSLib/**/*.{strings}"
+  ],
   "dependencies": {
     "Alamofire": [
 

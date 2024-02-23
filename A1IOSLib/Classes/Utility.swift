@@ -8,7 +8,7 @@
 import UIKit
 
 class Utility {
-    class func showAlert(title:String = "Alert", message: String, defaultTitle: String? = "Ok", defaultHandler: ((UIAlertAction) -> Void)? = nil, isCancel: Bool = false, cancelTitle: String? = "Cancel", cancelHandler: ((UIAlertAction) -> Void)? = nil) {
+    class func showAlert(title:String = Localization.alertTitle, message: String, defaultTitle: String? = Localization.okTitle, defaultHandler: ((UIAlertAction) -> Void)? = nil, isCancel: Bool = false, cancelTitle: String? = Localization.cancelTitle, cancelHandler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: defaultTitle, style: UIAlertAction.Style.default, handler: defaultHandler))
         if isCancel {
