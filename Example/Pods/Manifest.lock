@@ -1,5 +1,5 @@
 PODS:
-  - A1IOSLib (1.1.12):
+  - A1IOSLib (1.1.15):
     - Alamofire
     - Beacon
     - FBSDKCoreKit
@@ -9,6 +9,7 @@ PODS:
     - Google-Mobile-Ads-SDK
     - Mixpanel-swift
     - Purchasely (= 4.2.0)
+    - ShimmerSwift
     - SwiftyJSON
     - YandexMobileMetrica
   - Alamofire (5.8.1)
@@ -118,6 +119,7 @@ PODS:
   - nanopb/encode (2.30909.1)
   - PromisesObjC (2.3.1)
   - Purchasely (4.2.0)
+  - ShimmerSwift (2.1.1)
   - SwiftyJSON (5.0.1)
   - YandexMobileMetrica (4.5.2):
     - YandexMobileMetrica/Static (= 4.5.2)
@@ -154,6 +156,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Purchasely
+    - ShimmerSwift
     - SwiftyJSON
     - YandexMobileMetrica
 
@@ -162,7 +165,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  A1IOSLib: 78c36a5a0341f6c935a5e0abc78a6e24324cd6b7
+  A1IOSLib: 3e0833f5f79556c011f61bfc28cd1e97d773d7f1
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   Beacon: 40264b605cb79338f8dfe28b9e07ebd172121deb
   FBAEMKit: 6c7b5eb77c96861bb59e040842c6e55bf39512ce
@@ -184,6 +187,7 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   Purchasely: 46641748d09d6d4746bb799a9f46d88810dbb256
+  ShimmerSwift: f7ed2daf9c246de8299dfd9e12c6ab465cba9842
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   YandexMobileMetrica: f5368ee93f286c793d73b58da00929babfc897c1
 

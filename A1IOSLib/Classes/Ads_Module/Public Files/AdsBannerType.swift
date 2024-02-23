@@ -13,4 +13,6 @@ public protocol AdsBannerType: AnyObject {
     
     /// Show the banner ad.
     func show()
+    
+    func updateLayout()
 }

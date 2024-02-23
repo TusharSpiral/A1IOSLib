@@ -85,7 +85,6 @@ final class DemoSelectionViewController: UITableViewController {
     private let sections = Section.allCases
     private let notificationCenter: NotificationCenter = .default
     private var bannerAd: AdsBannerType?
-    private var shimmerView: ShimmerView?
 
     // MARK: - Initialization
     
@@ -291,22 +290,5 @@ private extension DemoSelectionViewController {
             }
         }
     }
-    
-    func showBannerUI() {
-        if shimmerView == nil {
-            shimmerView = ShimmerView(frame: CGRectMake(0, 0, UIScreen.main.bounds.width, 61))
-            if let myView = shimmerView {
-                view.addSubview(myView)
-            }
-        }
-        shimmerView?.startAnimating()
-    }
-    
-    func hideBannerUI() {
-        if let myView = shimmerView {
-            myView.removeFromSuperview()
-        }
-    }
-
 }
 
