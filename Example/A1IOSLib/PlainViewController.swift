@@ -15,7 +15,8 @@ final class PlainViewController: UIViewController {
 
     private let a1Ads: AdsType
     private var bannerAd: AdsBannerType?
-    
+    private var bannerView: UIView?
+
     private lazy var interstitialAdButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Show Interstitial ad", for: .normal)
@@ -102,14 +103,21 @@ final class PlainViewController: UIViewController {
         )
         DispatchQueue.main.async {
             self.bannerAd = banner?.0
-            if let bannerView = banner?.1 {
-                bannerView.frame = CGRectMake(0, UIScreen.main.bounds.height - bannerView.frame.size.height - self.view.safeAreaInsets.bottom, bannerView.frame.size.width, bannerView.frame.size.height)
-                self.view.addSubview(bannerView)
+            if let banner = banner?.1 {
+                self.bannerView = banner
+//                bannerView.frame = CGRectMake(0, UIScreen.main.bounds.height - bannerView.frame.size.height - self.view.safeAreaInsets.bottom, bannerView.frame.size.width, bannerView.frame.size.height)
+                banner.frame = CGRectMake(0, self.view.safeAreaInsets.top , UIScreen.main.bounds.width, banner.frame.size.height)
+                self.view.addSubview(banner)
                 self.bannerAd?.show()
             }
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.bannerAd?.updateLayout()
+        
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }

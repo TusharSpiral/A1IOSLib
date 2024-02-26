@@ -32,4 +32,5 @@ Pod::Spec.new do |spec|
   spec.dependency 'Google-Mobile-Ads-SDK'
   spec.dependency 'FirebaseRemoteConfig'
   spec.dependency 'SwiftyJSON'
+  spec.dependency 'ShimmerSwift'
 end
