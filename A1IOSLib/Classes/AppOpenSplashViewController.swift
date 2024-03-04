@@ -8,6 +8,10 @@
 
 import UIKit
 
+public protocol AppOpenSplashViewControllerDelegate {
+    func dismissController()
+}
+
 public class AppOpenSplashViewController: UIViewController {
     /// Number of seconds remaining to show the app open ad.
     /// This simulates the time needed to load the app.
@@ -18,6 +22,7 @@ public class AppOpenSplashViewController: UIViewController {
     /// Text that indicates the number of seconds left to show an app open ad.
     ///
     private var splashImageName: String = "welcome"
+    var delegate: AppOpenSplashViewControllerDelegate?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +71,7 @@ public class AppOpenSplashViewController: UIViewController {
     private func startMainScreen() {
         self.dismiss(animated: false) {
             AdsHandler.shared.setAppOpenAdSplashShowing(false)
+            self.delegate?.dismissController()
             print("Dismissed splash")
         }
     }
@@ -75,10 +81,11 @@ public class AppOpenSplashViewController: UIViewController {
         static let storyboardName = "Splash"
     }
     
-    public static func buildViewController(imageName: String) -> AppOpenSplashViewController {
+    public static func buildViewController(imageName: String, delegate: UIViewController) -> AppOpenSplashViewController {
         if let controller = UIStoryboard(name: Constants.storyboardName,
                                          bundle: .main).instantiateViewController(withIdentifier: Constants.reuseIdentifier) as? AppOpenSplashViewController {
             controller.splashImageName = imageName
+            controller.delegate = delegate as? any AppOpenSplashViewControllerDelegate
             return controller
         }
         return AppOpenSplashViewController()
