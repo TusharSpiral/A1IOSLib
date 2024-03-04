@@ -76,6 +76,12 @@ public protocol AdaptyPaywallControllerDelegate: NSObject {
     func paywallController(_ controller: AdaptyPaywallController,
                            didCancelPurchase product: AdaptyPaywallProduct)
 
+    /// If user initiates the restore process, this method will be invoked.
+    ///
+    /// - Parameters:
+    ///     - controller: an ``AdaptyPaywallController`` within which the event occurred.
+    func paywallControllerDidStartRestore(_ controller: AdaptyPaywallController)
+
     /// This method is invoked when a successful restore is made.
     ///
     /// Check if the ``AdaptyProfile`` object contains the desired access level, and if so, the controller can be dismissed.
@@ -113,7 +119,8 @@ public protocol AdaptyPaywallControllerDelegate: NSObject {
 }
 
 extension AdaptyUI {
-    public static let SDKVersion = "2.0.2"
+    public static let SDKVersion = "2.1.2"
+    public static let BuilderVersion = "2"
 
     /// If you are using the [Paywall Builder](https://docs.adapty.io/docs/paywall-builder-getting-started), you can use this method to get a configuration object for your paywall.
     ///
@@ -128,10 +135,11 @@ extension AdaptyUI {
         let data: Data
         do {
             data = try JSONSerialization.data(withJSONObject: [
-                "paywall_id": paywall.id,
                 "paywall_variation_id": paywall.variationId,
+                "paywall_instance_id": paywall.instanceIdentity,
                 "locale": locale,
-                "builder_version": AdaptyUI.SDKVersion,
+                "ui_sdk_version": AdaptyUI.SDKVersion,
+                "builder_version": AdaptyUI.BuilderVersion,
             ])
         } catch {
             let encodingError = AdaptyUIError.encoding(error)
@@ -151,18 +159,21 @@ extension AdaptyUI {
     ///   - products: optional ``AdaptyPaywallProducts`` array. Pass this value in order to optimize the display time of the products on the screen. If you pass `nil`, ``AdaptyUI`` will automatically fetch the required products.
     ///   - viewConfiguration: an ``AdaptyUI.LocalizedViewConfiguration`` object containing information about the visual part of the paywall. To load it, use the ``AdaptyUI.getViewConfiguration(paywall:locale:)`` method.
     ///   - delegate: the object that implements the ``AdaptyPaywallControllerDelegate`` protocol. Use it to respond to different events happening inside the purchase screen.
+    ///   - tagResolver: if you are going to use custom tags functionality, pass the resolver function here.
     /// - Returns: an ``AdaptyPaywallController`` object, representing the requested paywall screen.
     public static func paywallController(
         for paywall: AdaptyPaywall,
         products: [AdaptyPaywallProduct]? = nil,
         viewConfiguration: AdaptyUI.LocalizedViewConfiguration,
-        delegate: AdaptyPaywallControllerDelegate
+        delegate: AdaptyPaywallControllerDelegate,
+        tagResolver: AdaptyTagResolver? = nil
     ) -> AdaptyPaywallController {
         AdaptyPaywallController(
             paywall: paywall,
             products: products,
             viewConfiguration: viewConfiguration,
-            delegate: delegate
+            delegate: delegate,
+            tagResolver: tagResolver
         )
     }
 }

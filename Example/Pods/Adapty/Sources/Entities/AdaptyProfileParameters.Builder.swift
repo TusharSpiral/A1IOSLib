@@ -8,7 +8,7 @@
 import Foundation
 
 extension AdaptyProfileParameters {
-    public class Builder {
+    public final class Builder {
         var parameters: AdaptyProfileParameters
 
         public convenience init() {
@@ -148,6 +148,12 @@ extension AdaptyProfileParameters.Builder {
     @discardableResult
     public func with(oneSignalPlayerId value: String?) -> Self {
         parameters.oneSignalPlayerId = value
+        return self
+    }
+
+    @discardableResult
+    public func with(oneSignalSubscriptionId value: String?) -> Self {
+        parameters.oneSignalSubscriptionId = value
         return self
     }
 

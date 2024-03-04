@@ -31,6 +31,8 @@ class TemplateLayoutBuilderBasic: LayoutBuilder {
     private let closeButton: AdaptyUI.Button?
     private let footerBlock: AdaptyUI.FooterBlock?
     private let initialProducts: [ProductInfoModel]
+    private let paywall: AdaptyPaywall
+    private let tagConverter: AdaptyUI.Text.CustomTagConverter?
 
     private let scrollViewDelegate = AdaptyCompoundScrollViewDelegate()
 
@@ -45,7 +47,9 @@ class TemplateLayoutBuilderBasic: LayoutBuilder {
         purchaseButtonOfferTitle: AdaptyUI.CompoundText?,
         footerBlock: AdaptyUI.FooterBlock?,
         closeButton: AdaptyUI.Button?,
-        initialProducts: [ProductInfoModel]
+        initialProducts: [ProductInfoModel],
+        paywall: AdaptyPaywall,
+        tagConverter: AdaptyUI.Text.CustomTagConverter?
     ) {
         self.coverImage = coverImage
         self.coverImageHeightMultilpyer = coverImageHeightMultilpyer
@@ -58,14 +62,18 @@ class TemplateLayoutBuilderBasic: LayoutBuilder {
         self.footerBlock = footerBlock
         self.closeButton = closeButton
         self.initialProducts = initialProducts
+        self.paywall = paywall
+        self.tagConverter = tagConverter
     }
 
+    private weak var closeButtonComponentView: AdaptyButtonComponentView?
     private weak var activityIndicatorComponentView: AdaptyActivityIndicatorView?
     private weak var contentViewComponentView: AdaptyBaseContentView?
     private weak var productsComponentView: ProductsComponentView?
     private weak var continueButtonComponentView: AdaptyButtonComponentView?
     private weak var scrollView: AdaptyBaseScrollView?
 
+    var closeButtonView: AdaptyButtonComponentView? { closeButtonComponentView }
     var activityIndicator: AdaptyActivityIndicatorView? { activityIndicatorComponentView }
     var productsView: ProductsComponentView? { productsComponentView }
     var continueButton: AdaptyButtonComponentView? { continueButtonComponentView }
@@ -138,23 +146,25 @@ class TemplateLayoutBuilderBasic: LayoutBuilder {
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         contentView.layoutContent(stackView, inset: UIEdgeInsets(top: contentShape.recommendedContentOverlap,
-                                                                 left: 24,
+                                                                 left: 20,
                                                                  bottom: 24 + verticalOverscroll,
-                                                                 right: 24))
+                                                                 right: 20))
 
         if let titleRows = titleRows {
-            try layoutText(titleRows,
-                           paragraph: .init(paragraphSpacing: 4.0),
-                           in: stackView)
+            try layoutTitleRows(titleRows, tagConverter, in: stackView)
         }
 
         if let featuresBlock = featuresBlock {
-            try layoutFeaturesBlock(featuresBlock, in: stackView)
+            try layoutFeaturesBlock(featuresBlock, tagConverter, in: stackView)
         }
 
-        productsComponentView = try layoutProductsBlock(productsBlock,
-                                                        initialProducts: initialProducts,
-                                                        in: stackView)
+        productsComponentView = try layoutProductsBlock(
+            productsBlock,
+            initialProducts: initialProducts, 
+            paywall: paywall,
+            tagConverter: tagConverter,
+            in: stackView
+        )
 
         let continueButtonPlaceholder = UIView()
         continueButtonPlaceholder.translatesAutoresizingMaskIntoConstraints = false
@@ -165,8 +175,11 @@ class TemplateLayoutBuilderBasic: LayoutBuilder {
             continueButtonPlaceholder.heightAnchor.constraint(equalToConstant: 58.0)
         )
 
-        let continueButtonView = AdaptyButtonComponentView(component: purchaseButton,
-                                                           addProgressView: true) { [weak self] _ in
+        let continueButtonView = AdaptyButtonComponentView(
+            component: purchaseButton,
+            tagConverter: tagConverter,
+            addProgressView: true
+        ) { [weak self] _ in
             self?.onContinueCallback?()
         }
 
@@ -180,6 +193,7 @@ class TemplateLayoutBuilderBasic: LayoutBuilder {
         if let footerBlock {
             let footerView = try AdaptyFooterComponentView(
                 footerBlock: footerBlock,
+                tagConverter: tagConverter,
                 onTap: { [weak self] action in
                     self?.onActionCallback?(action)
                 }
@@ -193,6 +207,7 @@ class TemplateLayoutBuilderBasic: LayoutBuilder {
         if let closeButton = closeButton {
             let closeButtonView = AdaptyButtonComponentView(
                 component: closeButton,
+                tagConverter: tagConverter,
                 contentViewMargins: .closeButtonDefaultMargin,
                 onTap: { [weak self] _ in
                     self?.onActionCallback?(.close)
@@ -200,6 +215,7 @@ class TemplateLayoutBuilderBasic: LayoutBuilder {
             )
 
             layoutCloseButton(closeButtonView, on: view)
+            closeButtonComponentView = closeButtonView
         }
 
         let progressView = AdaptyActivityIndicatorView(backgroundColor: .black.withAlphaComponent(0.6),

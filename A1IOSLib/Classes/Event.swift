@@ -186,7 +186,7 @@ public class EventManager: NSObject {
     }
 
     public func logEvent(title: String, keys: [String] = [], values: [String] = []) {
-        var params = setParam(keys: keys, values: values)
+        let params = setParam(keys: keys, values: values)
         logEvent(title: title, params: params)
     }
     

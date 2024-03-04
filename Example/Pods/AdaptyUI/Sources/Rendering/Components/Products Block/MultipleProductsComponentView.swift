@@ -15,18 +15,24 @@ extension Collection where Indices.Iterator.Element == Index {
 }
 
 final class MultipleProductsComponentView: UIStackView, ProductsComponentView {
+    private let paywall: AdaptyPaywall
     private var products: [ProductInfoModel]
     private let productsBlock: AdaptyUI.ProductsBlock
+    private let tagConverter: AdaptyUI.Text.CustomTagConverter?
 
     var onProductSelected: ((ProductInfoModel) -> Void)?
 
     init(
         axis: NSLayoutConstraint.Axis,
+        paywall: AdaptyPaywall,
         products: [ProductInfoModel],
-        productsBlock: AdaptyUI.ProductsBlock
+        productsBlock: AdaptyUI.ProductsBlock,
+        tagConverter: AdaptyUI.Text.CustomTagConverter?
     ) throws {
+        self.paywall = paywall
         self.products = products
         self.productsBlock = productsBlock
+        self.tagConverter = tagConverter
 
         super.init(frame: .zero)
 
@@ -53,7 +59,7 @@ final class MultipleProductsComponentView: UIStackView, ProductsComponentView {
 
     private func cleanupView() {
         purchaseButtons.removeAll()
-        
+
         let views = arrangedSubviews
 
         for view in views {
@@ -63,19 +69,32 @@ final class MultipleProductsComponentView: UIStackView, ProductsComponentView {
     }
 
     private func populateProductsButtons(_ products: [ProductInfoModel], selectedId: String?) throws {
-        let productsInfos = try productsBlock.productsInfos
+        var previousProductInfoView: ProductInfoView?
+
+        let orderedProducts = productsBlock.products(by: paywall)
 
         for i in 0 ..< products.count {
             let product = products[i]
+            let productInfo: AdaptyUI.ProductInfo
 
-            guard let productInfo = productsInfos[safe: i] else {
-                throw AdaptyUIError.componentNotFound("\(product.id):product_info")
+            if let adaptyProduct = product.adaptyProduct {
+                if let info = productsBlock.product(by: adaptyProduct)?.toProductInfo(id: product.id) {
+                    productInfo = info
+                } else {
+                    throw AdaptyUIError.componentNotFound("\(product.id):product_info")
+                }
+            } else {
+                if let info = orderedProducts[safe: i]?.toProductInfo(id: product.id) {
+                    productInfo = info
+                } else {
+                    throw AdaptyUIError.componentNotFound("\(product.id):product_info")
+                }
             }
 
             let productView = UIView()
             addArrangedSubview(productView)
 
-            let button = try buildProductItemView(
+            let (button, productInfoView) = try buildProductItemView(
                 on: productView,
                 blockType: productsBlock.type,
                 product: product,
@@ -84,13 +103,24 @@ final class MultipleProductsComponentView: UIStackView, ProductsComponentView {
             )
 
             purchaseButtons.append(button)
-            
+
             switch productsBlock.type {
             case .horizontal:
-                addConstraint(productView.heightAnchor.constraint(equalToConstant: 128.0))
+                guard let previousView = previousProductInfoView as? VerticalProductInfoView,
+                      let currentView = productInfoView as? VerticalProductInfoView else { break }
+
+                addConstraints([
+                    currentView.titleLabelYAxisAnchor.constraint(equalTo: previousView.titleLabelYAxisAnchor),
+                    currentView.subtitleLabelYAxisAnchor.constraint(equalTo: previousView.subtitleLabelYAxisAnchor),
+                    currentView.priceTitleLabelYAxisAnchor.constraint(equalTo: previousView.priceTitleLabelYAxisAnchor),
+                    currentView.priceSubtitleLabelYAxisAnchor.constraint(equalTo: previousView.priceSubtitleLabelYAxisAnchor),
+                ])
             default:
+                alignment = .fill
                 addConstraint(productView.heightAnchor.constraint(equalToConstant: 64.0))
             }
+
+            previousProductInfoView = productInfoView
         }
     }
 
@@ -100,18 +130,25 @@ final class MultipleProductsComponentView: UIStackView, ProductsComponentView {
         product: ProductInfoModel,
         productInfo: AdaptyUI.ProductInfo,
         isSelected: Bool
-    ) throws -> AdaptyButtonComponentView {
+    ) throws -> (AdaptyButtonComponentView, ProductInfoView) {
         guard let buttonComponent = productInfo.button else {
             throw AdaptyUIError.componentNotFound("product_info.button")
         }
 
         let productInfoView: ProductInfoView
+        let contentViewMargins: UIEdgeInsets
 
         switch blockType {
         case .horizontal:
-            productInfoView = try VerticalProductInfoView(product: product, info: productInfo)
+            contentViewMargins = .zero
+            productInfoView = try VerticalProductInfoView(product: product,
+                                                          info: productInfo,
+                                                          tagConverter: tagConverter)
         default:
-            productInfoView = try HorizontalProductInfoView(product: product, info: productInfo)
+            contentViewMargins = .init(top: 12, left: 20, bottom: 12, right: 20)
+            productInfoView = try HorizontalProductInfoView(product: product,
+                                                            info: productInfo,
+                                                            tagConverter: tagConverter)
         }
 
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -120,8 +157,9 @@ final class MultipleProductsComponentView: UIStackView, ProductsComponentView {
 
         let button = AdaptyButtonComponentView(
             component: buttonComponent,
+            tagConverter: tagConverter,
             contentView: productInfoView,
-            contentViewMargins: .init(top: 12, left: 20, bottom: 12, right: 20),
+            contentViewMargins: contentViewMargins,
             onTap: { [weak self] _ in self?.onProductSelected?(product) }
         )
         button.isSelected = isSelected
@@ -135,7 +173,9 @@ final class MultipleProductsComponentView: UIStackView, ProductsComponentView {
         ])
 
         if let tagText = productInfo.tagText {
-            let tagView = try ProductBadgeView(text: tagText, shape: productInfo.tagShape)
+            let tagView = try ProductBadgeView(text: tagText,
+                                               shape: productInfo.tagShape,
+                                               tagConverter: tagConverter)
 
             containerView.addSubview(tagView)
 
@@ -152,15 +192,15 @@ final class MultipleProductsComponentView: UIStackView, ProductsComponentView {
                 ])
             }
         }
-        
-        return button
+
+        return (button, productInfoView)
     }
 
-    func updateProducts(_ products: [ProductInfoModel], selectedProductId: String?) {
+    func updateProducts(_ products: [ProductInfoModel], selectedProductId: String?) throws {
         self.products = products
 
         cleanupView()
-        try? setupView()
+        try setupView()
     }
 
     func updateSelectedState(_ productId: String) {

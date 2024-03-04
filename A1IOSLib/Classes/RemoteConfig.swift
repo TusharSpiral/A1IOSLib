@@ -70,14 +70,19 @@ public struct AdsConfiguration: Codable {
 
 // MARK: - VersionConfig
 public struct VersionConfig: Codable {
-    public let forceTitle, forceMessage, optionalTitle, optionalMessage: String
     public let minVersion, stableVersion: String
 
     enum CodingKeys: String, CodingKey {
-        case forceTitle = "force_title"
-        case forceMessage = "force_message"
-        case optionalTitle = "optional_title"
-        case optionalMessage = "optional_message"
         case minVersion, stableVersion
+    }
+    
+    public init() {
+        self.minVersion = ""
+        self.stableVersion = ""
+    }
+    
+    public init(minVersion: String, stableVersion: String) {
+        self.minVersion = minVersion
+        self.stableVersion = stableVersion
     }
 }

@@ -14,6 +14,11 @@ extension AdaptyUI.ViewItem {
         let properties: [(key: String, value: AdaptyUI.ViewItem)]
     }
 
+    struct ProductObject {
+        let productId: String
+        let properties: [(key: String, value: AdaptyUI.ViewItem)]
+    }
+
     struct Shape {
         let backgroundAssetId: String?
         let type: AdaptyUI.ShapeType
@@ -28,6 +33,8 @@ extension AdaptyUI.ViewItem {
         let selectedTitle: Text?
         let align: AdaptyUI.Button.Align?
         let action: AdaptyUI.ButtonAction?
+        let visibility: Bool
+        let transitionIn: [AdaptyUI.Transition]
     }
 
     struct Text {
@@ -78,6 +85,21 @@ extension AdaptyUI.ViewItem.CustomObject: Decodable {
     }
 }
 
+extension AdaptyUI.ViewItem.ProductObject: Decodable {
+    enum PropertyKeys: String {
+        case type
+        case productId = "product_id"
+        case order
+    }
+
+    init(from decoder: Decoder) throws {
+        typealias CodingKeys = AdaptyUI.ViewStyle.CodingKeys
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        properties = try container.toOrderedItems { PropertyKeys(rawValue: $0) == nil }
+        productId = try container.decode(String.self, forKey: CodingKeys(PropertyKeys.productId))
+    }
+}
+
 extension AdaptyUI.ViewItem.Shape: Decodable {
     enum CodingKeys: String, CodingKey {
         case backgroundAssetId = "background"
@@ -100,7 +122,6 @@ extension AdaptyUI.ViewItem.Shape: Decodable {
         } else {
             shape = AdaptyUI.Shape.defaultType
         }
-
 
         if case .rectangle = shape,
            let rectangleCornerRadius = try container.decodeIfPresent(AdaptyUI.Shape.CornerRadius.self, forKey: .rectangleCornerRadius) {
@@ -127,6 +148,29 @@ extension AdaptyUI.ViewItem.Button: Decodable {
         case title
         case align
         case action
+        case visibility
+        case transitionIn = "transition_in"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        shape = try container.decodeIfPresent(AdaptyUI.ViewItem.Shape.self, forKey: .shape)
+        selectedShape = try container.decodeIfPresent(AdaptyUI.ViewItem.Shape.self, forKey: .selectedShape)
+        selectedTitle = try container.decodeIfPresent(AdaptyUI.ViewItem.Text.self, forKey: .selectedTitle)
+        title = try container.decodeIfPresent(AdaptyUI.ViewItem.Text.self, forKey: .title)
+        align = try container.decodeIfPresent(AdaptyUI.Button.Align.self, forKey: .align)
+        action = try container.decodeIfPresent(AdaptyUI.ButtonAction.self, forKey: .action)
+        visibility = try container.decodeIfPresent(Bool.self, forKey: .visibility) ?? true
+
+        if let array = try? container.decodeIfPresent([AdaptyUI.Transition].self, forKey: .transitionIn) {
+            transitionIn = array
+        } else if let union = try? container.decodeIfPresent(AdaptyUI.TransitionUnion.self, forKey: .transitionIn) {
+            transitionIn = union.items
+        } else if let transition = try container.decodeIfPresent(AdaptyUI.Transition.self, forKey: .transitionIn) {
+            transitionIn = [transition]
+        } else {
+            transitionIn = []
+        }
     }
 }
 

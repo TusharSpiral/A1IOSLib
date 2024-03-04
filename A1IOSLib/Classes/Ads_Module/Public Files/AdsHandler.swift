@@ -25,13 +25,19 @@ public class AdsHandler {
             isPro = pro
             Ads.shared.setDisabled(true)
         } else if config.appOpenID != "", config.interID != "", config.bannerID != "" {
-            if config.adsEnabled != adConfig.adsEnabled || config.appOpenID != adConfig.appOpenID || config.interID != adConfig.interID || config.bannerID != adConfig.bannerID || pro != isPro {
-                isPro = pro
-                adConfig = config
-                configureA1Ads()
+            if let configuration = a1Ads.getConfiguration {
+                if config.adsEnabled != configuration.adsEnabled || config.appOpenID != configuration.appOpenID || config.interID != configuration.interID || config.bannerID != configuration.bannerID || pro != isPro {
+                    isPro = pro
+                    adConfig = config
+                    configureA1Ads()
+                } else {
+                    isPro = pro
+                    adConfig = config
+                }
             } else {
                 isPro = pro
                 adConfig = config
+                configureA1Ads()
             }
             Ads.shared.setDisabled(false)
         } else {
@@ -42,12 +48,24 @@ public class AdsHandler {
         }
     }
     
+    public func appOpenAdSplashShowing() -> Bool {
+        return a1Ads.isAppOpenAdSplashShowing
+    }
+
+    public func setAppOpenAdSplashShowing(_ value: Bool) {
+        a1Ads.isAppOpenAdSplashShowing = value
+    }
+
     public func appOpenAdAvailable() -> Bool {
         return a1Ads.isAppOpenAdReady
     }
     
     public func appOpenAdShowing() -> Bool {
         return a1Ads.isAppOpenAdShowing
+    }
+    
+    public func appOpenAdLoading() -> Bool {
+        return a1Ads.isAppOpenAdLoading
     }
     
     public func interAdAvailable() -> Bool {
@@ -80,7 +98,7 @@ public class AdsHandler {
     
     public func canShowInterAd() -> Bool {
         interTriedCount += 1
-        guard isReachable && !isPro && adConfig.adsEnabled && adConfig.interEnabled else { return false }
+        guard !a1Ads.isInterAdShowing && !a1Ads.isAppOpenAdShowing && isReachable && !isPro && adConfig.adsEnabled && adConfig.interEnabled else { return false }
         print("Inter interval is \(adConfig.interInterval) count is \(interTriedCount)")
         // Check if ad was loaded more than n hours ago.
         if let openLoadTime = appOpenLoadTime {
@@ -105,7 +123,7 @@ public class AdsHandler {
     }
     
     public func canShowAppOpenAd() -> Bool {
-        guard isReachable && !isPro && adConfig.adsEnabled && adConfig.appOpenEnabled else { return false }
+        guard !a1Ads.isInterAdShowing && !a1Ads.isAppOpenAdShowing && isReachable && !isPro && adConfig.adsEnabled && adConfig.appOpenEnabled else { return false }
         print("App open interval is \(TimeInterval(adConfig.appOpenInterval))")
         // Check if ad was loaded more than n hours ago.
         if let interTime = interLoadTime {

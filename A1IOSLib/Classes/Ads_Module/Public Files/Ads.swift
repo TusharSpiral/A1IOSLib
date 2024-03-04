@@ -44,23 +44,15 @@ public final class Ads: NSObject {
 // MARK: - AdsType
 
 extension Ads: AdsType {
-    
-    public func getDebugScreen() -> DebugViewController? {
-        let podBundle = Bundle(for:DebugViewController.self)
-           if let bundleURL = podBundle.url(forResource: "A1IOSLib", withExtension: "bundle") {
-               if let bundle = Bundle(url: bundleURL) {
-                   let storyboard = UIStoryboard(name: "Debug", bundle: bundle)
-                   return storyboard.instantiateInitialViewController()
-               } else {
-                   assertionFailure("Could not load the bundle")
-               }
-           } else {
-               assertionFailure("Could not create a path to the bundle")
-           }
-        return nil
-
+    public var isAppOpenAdSplashShowing: Bool {
+        get {
+            appOpenAd?.isAppOpenSplash ?? false
+        }
+        set {
+            appOpenAd?.isAppOpenSplash = newValue
+        }
     }
-
+    
     /// Check if app open  ad is ready to be displayed.
     public var isAppOpenAdReady: Bool {
         appOpenAd?.isReady ?? false
@@ -69,6 +61,10 @@ extension Ads: AdsType {
     /// Check if app open  ad is ready to be displayed.
     public var isAppOpenAdShowing: Bool {
         appOpenAd?.isShowing ?? false
+    }
+
+    public var isAppOpenAdLoading: Bool {
+        appOpenAd?.isLoading ?? false
     }
 
     /// Check if interstitial ad is ready to be displayed.
@@ -199,7 +195,7 @@ extension Ads: AdsType {
                              onError: ((Error) -> Void)?,
                              onWillPresentScreen: (() -> Void)?,
                              onWillDismissScreen: (() -> Void)?,
-                             onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, GADBannerView)? {
+                             onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, UIView)? {
         guard !isDisabled else { return nil }
 
         var adUnitId: String? {

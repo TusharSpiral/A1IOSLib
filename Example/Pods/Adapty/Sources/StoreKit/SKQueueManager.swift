@@ -17,7 +17,7 @@ protocol VariationIdStorage {
 final class SKQueueManager: NSObject {
     let queue: DispatchQueue
 
-    var purchaseValidator: PurchaseValidator!
+    var purchaseValidator: PurchaseValidator! // TODO: need refactoring
 
     var makePurchasesCompletionHandlers = [String: [AdaptyResultCompletion<AdaptyPurchasedInfo>]]()
     var makePurchasesProduct = [String: AdaptyProduct]()
@@ -30,7 +30,7 @@ final class SKQueueManager: NSObject {
 
     private(set) var _sk2TransactionObserver: Any?
 
-    init(queue: DispatchQueue,  storage: VariationIdStorage, skProductsManager: SKProductsManager) {
+    init(queue: DispatchQueue, storage: VariationIdStorage, skProductsManager: SKProductsManager) {
         self.queue = queue
         self.storage = storage
         variationsIds = storage.getVariationsIds() ?? [:]
@@ -88,38 +88,17 @@ final class SKQueueManager: NSObject {
     }
 }
 
-extension SKPaymentTransactionState {
-    fileprivate var stringValue: String {
-        switch self {
-        case .purchasing: return "purchasing"
-        case .purchased: return "purchased"
-        case .failed: return "failed"
-        case .restored: return "restored"
-        case .deferred: return "deferred"
-        default:
-            return "unknown(\(self))"
-        }
-    }
-}
-
-extension SKPaymentTransaction {
-    var logParams: EventParameters {
-        [
-            "product_id": .value(payment.productIdentifier),
-            "state": .value(transactionState.stringValue),
-            "transaction_id": .valueOrNil(transactionIdentifier),
-            "original_id": .valueOrNil(original?.transactionIdentifier),
-        ]
-    }
-}
-
 extension SKQueueManager: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         transactions.forEach { transaction in
 
             let logParams = transaction.logParams
 
-            Adapty.logSystemEvent(AdaptyAppleEventQueueHandlerParameters(eventName: "updated_transaction", params: logParams, error: transaction.error == nil ? nil : "\(transaction.error!.localizedDescription). Detail: \(transaction.error!)"))
+            Adapty.logSystemEvent(AdaptyAppleEventQueueHandlerParameters(
+                eventName: "updated_transaction",
+                params: logParams,
+                error: transaction.error.map { "\($0.localizedDescription). Detail: \($0)" }
+            ))
 
             switch transaction.transactionState {
             case .purchased:

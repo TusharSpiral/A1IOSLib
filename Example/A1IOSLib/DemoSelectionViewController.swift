@@ -85,7 +85,6 @@ final class DemoSelectionViewController: UITableViewController {
     private let sections = Section.allCases
     private let notificationCenter: NotificationCenter = .default
     private var bannerAd: AdsBannerType?
-    private var shimmerView: ShimmerView?
 
     // MARK: - Initialization
     
@@ -120,9 +119,8 @@ final class DemoSelectionViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //makeBanner()
-        //showAppOpenAd()
-        checkAndShowPermissionPopup()
+//        checkAndShowPermissionPopup()
+//        AppUpdate.shared.checkUpdate()
     }
 
     func showAppOpenAd() {
@@ -212,32 +210,11 @@ final class DemoSelectionViewController: UITableViewController {
                 let plainViewController = PlainViewController(a1Ads: a1Ads)
                 viewController = plainViewController
             case .viewControllerInsideTabBar:
-                let storyboard = UIStoryboard(name: "Debug", bundle: nil)
-                if let vc = storyboard.instantiateViewController(withIdentifier: "DebugViewController") as? DebugViewController {
-                    navigationController?.pushViewController(vc, animated: true)
-                }
-            case .tabBarController:
-//                if let vc = a1Ads.getDebugScreen() {
-//                    navigationController?.pushViewController(vc, animated: true)
-//                }
-//                let vc = DebugViewController()
-//                navigationController?.pushViewController(vc, animated: true)
-                //let bundleName = Bundle(for: EventHandler.self)
-//                dump()
-//                let storyboard = UIStoryboard(name: "Debug", bundle: A1IOSLib.nibBundle?.bundleURL)
-//                if let vc = storyboard.instantiateViewController(withIdentifier: "DebugViewController") as? DebugViewController {
-//                    self.navigationController?.pushViewController(vc, animated: true)
-//                }
-//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                if let vc = storyboard.instantiateViewController(withIdentifier: "MasterTabbarController") as? MasterTabbarController {
-//                    navigationController?.pushViewController(vc, animated: true)
-//                }
-                break
+                viewController = DebugViewController.buildViewController()
+            case .tabBarController: break
             case .nativeAd:
-                viewController = NativeAdViewController(a1Ads: a1Ads)
-            case .updateConsent:
-                break
-                
+                viewController = NativeAdViewController()
+            case .updateConsent: break
             case .disable:
                 a1Ads.setDisabled(true)
                 bannerAd?.remove()
@@ -313,22 +290,5 @@ private extension DemoSelectionViewController {
             }
         }
     }
-    
-    func showBannerUI() {
-        if shimmerView == nil {
-            shimmerView = ShimmerView(frame: CGRectMake(0, 0, UIScreen.main.bounds.width, 61))
-            if let myView = shimmerView {
-                view.addSubview(myView)
-            }
-        }
-        shimmerView?.startAnimating()
-    }
-    
-    func hideBannerUI() {
-        if let myView = shimmerView {
-            myView.removeFromSuperview()
-        }
-    }
-
 }
 

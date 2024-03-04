@@ -13,15 +13,15 @@
     import AdServices
 #endif
 
-#if canImport(iAd)
-    import iAd
-#endif
-
 import Foundation
 #if canImport(UIKit)
     import UIKit
 #elseif os(macOS)
     import AppKit
+#endif
+
+#if canImport(WebKit)
+    import WebKit
 #endif
 
 import StoreKit
@@ -34,7 +34,7 @@ enum Environment {
     }
 
     enum User {
-        static var locale: String { Locale.preferredLanguages.first ?? Locale.current.identifier }
+        static var locale: AdaptyLocale { AdaptyLocale(id: Locale.preferredLanguages.first ?? Locale.current.identifier) }
     }
 
     enum System {
@@ -92,20 +92,37 @@ enum Environment {
             }
         }
 
+        private static var _webViewUserAgent: String?
+        static var webViewUserAgent: String? {
+            if let value = _webViewUserAgent { return value }
+            #if canImport(WebKit)
+                DispatchQueue.syncInMainIfNeeded {
+                    Device._webViewUserAgent = WKWebView().value(forKey: "userAgent").flatMap { $0 as? String }
+                }
+                return Device._webViewUserAgent
+            #else
+                return nil
+            #endif
+        }
+
+        static var ipV4Address: String?
+
         static let name: String = {
             #if os(macOS) || targetEnvironment(macCatalyst)
-                let matchingDict = IOServiceMatching("IOPlatformExpertDevice")
-                let service = IOServiceGetMatchingService(kIOMasterPortDefault, matchingDict)
-                defer { IOObjectRelease(service) }
+                let service = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
 
-                if let modelData = IORegistryEntryCreateCFProperty(service,
-                                                                   "model" as CFString,
-                                                                   kCFAllocatorDefault, 0).takeRetainedValue() as? Data,
-                    let cString = modelData.withUnsafeBytes({ $0.baseAddress?.assumingMemoryBound(to: UInt8.self) }) {
-                    return String(cString: cString)
-                } else {
-                    return "unknown device"
+                var modelIdentifier: String?
+                if let modelData = IORegistryEntryCreateCFProperty(service, "model" as CFString, kCFAllocatorDefault, 0).takeRetainedValue() as? Data {
+                    modelIdentifier = String(data: modelData, encoding: .utf8)?.trimmingCharacters(in: .controlCharacters)
                 }
+                IOObjectRelease(service)
+
+                if modelIdentifier?.isEmpty ?? false {
+                    modelIdentifier = nil
+                }
+
+                return modelIdentifier ?? "unknown device"
+
             #else
                 var systemInfo = utsname()
                 uname(&systemInfo)
@@ -151,17 +168,6 @@ enum Environment {
 
     #if os(iOS)
         static func searchAdsAttribution(completion: @escaping ([String: Any]?, Error?) -> Void) {
-            ADClient.shared().requestAttributionDetails { attribution, error in
-                if var attribution: [String: Any] = attribution {
-                    attribution["asa-attribution"] = false
-                    completion(attribution, error)
-                } else {
-                    modernSearchAdsAttribution(completion)
-                }
-            }
-        }
-
-        private static func modernSearchAdsAttribution(_ completion: @escaping ([String: Any]?, Error?) -> Void) {
             guard #available(iOS 14.3, *) else {
                 completion(nil, nil)
                 return

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ValidateReceiptRequest: HTTPEncodableRequest, HTTPRequestWithDecodableResponse {
+private struct ValidateReceiptRequest: HTTPEncodableRequest, HTTPRequestWithDecodableResponse {
     typealias ResponseBody = Backend.Response.Body<AdaptyProfile>
 
     let endpoint = HTTPEndpoint(
@@ -46,20 +46,36 @@ struct ValidateReceiptRequest: HTTPEncodableRequest, HTTPRequestWithDecodableRes
 }
 
 extension HTTPSession {
+    func performValidateTransactionRequest(profileId: String,
+                                           purchaseProductInfo: PurchaseProductInfo,
+                                           withReceipt receipt: Data,
+                                           _ completion: @escaping AdaptyResultCompletion<VH<AdaptyProfile>>) {
+        _performValidateReceiptRequest(profileId, receipt, purchaseProductInfo, completion)
+    }
+
     func performValidateReceiptRequest(profileId: String,
                                        receipt: Data,
-                                       purchaseProductInfo: PurchaseProductInfo? = nil,
                                        _ completion: @escaping AdaptyResultCompletion<VH<AdaptyProfile>>) {
+        _performValidateReceiptRequest(profileId, receipt, nil, completion)
+    }
+
+    fileprivate func _performValidateReceiptRequest(_ profileId: String,
+                                                    _ receipt: Data,
+                                                    _ purchaseProductInfo: PurchaseProductInfo?,
+                                                    _ completion: @escaping AdaptyResultCompletion<VH<AdaptyProfile>>) {
         let request = ValidateReceiptRequest(profileId: profileId,
                                              receipt: receipt,
                                              purchaseProductInfo: purchaseProductInfo)
-        let logParams: EventParameters? = purchaseProductInfo == nil ? nil : [
-            "product_id": .value(purchaseProductInfo!.vendorProductId),
-            "transaction_id": .valueOrNil(purchaseProductInfo!.transactionId),
-            "variation_id": .valueOrNil(purchaseProductInfo!.productVariationId),
-            "variation_id_persistent": .valueOrNil(purchaseProductInfo!.persistentProductVariationId),
-            "promotional_offer_id": .valueOrNil(purchaseProductInfo!.promotionalOfferId),
-        ]
+        let logParams: EventParameters? = purchaseProductInfo.map {
+            [
+                "product_id": .value($0.vendorProductId),
+                "transaction_id": .valueOrNil($0.transactionId),
+                "variation_id": .valueOrNil($0.productVariationId),
+                "variation_id_persistent": .valueOrNil($0.persistentProductVariationId),
+                "promotional_offer_id": .valueOrNil($0.promotionalOfferId),
+            ]
+        }
+
         perform(request, logName: "validate_receipt", logParams: logParams) { (result: ValidateReceiptRequest.Result) in
             switch result {
             case let .failure(error):

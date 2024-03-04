@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  Pods
+
+  Created by Navnidhi Sharma on 07/02/24.
+  
+*/
+
+"INTERNET_ERROR" = "Internet connection appears to be offline.";
+"NETWORK_ERROR" = "The network connection was lost.";
+"PRICE_ERROR" = "There was an error fetching prices - please try again";
+"FETCH_PLANS_ERROR" = "Unable to fetch subscription plans.";
+"UPDATE_NOW" = "Update Now";
+"MAYBE_LATER" = "Maybe Later";
+"ALERT" = "Alert";
+"OK" = "Ok";
+"CANCEL" = "Cancel";
+"FORCE_TITLE" = "App update required";
+"FORCE_MESSAGE" = "A new version is available. Please update your app before proceeding.";
+"OPTIONAL_TITLE" = "App update available";
+"OPTIONAL_MESSAGE" = "We have incorporated several innovative enhancements in this latest update.";

@@ -16,7 +16,7 @@ extension AdaptyUI.Button {
             return normal?.shape
         }
     }
-    
+
     func getStateTitle(_ isSelected: Bool) -> AdaptyUI.CompoundText? {
         if isSelected, let selected {
             return selected.title
@@ -30,41 +30,46 @@ extension UIEdgeInsets {
     var toDicrectional: NSDirectionalEdgeInsets {
         .init(top: top, leading: left, bottom: bottom, trailing: right)
     }
-    
+
     static let closeButtonDefaultMargin: UIEdgeInsets = .init(top: 12, left: 16, bottom: 12, right: 16)
     static let footerButtonDefaultMargin: UIEdgeInsets = .init(top: 12, left: 0, bottom: 12, right: 0)
 }
 
 final class AdaptyButtonComponentView: UIButton {
     let component: AdaptyUI.Button
+    let tagConverter: AdaptyUI.Text.CustomTagConverter?
     let onTap: (AdaptyUI.ButtonAction?) -> Void
 
     private var gradientLayer: CAGradientLayer?
     private var contentView: UIView?
     private let contentViewMargins: UIEdgeInsets
-    
+
     init(component: AdaptyUI.Button,
+         tagConverter: AdaptyUI.Text.CustomTagConverter?,
          contentView: UIView? = nil,
          contentViewMargins: UIEdgeInsets = .zero,
          addProgressView: Bool = false,
          onTap: @escaping (AdaptyUI.ButtonAction?) -> Void) {
         self.component = component
+        self.tagConverter = tagConverter
         self.onTap = onTap
         self.contentViewMargins = contentViewMargins
-        
+
         super.init(frame: .zero)
+
+        isHidden = !component.visibility
 
         translatesAutoresizingMaskIntoConstraints = false
         layer.masksToBounds = true
 
         if let contentView {
             setupContentView(contentView, contentViewMargins)
-        } else if let title = component.normal?.title?.attributedString() {
+        } else if let title = component.normal?.title?.attributedString(tagConverter: tagConverter) {
             setAttributedTitle(title, for: .normal)
 
             contentEdgeInsets = contentViewMargins
             titleLabel?.numberOfLines = 0
-            
+
             if #available(iOS 15.0, *) {
                 var configuration: UIButton.Configuration = .borderless()
                 configuration = .plain()
@@ -134,12 +139,12 @@ final class AdaptyButtonComponentView: UIButton {
         let title = component.getStateTitle(isSelected)
         updateContent(title)
     }
-    
+
     func updateContent(_ text: AdaptyUI.CompoundText?) {
         contentView?.removeFromSuperview()
         contentView = nil
 
-        setAttributedTitle(text?.attributedString(), for: .normal)
+        setAttributedTitle(text?.attributedString(tagConverter: tagConverter), for: .normal)
 
         if #available(iOS 15.0, *) {
             var configuration: UIButton.Configuration = .borderless()
@@ -155,6 +160,13 @@ final class AdaptyButtonComponentView: UIButton {
 
     func updateContent(_ view: UIView, margins: UIEdgeInsets?) {
         setupContentView(view, margins)
+    }
+
+    func performTransitionIn() {
+        guard let transition = component.transitionIn.first(where: { $0.isFade }),
+              case let .fade(animation) = transition else { return }
+
+        performFadeAnimation(animation)
     }
 
     required init?(coder: NSCoder) {
@@ -208,7 +220,7 @@ final class AdaptyButtonComponentView: UIButton {
                 self.gradientLayer = gradientLayer
             }
             backgroundColor = .clear
-        }        
+        }
     }
 
     private func updateShapeBorder(_ border: AdaptyUI.Shape.Border?) {
@@ -235,6 +247,39 @@ final class AdaptyButtonComponentView: UIButton {
             progressView.startAnimating()
         } else {
             progressView.stopAnimating()
+        }
+    }
+}
+
+extension AdaptyUI.Transition {
+    var isFade: Bool {
+        switch self {
+        case .fade: return true
+        default: return false
+        }
+    }
+}
+
+extension AdaptyUI.TransitionFade {
+    var options: UIView.AnimationOptions {
+        switch interpolator {
+        case .easeIn: return [.curveEaseIn]
+        case .easeOut: return [.curveEaseOut]
+        case .easeInOut: return [.curveEaseInOut]
+        default: return [.curveLinear]
+        }
+    }
+}
+
+extension UIView {
+    func performFadeAnimation(_ animation: AdaptyUI.TransitionFade) {
+        alpha = 0.0
+        isHidden = false
+
+        UIView.animate(withDuration: animation.duration,
+                       delay: animation.startDelay,
+                       options: animation.options) {
+            self.alpha = 1.0
         }
     }
 }

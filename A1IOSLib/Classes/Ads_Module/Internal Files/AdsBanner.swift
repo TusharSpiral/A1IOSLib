@@ -5,6 +5,7 @@
 //  Created by Mohammad Zaid on 28/11/23.
 //
 import GoogleMobileAds
+import ShimmerSwift
 
 final class AdsBanner: NSObject {
     
@@ -21,6 +22,9 @@ final class AdsBanner: NSObject {
     private var onDidDismissScreen: (() -> Void)?
 
     private var bannerView: GADBannerView?
+    private var shimmer: ShimmeringView = ShimmeringView()
+    private var shimmerContentView: UIView = UIView()
+    private var bannerContainer: UIView = UIView()
     
     // MARK: - Initialization
     
@@ -40,7 +44,7 @@ final class AdsBanner: NSObject {
                  onError: ((Error) -> Void)?,
                  onWillPresentScreen: (() -> Void)?,
                  onWillDismissScreen: (() -> Void)?,
-                 onDidDismissScreen: (() -> Void)?) -> GADBannerView {
+                 onDidDismissScreen: (() -> Void)?) -> UIView {
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
@@ -62,8 +66,20 @@ final class AdsBanner: NSObject {
 
         // Set the banner view delegate
         bannerView.delegate = self
-
-        return bannerView
+        bannerContainer = UIView()
+        bannerContainer.frame = bannerView.frame
+        shimmer = ShimmeringView()
+        shimmer.shimmerSpeed = 400
+        shimmer.frame = bannerView.frame
+        bannerContainer.addSubview(shimmer)
+        shimmerContentView = UIView(frame: shimmer.bounds)
+        shimmerContentView.backgroundColor = .lightGray
+        // Add the view you want shimmered to the `shimmerView`
+        shimmer.contentView = shimmerContentView
+        // Start shimmering
+        shimmer.isShimmering = true
+        bannerContainer.addSubview(bannerView)
+        return bannerContainer
     }
 }
 
@@ -86,6 +102,17 @@ extension AdsBanner: AdsBannerType {
         bannerView = nil
         onClose?()
     }
+    
+    func updateLayout() {
+        shimmer.isHidden = false
+        shimmer.isShimmering = true
+        if let banner = bannerView {
+            banner.frame.size.width = UIScreen.main.bounds.width
+            bannerContainer.frame.size.width = UIScreen.main.bounds.width
+            shimmer.frame.size.width = UIScreen.main.bounds.width
+            shimmerContentView.frame.size.width = UIScreen.main.bounds.width
+        }
+    }
 }
 
 // MARK: - GADBannerViewDelegate
@@ -98,6 +125,7 @@ extension AdsBanner: GADBannerViewDelegate {
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         onOpen?()
+        shimmer.isHidden = true
         print("AdsBanner did receive ad from: \(bannerView.responseInfo?.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "not found")")
     }
 
@@ -105,6 +133,7 @@ extension AdsBanner: GADBannerViewDelegate {
         EventManager.shared.logEvent(title: AdsKey.event_ad_banner_load_failed.rawValue)
         EventManager.shared.logEvent(title: AppErrorKey.event_ad_error_load_failed.rawValue, key: "error", value: error.localizedDescription)
         onError?(error)
+        shimmer.isHidden = true
     }
 
     // Click-Time lifecycle events

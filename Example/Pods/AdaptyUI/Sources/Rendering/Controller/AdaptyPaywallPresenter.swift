@@ -51,6 +51,8 @@ class AdaptyPaywallPresenter {
 
     private var cancellable = Set<AnyCancellable>()
 
+    private(set) var initiatePurchaseOnTap: Bool
+
     var onPurchase: ((AdaptyResult<AdaptyPurchasedInfo>, AdaptyPaywallProduct) -> Void)?
     var onRestore: ((AdaptyResult<AdaptyProfile>) -> Void)?
 
@@ -64,11 +66,20 @@ class AdaptyPaywallPresenter {
         self.logId = logId
         self.paywall = paywall
         self.viewConfiguration = viewConfiguration
+
+        if let style = try? viewConfiguration.extractDefaultStyle() {
+            initiatePurchaseOnTap = style.productBlock.initiatePurchaseOnTap
+        } else {
+            initiatePurchaseOnTap = false
+        }
+
         self.products = Self.generateProductsInfos(paywall: paywall,
                                                    products: products,
                                                    eligibilities: nil)
 
-        selectedProductId = self.products[selectedProductIndex].id
+        if selectedProductIndex < self.products.count && selectedProductIndex >= 0 {
+            selectedProductId = self.products[selectedProductIndex].id
+        }
     }
 
     private static func generateProductsInfos(
@@ -193,8 +204,16 @@ class AdaptyPaywallPresenter {
     private func loadProductsIntroductoryEligibilities() {
         guard let products = adaptyProducts else { return }
 
+        log(.verbose, "loadProductsIntroductoryEligibilities begin")
+
         Adapty.getProductsIntroductoryOfferEligibility(products: products) { [weak self] result in
-            self?.introductoryOffersEligibilities = try? result.get()
+            switch result {
+            case let .success(eligibilities):
+                self?.introductoryOffersEligibilities = eligibilities
+                self?.log(.verbose, "loadProductsIntroductoryEligibilities success: \(eligibilities)")
+            case let .failure(error):
+                self?.log(.error, "loadProductsIntroductoryEligibilities fail: \(error)")
+            }
         }
     }
 }

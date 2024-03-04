@@ -10,6 +10,10 @@ import Foundation
 
 extension AdaptyUI.ViewConfiguration {
     public func extractLocale(_ locale: String) -> AdaptyUI.LocalizedViewConfiguration {
+        extractLocale(AdaptyLocale(id: locale))
+    }
+
+    func extractLocale(_ locale: AdaptyLocale) -> AdaptyUI.LocalizedViewConfiguration {
         let localization: AdaptyUI.Localization?
         if let value = localizations[locale] {
             if defaultLocalization?.id == value.id {
@@ -45,7 +49,7 @@ extension AdaptyUI.ViewConfiguration {
             }
         }
 
-        func getString(_ id: String?) -> String? {
+        func getString(_ id: String?) -> AdaptyUI.Localization.Item? {
             guard let id = id else { return nil }
             return localization?.strings?[id]
         }
@@ -72,7 +76,7 @@ extension AdaptyUI.ViewConfiguration {
 
         func getButtonAction(from value: AdaptyUI.ButtonAction) -> AdaptyUI.ButtonAction {
             guard case let .openUrl(id) = value else { return value }
-            return .openUrl(getString(id))
+            return .openUrl(getString(id)?.value)
         }
 
         func getTextOrNil(from value: AdaptyUI.ViewItem.Text?) -> AdaptyUI.CompoundText? {
@@ -89,8 +93,11 @@ extension AdaptyUI.ViewConfiguration {
                     switch $0 {
                     case let .text(item):
                         let font = getAssetFont(item.fontAssetId) ?? defaultFont
+                        let str = getString(item.stringId)
                         let text = AdaptyUI.Text(
-                            value: getString(item.stringId),
+                            value: str?.value,
+                            fallback: str?.fallback,
+                            hasTags: str?.hasTags ?? false,
                             font: font,
                             size: item.size ?? group.size ?? font?.defaultSize,
                             fill: getAssetFilling(item.fillAssetId) ?? defaultFilling ?? font?.defaultFilling,
@@ -119,6 +126,10 @@ extension AdaptyUI.ViewConfiguration {
 
         func convert(_ item: [(key: String, value: AdaptyUI.ViewItem)]?) -> [(key: String, value: AdaptyUI.LocalizedViewItem)] {
             item?.map { (key: $0.key, value: convert($0.value)) } ?? []
+        }
+
+        func convert(_ item: AdaptyUI.ViewItem.ProductObject) -> AdaptyUI.ProductObject {
+            AdaptyUI.ProductObject(productId: item.productId, orderedProperties: convert(item.properties))
         }
 
         func convert(_ item: AdaptyUI.ViewItem) -> AdaptyUI.LocalizedViewItem {
@@ -152,7 +163,9 @@ extension AdaptyUI.ViewConfiguration {
                     normal: normal.isEmpty ? nil : normal,
                     selected: selected.isEmpty ? nil : selected,
                     align: value.align ?? AdaptyUI.Button.defaultAlign,
-                    action: getButtonActionOrNil(from: value.action)
+                    action: getButtonActionOrNil(from: value.action),
+                    visibility: value.visibility,
+                    transitionIn: value.transitionIn
                 ))
             case let .text(group):
                 return .text(getText(from: group))
@@ -177,6 +190,8 @@ extension AdaptyUI.ViewConfiguration {
                 productBlock: AdaptyUI.ProductsBlock(
                     type: style.value.productsBlock.type,
                     mainProductIndex: style.value.productsBlock.mainProductIndex,
+                    initiatePurchaseOnTap: style.value.productsBlock.initiatePurchaseOnTap,
+                    products: style.value.productsBlock.products.map { convert($0) },
                     orderedItems: convert(style.value.productsBlock.orderedItems)
                 ),
                 footerBlock: style.value.footerBlock.map {
@@ -190,7 +205,7 @@ extension AdaptyUI.ViewConfiguration {
         return AdaptyUI.LocalizedViewConfiguration(
             id: id,
             templateId: templateId,
-            locale: localization?.id ?? locale,
+            locale: (localization?.id ?? locale).id,
             styles: styles,
             isHard: isHard,
             mainImageRelativeHeight: mainImageRelativeHeight,

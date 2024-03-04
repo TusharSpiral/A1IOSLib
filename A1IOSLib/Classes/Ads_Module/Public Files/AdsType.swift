@@ -32,6 +32,7 @@ public protocol AdsRequestBuilderType: AnyObject {
 }
 
 public protocol AdsType: AnyObject {
+    var isAppOpenAdSplashShowing: Bool { get set }
     var isAppOpenAdReady: Bool { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
@@ -47,7 +48,7 @@ public protocol AdsType: AnyObject {
                       onError: ((Error) -> Void)?,
                       onWillPresentScreen: (() -> Void)?,
                       onWillDismissScreen: (() -> Void)?,
-                      onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, GADBannerView)?
+                      onDidDismissScreen: (() -> Void)?) -> (AdsBannerType, UIView)?
     
     func showAppOpenAd(from viewController: UIViewController,
                       onOpen: (() -> Void)?,
@@ -81,5 +82,4 @@ public protocol AdsType: AnyObject {
     
     func setDisabled(_ isDisabled: Bool)
     
-//    func getDebugScreen() -> MyViewController?
 }

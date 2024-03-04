@@ -21,20 +21,28 @@ public struct AdaptyProfileParameters {
     public internal(set) var appmetricaProfileId: String?
     public internal(set) var appmetricaDeviceId: String?
     public internal(set) var oneSignalPlayerId: String?
+    public internal(set) var oneSignalSubscriptionId: String?
     public internal(set) var pushwooshHWID: String?
     public internal(set) var firebaseAppInstanceId: String?
     public internal(set) var airbridgeDeviceId: String?
-    
+
     var storeCountry: String?
+    var ipV4Address: String?
+
     public internal(set) var appTrackingTransparencyStatus: AdaptyProfileParameters.AppTrackingTransparencyStatus?
-    
+
     var codableCustomAttributes: AdaptyProfile.CustomAttributes?
     public internal(set) var analyticsDisabled: Bool?
     public var customAttributes: [String: Any]? { codableCustomAttributes?.convertToSimpleDictionary() }
 
     init() {}
+
     init(storeCountry: String) {
         self.storeCountry = storeCountry
+    }
+
+    init(ipV4Address: String) {
+        self.ipV4Address = ipV4Address
     }
 
     init(customAttributes: AdaptyProfile.CustomAttributes) {
@@ -64,10 +72,13 @@ extension AdaptyProfileParameters: Codable {
         case appmetricaProfileId = "appmetrica_profile_id"
         case appmetricaDeviceId = "appmetrica_device_id"
         case storeCountry = "store_country"
+        case ipV4Address = "ip_v4_address"
+
         case appTrackingTransparencyStatus = "att_status"
         case codableCustomAttributes = "custom_attributes"
         case analyticsDisabled = "analytics_disabled"
         case oneSignalPlayerId = "one_signal_player_id"
+        case oneSignalSubscriptionId = "one_signal_subscription_id"
         case pushwooshHWID = "pushwoosh_hwid"
         case firebaseAppInstanceId = "firebase_app_instance_id"
         case airbridgeDeviceId = "airbridge_device_id"
@@ -88,9 +99,11 @@ extension AdaptyProfileParameters: Codable {
         try container.encodeIfPresent(appmetricaProfileId, forKey: .appmetricaProfileId)
         try container.encodeIfPresent(appmetricaDeviceId, forKey: .appmetricaDeviceId)
         try container.encodeIfPresent(storeCountry, forKey: .storeCountry)
+        try container.encodeIfPresent(ipV4Address, forKey: .ipV4Address)
         try container.encodeIfPresent(appTrackingTransparencyStatus, forKey: .appTrackingTransparencyStatus)
         try container.encodeIfPresent(codableCustomAttributes, forKey: .codableCustomAttributes)
         try container.encodeIfPresent(oneSignalPlayerId, forKey: .oneSignalPlayerId)
+        try container.encodeIfPresent(oneSignalSubscriptionId, forKey: .oneSignalSubscriptionId)
         try container.encodeIfPresent(pushwooshHWID, forKey: .pushwooshHWID)
         try container.encodeIfPresent(firebaseAppInstanceId, forKey: .firebaseAppInstanceId)
         try container.encodeIfPresent(airbridgeDeviceId, forKey: .airbridgeDeviceId)

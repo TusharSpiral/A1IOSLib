@@ -21,16 +21,18 @@ public class AdaptyPaywallController: UIViewController {
     private var layoutBuilder: LayoutBuilder?
     private let presenter: AdaptyPaywallPresenter
     private var cancellable = Set<AnyCancellable>()
+    private let tagResolver: AdaptyTagResolver?
 
     init(
         paywall: AdaptyPaywall,
         products: [AdaptyPaywallProduct]?,
         viewConfiguration: AdaptyUI.LocalizedViewConfiguration,
-        delegate: AdaptyPaywallControllerDelegate
+        delegate: AdaptyPaywallControllerDelegate,
+        tagResolver: AdaptyTagResolver?
     ) {
         let logId = AdaptyUI.generateLogId()
 
-        AdaptyUI.writeLog(level: .verbose, message: "#Controller_\(logId)# init template: \(viewConfiguration.templateId), products: \(products?.count ?? 0)")
+        AdaptyUI.writeLog(level: .verbose, message: "#\(logId)# init template: \(viewConfiguration.templateId), products: \(products?.count ?? 0)")
 
         self.logId = logId
         self.delegate = delegate
@@ -48,6 +50,8 @@ public class AdaptyPaywallController: UIViewController {
                                            products: products,
                                            selectedProductIndex: selectedProductIndex,
                                            viewConfiguration: viewConfiguration)
+
+        self.tagResolver = tagResolver
 
         super.init(nibName: nil, bundle: nil)
 
@@ -87,6 +91,7 @@ public class AdaptyPaywallController: UIViewController {
         super.viewDidAppear(animated)
 
         log(.verbose, "viewDidAppear")
+        layoutBuilder?.closeButtonView?.performTransitionIn()
     }
 
     override public func viewDidDisappear(_ animated: Bool) {
@@ -104,25 +109,37 @@ public class AdaptyPaywallController: UIViewController {
     private func buildInterface() {
         view.backgroundColor = .white
 
+        let tagConverter: AdaptyUI.Text.CustomTagConverter?
+
+        if let tagResolver = tagResolver {
+            tagConverter = { tagResolver.replacement(for: $0) }
+        } else {
+            tagConverter = nil
+        }
+
         do {
             layoutBuilder = try TemplateLayoutBuilderFabric.createLayoutFromConfiguration(
+                presenter.paywall,
                 presenter.viewConfiguration,
-                products: presenter.products
+                products: presenter.products,
+                tagConverter: tagConverter
             )
 
             try layoutBuilder?.buildInterface(on: view)
 
         } catch {
-            if let error = error as? AdaptyUIError {
-                log(.error, "Rendering Error = \(error)")
-                delegate?.paywallController(self, didFailRenderingWith: AdaptyError(error))
-            } else {
-                log(.error, "Unknown Rendering Error = \(error)")
-                let adaptyError = AdaptyError(AdaptyUIError.rendering(error))
-                delegate?.paywallController(self, didFailRenderingWith: adaptyError)
-            }
+            handleRenderingError(error)
+        }
+    }
 
-            return
+    private func handleRenderingError(_ error: Error) {
+        if let error = error as? AdaptyUIError {
+            log(.error, "Rendering Error = \(error)")
+            delegate?.paywallController(self, didFailRenderingWith: AdaptyError(error))
+        } else {
+            log(.error, "Unknown Rendering Error = \(error)")
+            let adaptyError = AdaptyError(AdaptyUIError.rendering(error))
+            delegate?.paywallController(self, didFailRenderingWith: adaptyError)
         }
     }
 
@@ -138,6 +155,7 @@ public class AdaptyPaywallController: UIViewController {
         case .restore:
             log(.verbose, "restore tap")
             presenter.restorePurchases()
+            delegate?.paywallControllerDidStartRestore(self)
         case let .custom(id):
             log(.verbose, "custom (\(id ?? "null") tap")
             guard let id = id else { return }
@@ -151,7 +169,14 @@ public class AdaptyPaywallController: UIViewController {
             .sink { [weak self] value in
                 guard let self = self else { return }
 
-                self.layoutBuilder?.productsView?.updateProducts(value, selectedProductId: self.presenter.selectedProductId)
+                do {
+                    try self.layoutBuilder?.productsView?.updateProducts(
+                        value,
+                        selectedProductId: self.presenter.selectedProductId
+                    )
+                } catch {
+                    self.handleRenderingError(error)
+                }
 
                 if let selectedProductId = self.presenter.selectedProductId,
                    let product = value.first(where: { $0.id == selectedProductId }) {
@@ -202,8 +227,14 @@ public class AdaptyPaywallController: UIViewController {
 
     private func subscribeForActions() {
         layoutBuilder?.productsView?.onProductSelected = { [weak self] product in
-            self?.presenter.selectProduct(id: product.id)
-            self?.layoutBuilder?.continueButtonShowIntroCallToAction(product.isEligibleForFreeTrial)
+            guard let self = self else { return }
+            
+            self.presenter.selectProduct(id: product.id)
+            self.layoutBuilder?.continueButtonShowIntroCallToAction(product.isEligibleForFreeTrial)
+            
+            if self.presenter.initiatePurchaseOnTap {
+                self.presenter.makePurchase()
+            }
         }
 
         layoutBuilder?.addListeners(

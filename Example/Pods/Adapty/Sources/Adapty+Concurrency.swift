@@ -17,20 +17,17 @@ import StoreKit
         /// - Parameter apiKey: You can find it in your app settings in [Adapty Dashboard](https://app.adapty.io/) *App settings* > *General*.
         /// - Parameter observerMode: A boolean value controlling [Observer mode](https://docs.adapty.io/v2.0.0/docs/observer-vs-full-mode). Turn it on if you handle purchases and subscription status yourself and use Adapty for sending subscription events and analytics
         /// - Parameter customerUserId: User identifier in your system
-        /// - Parameter enableUsageLogs: You can enable "Usage Logs" collection, passing here `true`
         /// - Parameter storeKit2Usage: You can override StoreKit 2 usage policy with this value
         /// - Parameter dispatchQueue: Specify the Dispatch Queue where callbacks will be executed
         public static func activate(_ apiKey: String,
                                     observerMode: Bool = false,
                                     customerUserId: String? = nil,
-                                    enableUsageLogs: Bool = false,
                                     storeKit2Usage: StoreKit2Usage = .default,
                                     dispatchQueue: DispatchQueue = .main) async throws {
             return try await withCheckedThrowingContinuation { continuation in
                 Adapty.activate(apiKey,
                                 observerMode: observerMode,
                                 customerUserId: customerUserId,
-                                enableUsageLogs: enableUsageLogs,
                                 storeKit2Usage: storeKit2Usage,
                                 dispatchQueue: dispatchQueue) { error in
                     if let error = error {
@@ -65,7 +62,7 @@ import StoreKit
         /// The main function for getting a user profile. Allows you to define the level of access, as well as other parameters.
         ///
         /// The `getProfile` method provides the most up-to-date result as it always tries to query the API. If for some reason (e.g. no internet connection), the Adapty SDK fails to retrieve information from the server, the data from cache will be returned. It is also important to note that the Adapty SDK updates AdaptyProfile cache on a regular basis, in order to keep this information as up-to-date as possible.
-        public static func getProfile() async throws -> AdaptyProfile? {
+        public static func getProfile() async throws -> AdaptyProfile {
             return try await withCheckedThrowingContinuation { continuation in
                 Adapty.getProfile { result in
                     switch result {
@@ -125,16 +122,22 @@ import StoreKit
         /// Read more on the [Adapty Documentation](https://docs.adapty.io/v2.0.0/docs/displaying-products)
         ///
         /// - Parameters:
-        ///   - id: The identifier of the desired paywall. This is the value you specified when you created the paywall in the Adapty Dashboard.
+        ///   - placementId: The identifier of the desired paywall. This is the value you specified when you created the paywall in the Adapty Dashboard.
         ///   - locale: The identifier of the paywall [localization](https://docs.adapty.io/docs/paywall#localizations).
         ///             This parameter is expected to be a language code composed of one or more subtags separated by the "-" character. The first subtag is for the language, the second one is for the region (The support for regions will be added later).
         ///             Example: "en" means English, "en-US" represents US English.
         ///             If the parameter is omitted, the paywall will be returned in the default locale.
+        ///   - fetchPolicy:
         /// - Returns: The ``AdaptyPaywall`` object. This model contains the list of the products ids, paywall's identifier, custom payload, and several other properties.
         /// - Throws: An ``AdaptyError`` object
-        public static func getPaywall(_ id: String, locale: String? = nil) async throws -> AdaptyPaywall? {
+        public static func getPaywall(
+            placementId: String,
+            locale: String? = nil,
+            fetchPolicy: AdaptyPaywall.FetchPolicy = .default,
+            loadTimeout: TimeInterval = .defaultLoadPaywallTimeout
+        ) async throws -> AdaptyPaywall {
             return try await withCheckedThrowingContinuation { continuation in
-                Adapty.getPaywall(id, locale: locale) { result in
+                Adapty.getPaywall(placementId: placementId, locale: locale, fetchPolicy: fetchPolicy, loadTimeout: loadTimeout) { result in
                     switch result {
                     case let .failure(error):
                         continuation.resume(throwing: error)
@@ -153,7 +156,7 @@ import StoreKit
         ///   - paywall: the ``AdaptyPaywall`` for which you want to get a products
         /// - Returns: A result containing the ``AdaptyPaywallProduct`` objects array. The order will be the same as in the paywalls object. You can present them in your UI
         /// - Throws: An ``AdaptyError`` object
-        public static func getPaywallProducts(paywall: AdaptyPaywall) async throws -> [AdaptyPaywallProduct]? {
+        public static func getPaywallProducts(paywall: AdaptyPaywall) async throws -> [AdaptyPaywallProduct] {
             return try await withCheckedThrowingContinuation { continuation in
                 Adapty.getPaywallProducts(paywall: paywall) { result in
                     switch result {

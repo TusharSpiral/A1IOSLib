@@ -10,8 +10,10 @@ import Foundation
 import GoogleMobileAds
 
 protocol AdsAppOpenType: AnyObject {
+    var isAppOpenSplash: Bool { get set }
     var isReady: Bool { get }
     var isShowing: Bool { get }
+    var isLoading: Bool { get }
     func load()
     func stopLoading()
     func show(from viewController: UIViewController,
@@ -25,12 +27,13 @@ final class AppOpenAdManager: NSObject {
     private let request: () -> GADRequest
 
   /// The app open ad.
-  var appOpenAd: GADAppOpenAd?
+  private var appOpenAd: GADAppOpenAd?
   /// Maintains a reference to the delegate.
   /// Keeps track of if an app open ad is loading.
   var isLoadingAd = false
   /// Keeps track of if an app open ad is showing.
   var isShowingAd = false
+  var isAppOpenAdSplash = false
   /// Keeps track of the time when an app open ad was loaded to discard expired ad.
     private var viewController: UIViewController?
     private var showAdAfterLoad = false
@@ -59,12 +62,9 @@ final class AppOpenAdManager: NSObject {
       EventManager.shared.logEvent(title: AdsKey.event_ad_appopen_load_start.rawValue)
     isLoadingAd = true
     print("Start loading app open ad.")
-    GADAppOpenAd.load(
-      withAdUnitID: adUnitId,
-      request: request(),
-      orientation: UIInterfaceOrientation.portrait
-    ) { ad, error in
-      self.isLoadingAd = false
+    GADAppOpenAd.load(withAdUnitID: adUnitId, request: request()) { [weak self] (ad, error) in
+        guard let self else {return}
+        self.isLoadingAd = false
       if let error = error {
         self.appOpenAd = nil
         print("App open ad failed to load with error: \(error.localizedDescription)")
@@ -135,6 +135,7 @@ extension AppOpenAdManager: GADFullScreenContentDelegate {
     print("App open ad was dismissed.")
       // Send callback
       onClose?()
+      AdsHandler.shared.appOpenLoadTime = Date()
       // Load the next ad so its ready for displaying
       loadAd()
   }
@@ -156,12 +157,25 @@ extension AppOpenAdManager: GADFullScreenContentDelegate {
 }
 
 extension AppOpenAdManager: AdsAppOpenType {
+    var isAppOpenSplash: Bool {
+        get {
+            return isAppOpenAdSplash
+        }
+        set {
+            isAppOpenAdSplash = newValue
+        }
+    }
+        
     var isReady: Bool {
         return isAdAvailable()
     }
     
     var isShowing: Bool {
         return isShowingAd
+    }
+
+    var isLoading: Bool {
+        return isLoadingAd
     }
 
     func load() {

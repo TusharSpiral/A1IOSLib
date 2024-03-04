@@ -44,9 +44,9 @@ public class AdaptyHandler: NSObject {
             print("Adapty time:\(time), level: \(level): \(message)")
         }
         if uid != "", !uid.isEmpty {
-            Adapty.activate(key, customerUserId: uid, enableUsageLogs: true)
+            Adapty.activate(key, customerUserId: uid)
         } else {
-            Adapty.activate(key, enableUsageLogs: true)
+            Adapty.activate(key)
         }
 //        self.restorePurchase(completionHandler: completion)
     }
@@ -88,7 +88,7 @@ public class AdaptyHandler: NSObject {
                 }
             }
         } else {
-            Adapty.getPaywall(placement, locale: "en") { result in
+            Adapty.getPaywall(placementId: placement, locale: "en") { result in
                 switch result {
                 case let .success(paywall):
                     Adapty.logShowPaywall(paywall)
@@ -138,7 +138,7 @@ public class AdaptyHandler: NSObject {
     }
     
     public func preFetchPaywall(placement: String, completion: @escaping (Bool) -> Void) {
-        Adapty.getPaywall(placement, locale: "en") { result in
+        Adapty.getPaywall(placementId: placement, locale: "en") { result in
             switch result {
             case let .success(paywall):
                 AdaptyUI.getViewConfiguration(forPaywall: paywall, locale: "en") { result in
@@ -252,6 +252,10 @@ extension AdaptyHandler: AdaptyPaywallControllerDelegate {
         EventManager.shared.logEvent(title: AdaptyKey.event_subs_paywall_payment_failed.rawValue)
         print("didFailPurchase")
 
+    }
+    public func paywallControllerDidStartRestore(_ controller: AdaptyPaywallController) {
+        print("Restore started")
+        
     }
     public func paywallController(_ controller: AdaptyPaywallController,
                            didFinishRestoreWith profile: AdaptyProfile) {

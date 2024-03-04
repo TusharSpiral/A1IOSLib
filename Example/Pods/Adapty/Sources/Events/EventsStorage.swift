@@ -8,15 +8,15 @@
 import Foundation
 
 protocol EventsStorage: AnyObject {
-    func setEventCounter(_ value: Int)
+    func setEventCounter(_: Int)
     func getEventCounter() -> Int
 
-    func setEvents(_ value: [Data])
+    func setEvents(_: [Data])
     func getEvents() -> [Data]?
     var profileId: String { get }
 }
 
-class EventCollectionStorage {
+final class EventCollectionStorage {
     private enum Constants {
         static let limitEvents = 500
     }
