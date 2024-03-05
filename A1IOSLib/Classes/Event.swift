@@ -22,6 +22,7 @@ public enum PurchaselyKey: String {
     case event_subs_purchasely_load_started
     case event_subs_purchasely_show_requested
     case event_subs_purchasely_screen_shown
+    case event_subs_purchasely_screen_cross_clicked
     case event_subs_purchasely_payment_failed
     case event_subs_purchase_acknowledged // with params
 

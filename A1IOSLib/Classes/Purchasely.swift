@@ -125,6 +125,7 @@ public class PurchaselyManager: NSObject {
                 EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchase_acknowledged.rawValue, keys: ["Placement_Name", "Plans"], values: [self.currentPlacement ?? "", plan?.name ?? ""])
             case .cancelled:
                 print("User cancelled: \(plan?.name ?? "No plan")")
+                EventManager.shared.logEvent(title: PurchaselyKey.event_subs_purchasely_screen_cross_clicked.rawValue, keys: ["Placement_Name", "Plans"], values: [self.currentPlacement ?? "", plan?.name ?? ""])
                 self.delegate?.cancelSubscription()
             default:
                 break
