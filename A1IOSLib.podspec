@@ -33,4 +33,5 @@ Pod::Spec.new do |spec|
   spec.dependency 'FirebaseRemoteConfig'
   spec.dependency 'SwiftyJSON'
   spec.dependency 'ShimmerSwift'
+  spec.dependency 'lottie-ios'
 end

@@ -7,6 +7,7 @@ PODS:
     - FirebaseAnalytics
     - FirebaseRemoteConfig
     - Google-Mobile-Ads-SDK
+    - lottie-ios
     - Mixpanel-swift
     - Purchasely (= 4.2.0)
     - ShimmerSwift
@@ -117,6 +118,7 @@ PODS:
   - GoogleUtilities/UserDefaults (7.13.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
+  - lottie-ios (4.4.1)
   - Mixpanel-swift (4.2.0):
     - Mixpanel-swift/Complete (= 4.2.0)
   - Mixpanel-swift/Complete (4.2.0)
@@ -139,11 +141,10 @@ PODS:
     - YandexMobileMetrica/Static/Core
 
 DEPENDENCIES:
-  - A1IOSLib
+  - A1IOSLib (from `../`)
 
 SPEC REPOS:
   trunk:
-    - A1IOSLib
     - Alamofire
     - Beacon
     - FBAEMKit
@@ -161,6 +162,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
     - GoogleUtilities
+    - lottie-ios
     - Mixpanel-swift
     - nanopb
     - PromisesObjC
@@ -169,8 +171,12 @@ SPEC REPOS:
     - SwiftyJSON
     - YandexMobileMetrica
 
+EXTERNAL SOURCES:
+  A1IOSLib:
+    :path: "../"
+
 SPEC CHECKSUMS:
-  A1IOSLib: 6bcde20f9a440d7436cd7640c546a315158fead0
+  A1IOSLib: e968797d2881fe0b3f0fc5032675f4793566260e
   Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
   Beacon: 40264b605cb79338f8dfe28b9e07ebd172121deb
   FBAEMKit: 6c7b5eb77c96861bb59e040842c6e55bf39512ce
@@ -188,6 +194,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: ccefe3eac9b0aa27f96066809fb1a7fe4b462626
   GoogleUserMessagingPlatform: d31dbfb40ec02c5d9683029815c5d5a7f46389ee
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
+  lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
@@ -196,6 +203,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   YandexMobileMetrica: f5368ee93f286c793d73b58da00929babfc897c1
 
-PODFILE CHECKSUM: 891d685d6061501e754ee89fac853d34c953872c
+PODFILE CHECKSUM: aaffff02a7630e509d0518264cc2a0adbd5f4451
 
 COCOAPODS: 1.14.2
