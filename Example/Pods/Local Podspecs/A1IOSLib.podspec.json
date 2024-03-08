@@ -1,6 +1,6 @@
 {
   "name": "A1IOSLib",
-  "version": "1.1.18",
+  "version": "1.1.19",
   "summary": "Private common A1IOSLib.",
   "description": "Private common SDK to personal use A1IOSLib.",
   "homepage": "https://github.com/TusharSpiral/A1IOSLib",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://TusharSpiral@github.com/TusharSpiral/A1IOSLib.git",
-    "tag": "1.1.18"
+    "tag": "1.1.19"
   },
   "platforms": {
     "ios": "14.0"
