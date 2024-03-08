@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "A1IOSLib"
-  spec.version      = "1.1.18"
+  spec.version      = "1.1.19"
   spec.summary      = "Private common A1IOSLib."
   spec.description  = "Private common SDK to personal use A1IOSLib."
   spec.homepage         = 'https://github.com/TusharSpiral/A1IOSLib'
@@ -33,5 +33,4 @@ Pod::Spec.new do |spec|
   spec.dependency 'FirebaseRemoteConfig'
   spec.dependency 'SwiftyJSON'
   spec.dependency 'ShimmerSwift'
-  spec.dependency 'lottie-ios'
 end

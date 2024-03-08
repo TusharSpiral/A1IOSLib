@@ -12,7 +12,7 @@ import UserMessagingPlatform
 public class ConsentManager {
     public static let shared = ConsentManager()
     
-    var isPrivacyOptionsRequired: Bool {
+    public var isPrivacyOptionsRequired: Bool {
         return UMPConsentInformation.sharedInstance.privacyOptionsRequirementStatus == .required
     }
     
