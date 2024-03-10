@@ -1,8 +1,8 @@
 PODS:
-  - A1IOSLib (1.1.19):
+  - A1IOSLib (1.1.20):
     - Alamofire
     - Beacon
-    - FBSDKCoreKit
+    - FBSDKCoreKit (= 16.3.1)
     - Firebase
     - FirebaseAnalytics
     - FirebaseRemoteConfig
@@ -173,7 +173,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  A1IOSLib: f5c46363163693be4126c77c3e879fe3e95b77c8
+  A1IOSLib: 8b3618fd1ea7e09a7e0213889f84329dcc0f5dfa
   Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
   Beacon: 40264b605cb79338f8dfe28b9e07ebd172121deb
   FBAEMKit: 6c7b5eb77c96861bb59e040842c6e55bf39512ce
@@ -199,6 +199,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   YandexMobileMetrica: f5368ee93f286c793d73b58da00929babfc897c1
 
-PODFILE CHECKSUM: aaffff02a7630e509d0518264cc2a0adbd5f4451
+PODFILE CHECKSUM: b7e5a6feec8aa8f085edb1189a2078f2ee98109c
 
 COCOAPODS: 1.14.2
