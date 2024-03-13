@@ -26,7 +26,7 @@ public class ConsentManager {
             guard requestConsentError == nil else {
                 return
             }
-            
+            EventManager.shared.logEvent(title: GDPRKeys.event_app_home_gdpr_form_loaded.rawValue)
         }
     }
     
@@ -43,6 +43,7 @@ public class ConsentManager {
                     // Show the consent form
                     guard UMPConsentInformation.sharedInstance.consentStatus == .required else {completionHandler(); return}
                     if let vc = UIApplication.shared.windows.first?.rootViewController {
+                        EventManager.shared.logEvent(title: GDPRKeys.event_app_home_gdpr_form_shown.rawValue)
                         form.present(from: vc) { (dismissError) in
                             if UMPConsentInformation.sharedInstance.consentStatus != .required {
                                 AdsHandler.shared.configureAds(config: adConfig, pro: isPro)

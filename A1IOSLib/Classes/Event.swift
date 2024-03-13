@@ -76,6 +76,11 @@ public enum AppErrorKey: String {
     case event_app_error_purchase_click_failed
 }
 
+public enum GDPRKeys:String {
+    case event_app_home_gdpr_form_loaded
+    case event_app_home_gdpr_form_shown
+}
+
 public class EventManager: NSObject {
     let proOpenFromKey = "pro_opened_from"
     public static var shared = EventManager()
