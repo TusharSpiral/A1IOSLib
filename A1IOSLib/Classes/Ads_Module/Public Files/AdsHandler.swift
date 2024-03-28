@@ -96,6 +96,10 @@ public class AdsHandler {
         return isReachable && !isPro && adConfig.adsEnabled && adConfig.bannerEnabled
     }
     
+    public func canShowRewardedAd() -> Bool {
+        return isReachable && !isPro && adConfig.adsEnabled && adConfig.rewardedEnabled
+    }
+
     public func canShowInterAd() -> Bool {
         interTriedCount += 1
         guard !a1Ads.isInterAdShowing && !a1Ads.isAppOpenAdShowing && isReachable && !isPro && adConfig.adsEnabled && adConfig.interEnabled else { return false }

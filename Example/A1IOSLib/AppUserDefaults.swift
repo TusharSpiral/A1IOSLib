@@ -44,12 +44,16 @@ struct AppUserDefaults {
     static var appOpenEnabled : Bool
     @UserDefault(UserDefaults.key.bannerEnabled, defaultValue: true)
     static var bannerEnabled : Bool
+    @UserDefault(UserDefaults.key.rewardedEnabled, defaultValue: true)
+    static var rewardedEnabled : Bool
     @UserDefault(UserDefaults.key.appOpenID, defaultValue: "")
     static var appOpenID : String
     @UserDefault(UserDefaults.key.interID, defaultValue: "")
     static var interID : String
     @UserDefault(UserDefaults.key.bannerID, defaultValue: "")
     static var bannerID : String
+    @UserDefault(UserDefaults.key.rewardedID, defaultValue: "")
+    static var rewardedID : String
 }
 
 extension UserDefaults {
@@ -63,8 +67,10 @@ extension UserDefaults {
         static let interEnabled = "interEnabled"
         static let appOpenEnabled = "appOpenEnabled"
         static let bannerEnabled = "bannerEnabled"
+        static let rewardedEnabled = "rewardedEnabled"
         static let appOpenID = "appOpenID"
         static let interID = "interID"
         static let bannerID = "bannerID"
+        static let rewardedID = "rewardedID"
     }
 }

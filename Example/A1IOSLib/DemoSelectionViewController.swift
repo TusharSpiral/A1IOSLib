@@ -50,7 +50,7 @@ final class DemoSelectionViewController: UITableViewController {
             case .viewControllerInsideTabBar:
                 return "Debug"
             case .tabBarController:
-                return "Debug using pods"
+                return "Rewarded Ad"
             case .nativeAd:
                 return "Native Ad"
             case .updateConsent:
@@ -211,7 +211,9 @@ final class DemoSelectionViewController: UITableViewController {
                 viewController = plainViewController
             case .viewControllerInsideTabBar:
                 viewController = DebugViewController.buildViewController()
-            case .tabBarController: break
+            case .tabBarController:
+                tableView.deselectRow(at: indexPath, animated: true)
+                showRewarded()
             case .nativeAd:
                 viewController = NativeAdViewController()
             case .updateConsent: break
@@ -227,6 +229,38 @@ final class DemoSelectionViewController: UITableViewController {
             navigationController?.pushViewController(validViewController, animated: true)
         }
     }
+    
+    func showRewarded() {
+        guard AdsHandler.shared.canShowRewardedAd() else { return }
+        Ads.shared.showRewardedAd(
+            from: self,
+            onOpen: {
+                print(" rewarded ad did open")
+            },
+            onClose: {
+                print(" rewarded ad did close")
+            },
+            onError: { error in
+                print(" rewarded ad error \(error)")
+            },
+            onNotReady: { [weak self] in
+                guard let self = self else { return }
+                let alertController = UIAlertController(
+                    title: "Sorry",
+                    message: "No video available to watch at the moment.",
+                    preferredStyle: .alert
+                )
+                alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                DispatchQueue.main.async {
+                    self.present(alertController, animated: true)
+                }
+            },
+            onReward: ({ rewardAmount in
+                print(" rewarded ad did reward user with \(rewardAmount)")
+            })
+        )
+    }
+
 }
 
 // MARK: - Private Methods
