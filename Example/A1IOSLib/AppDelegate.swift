@@ -92,7 +92,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 bannerID: bannerID,
                 appOpenInterval: AppUserDefaults.appOpenInterval,
                 appOpenInterInterval: AppUserDefaults.appOpenInterInterval,
-                interClickInterval: AppUserDefaults.interClickInterval
+                interClickInterval: AppUserDefaults.interClickInterval,
+                rewardedEnabled: AppUserDefaults.rewardedEnabled,
+                rewardedID: AppUserDefaults.rewardedID
             )
             
         }

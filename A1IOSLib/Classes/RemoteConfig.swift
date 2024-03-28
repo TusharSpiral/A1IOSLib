@@ -18,7 +18,8 @@ public struct AdsConfiguration: Codable {
     public let bannerID: String
     public let appOpenInterval, appOpenInterInterval: Int
     public let interClickInterval: Int
-    public var rewardedID: String = ""
+    public var rewardedEnabled: Bool
+    public var rewardedID: String
     public var rewardedInterstitialID: String = ""
     public var nativeID: String = ""
 
@@ -34,6 +35,8 @@ public struct AdsConfiguration: Codable {
         case appOpenInterval = "app_open_interval"
         case appOpenInterInterval = "app_open_inter_interval"
         case interClickInterval = "inter_click_interval"
+        case rewardedEnabled = "rewarded_enabled"
+        case rewardedID = "rewarded_id"
     }
     
     public init() {
@@ -48,12 +51,13 @@ public struct AdsConfiguration: Codable {
         appOpenInterval = 10
         appOpenInterInterval = 10
         interClickInterval = 2
+        rewardedEnabled = true
         rewardedID = "ca-app-pub-3940256099942544/1712485313"
         rewardedInterstitialID = "ca-app-pub-3940256099942544/6978759866"
         nativeID = "ca-app-pub-3940256099942544/3986624511"
     }
     
-    public init(interInterval: Int, adsEnabled: Bool, interEnabled: Bool, interID: String, appOpenEnabled: Bool , appOpenID: String, bannerEnabled: Bool, bannerID: String, appOpenInterval: Int, appOpenInterInterval: Int, interClickInterval: Int) {
+    public init(interInterval: Int, adsEnabled: Bool, interEnabled: Bool, interID: String, appOpenEnabled: Bool , appOpenID: String, bannerEnabled: Bool, bannerID: String, appOpenInterval: Int, appOpenInterInterval: Int, interClickInterval: Int, rewardedEnabled: Bool, rewardedID: String) {
         self.interInterval = interInterval
         self.adsEnabled = adsEnabled
         self.interEnabled = interEnabled
@@ -65,6 +69,8 @@ public struct AdsConfiguration: Codable {
         self.appOpenInterval = appOpenInterval
         self.appOpenInterInterval = appOpenInterInterval
         self.interClickInterval = interClickInterval
+        self.rewardedEnabled = rewardedEnabled
+        self.rewardedID = rewardedID
     }
 }
 
