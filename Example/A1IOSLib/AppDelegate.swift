@@ -67,10 +67,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppUserDefaults.interEnabled = adConfig.interEnabled
         AppUserDefaults.appOpenEnabled = adConfig.appOpenEnabled
         AppUserDefaults.bannerEnabled = adConfig.bannerEnabled
-        
+        AppUserDefaults.rewardedEnabled = adConfig.rewardedEnabled
+
         AppUserDefaults.appOpenID = adConfig.appOpenID
         AppUserDefaults.interID = adConfig.interID
         AppUserDefaults.bannerID = adConfig.bannerID
+        AppUserDefaults.rewardedID = adConfig.rewardedID
     }
 
     func getAdConfig() -> AdsConfiguration {
@@ -92,7 +94,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 bannerID: bannerID,
                 appOpenInterval: AppUserDefaults.appOpenInterval,
                 appOpenInterInterval: AppUserDefaults.appOpenInterInterval,
-                interClickInterval: AppUserDefaults.interClickInterval
+                interClickInterval: AppUserDefaults.interClickInterval,
+                rewardedEnabled: AppUserDefaults.rewardedEnabled,
+                rewardedID: AppUserDefaults.rewardedID
             )
             
         }
