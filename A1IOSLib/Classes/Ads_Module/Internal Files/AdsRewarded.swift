@@ -54,14 +54,17 @@ extension AdsRewarded: AdsRewardedType {
     }
     
     func load() {
+        EventManager.shared.logEvent(title: AdsKey.event_ad_rewarded_load_start.rawValue)
         GADRewardedAd.load(withAdUnitID: adUnitId, request: request()) { [weak self] (ad, error) in
             guard let self = self else { return }
 
             if let error = error {
+                EventManager.shared.logEvent(title: AdsKey.event_ad_rewarded_load_failed.rawValue)
                 self.onError?(error)
                 return
             }
-
+            
+            EventManager.shared.logEvent(title: AdsKey.event_ad_rewarded_loaded.rawValue)
             self.rewardedAd = ad
             self.rewardedAd?.fullScreenContentDelegate = self
             
@@ -77,9 +80,10 @@ extension AdsRewarded: AdsRewardedType {
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
-        
+        EventManager.shared.logEvent(title: AdsKey.event_ad_rewarded_show_requested.rawValue)
         guard let rewardedAd = rewardedAd else {
             load()
+            EventManager.shared.logEvent(title: AdsKey.event_ad_rewarded_show_failed.rawValue)
             onError?(AdsError.rewardedAdNotLoaded)
             onNotReady?()
             return
@@ -87,12 +91,14 @@ extension AdsRewarded: AdsRewardedType {
 
         do {
             try rewardedAd.canPresent(fromRootViewController: viewController)
+            EventManager.shared.logEvent(title: AdsKey.event_ad_rewarded_shown.rawValue)
             let rewardAmount = rewardedAd.adReward.amount
             rewardedAd.present(fromRootViewController: viewController, userDidEarnRewardHandler: {
                 onReward(rewardAmount)
             })
         } catch {
             load()
+            EventManager.shared.logEvent(title: AdsKey.event_ad_rewarded_show_failed.rawValue)
             onError?(error)
             onNotReady?()
             return
@@ -123,6 +129,7 @@ extension AdsRewarded: GADFullScreenContentDelegate {
     }
 
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        EventManager.shared.logEvent(title: AdsKey.event_ad_rewarded_show_failed.rawValue)
         onError?(error)
     }
 }

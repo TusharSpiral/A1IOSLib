@@ -26,7 +26,7 @@ public class AdsHandler {
             Ads.shared.setDisabled(true)
         } else if config.appOpenID != "", config.interID != "", config.bannerID != "" {
             if let configuration = a1Ads.getConfiguration {
-                if config.adsEnabled != configuration.adsEnabled || config.appOpenID != configuration.appOpenID || config.interID != configuration.interID || config.bannerID != configuration.bannerID || pro != isPro {
+                if config.adsEnabled != configuration.adsEnabled || config.appOpenID != configuration.appOpenID || config.interID != configuration.interID || config.bannerID != configuration.bannerID || config.rewardedID != configuration.rewardedID || pro != isPro {
                     isPro = pro
                     adConfig = config
                     configureA1Ads()
