@@ -96,16 +96,15 @@ public class EventManager: NSObject {
     private var firebase = true
     private var facebook = true
     
-    public func configureEventManager(appMetricaKey: String = "", mixPanelKey: String = "", firebase: Bool = true, facebook: Bool = true) {
+    public func configureEventManager(appMetricaKey: String = "", mixPanelKey: String = "",userId: String = "", firebase: Bool = true, facebook: Bool = true) {
         self.appMetricaKey = appMetricaKey
         self.mixPanelKey = mixPanelKey
         self.firebase = firebase
         self.facebook = facebook
-        if firebase {
-            FirebaseApp.configure()
-        }
         if !appMetricaKey.isEmpty {
             let configuration = YMMYandexMetricaConfiguration.init(apiKey: appMetricaKey)
+            configuration?.logs = true
+            configuration?.userProfileID = userId
             YMMYandexMetrica.activate(with: configuration!)
         }
         if !mixPanelKey.isEmpty {
