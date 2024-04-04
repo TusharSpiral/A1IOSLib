@@ -52,6 +52,13 @@ public enum AdsKey: String {
     case event_ad_appopen_shown
     case event_ad_appopen_show_failed
     
+    case event_ad_rewarded_load_start
+    case event_ad_rewarded_load_failed
+    case event_ad_rewarded_loaded
+    case event_ad_rewarded_show_requested
+    case event_ad_rewarded_shown
+    case event_ad_rewarded_show_failed
+    
 }
 
 public enum AppUpdateKey: String {
