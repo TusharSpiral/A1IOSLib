@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "A1IOSLib"
-  spec.version      = "1.1.26"
+  spec.version      = "1.1.27"
   spec.summary      = "Private common A1IOSLib."
   spec.description  = "Private common SDK to personal use A1IOSLib."
   spec.homepage         = 'https://github.com/TusharSpiral/A1IOSLib'
@@ -21,16 +21,16 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target  = '14.0'
   spec.resources = ["A1IOSLib/**/*.{storyboard}", "A1IOSLib/**/*.{xib}"]
   spec.source_files = ["A1IOSLib/**/*.{swift}", "A1IOSLib/**/*.{strings}"]
-  spec.dependency 'Alamofire'
+  spec.dependency 'Alamofire', '5.9.0'
   spec.dependency 'Purchasely', '4.2.0'
-  spec.dependency 'FirebaseAnalytics'
-  spec.dependency 'Firebase'
-  spec.dependency 'Mixpanel-swift'
+  spec.dependency 'FirebaseAnalytics', '10.25.0'
+  spec.dependency 'Firebase', '10.25.0'
+  spec.dependency 'Mixpanel-swift', '4.2.0'
   spec.dependency 'FBSDKCoreKit', '16.3.1'
-  spec.dependency 'YandexMobileMetrica'
-  spec.dependency 'Beacon'
-  spec.dependency 'Google-Mobile-Ads-SDK'
-  spec.dependency 'FirebaseRemoteConfig'
-  spec.dependency 'SwiftyJSON'
-  spec.dependency 'ShimmerSwift'
+  spec.dependency 'YandexMobileMetrica', '4.5.2'
+  spec.dependency 'Beacon', '3.0.0'
+  spec.dependency 'Google-Mobile-Ads-SDK', '11.1.0'
+  spec.dependency 'FirebaseRemoteConfig', '10.25.0'
+  spec.dependency 'SwiftyJSON', '5.0.1'
+  spec.dependency 'ShimmerSwift', '2.1.1'
 end
