@@ -26,7 +26,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'FirebaseAnalytics', '10.25.0'
   spec.dependency 'Firebase', '10.25.0'
   spec.dependency 'Mixpanel-swift', '4.2.0'
-  spec.dependency 'FBSDKCoreKit', '16.3.1'
+  spec.dependency 'FBSDKCoreKit'
   spec.dependency 'YandexMobileMetrica', '4.5.2'
   spec.dependency 'Beacon', '3.0.0'
   spec.dependency 'Google-Mobile-Ads-SDK', '11.1.0'

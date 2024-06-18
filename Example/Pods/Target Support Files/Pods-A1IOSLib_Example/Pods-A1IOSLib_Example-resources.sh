@@ -102,6 +102,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/AdView.nib"
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTableViewCell.nib"
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTextCell.nib"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/GoogleUserMessagingPlatform/UserMessagingPlatformResources.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/Debug.storyboardc"
@@ -109,6 +110,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/AdView.nib"
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTableViewCell.nib"
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTextCell.nib"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/GoogleUserMessagingPlatform/UserMessagingPlatformResources.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

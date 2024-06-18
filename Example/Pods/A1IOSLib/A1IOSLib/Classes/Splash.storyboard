@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--App Open Splash View Controller-->
+        <scene sceneID="JHH-ud-7ic">
+            <objects>
+                <viewController storyboardIdentifier="AppOpenSplashViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RPW-bV-Rfz" customClass="AppOpenSplashViewController" customModule="A1IOSLib" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rrf-1b-gqe">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N3d-FN-SWb">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="3Qn-CG-aAN"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="N3d-FN-SWb" secondAttribute="bottom" id="Mup-o8-TVl"/>
+                            <constraint firstItem="N3d-FN-SWb" firstAttribute="top" secondItem="rrf-1b-gqe" secondAttribute="top" id="RMA-hB-dTn"/>
+                            <constraint firstItem="N3d-FN-SWb" firstAttribute="leading" secondItem="3Qn-CG-aAN" secondAttribute="leading" id="wGe-ge-Ku4"/>
+                            <constraint firstItem="3Qn-CG-aAN" firstAttribute="trailing" secondItem="N3d-FN-SWb" secondAttribute="trailing" id="y1G-EO-eai"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="splashImageView" destination="N3d-FN-SWb" id="Kdd-jn-7cL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BXX-Hg-cxW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2381" y="41"/>
+        </scene>
+    </scenes>
+</document>
