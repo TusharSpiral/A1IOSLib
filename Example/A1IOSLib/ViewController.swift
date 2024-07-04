@@ -14,7 +14,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        EventHandler.shared.logEvent(title: .testing)
-        PurchaselyManager.shared.showFreeTrial(from: self, placement: "", delegate: self)
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -30,26 +29,6 @@ class ViewController: UIViewController {
         
     }
     
-    
-    
-}
-
-extension ViewController: PurchaselyManagerDelegate {
-    func didUpdateSubscription() {
-        //Purchase done update according to you
-    }
-    
-    func alertAction(text: String?) {
-        //show alert
-    }
-    
-    func loader(isShown: Bool) {
-        if isShown {
-            // show loader
-        }else {
-            // hide loader
-        }
-    }
     
     
 }

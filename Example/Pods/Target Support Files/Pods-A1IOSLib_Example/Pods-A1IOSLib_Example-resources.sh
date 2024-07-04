@@ -98,7 +98,6 @@ EOM
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/Debug.storyboardc"
-  install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/Splash.storyboardc"
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/AdView.nib"
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTableViewCell.nib"
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTextCell.nib"
@@ -106,7 +105,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/Debug.storyboardc"
-  install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/Splash.storyboardc"
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/AdView.nib"
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTableViewCell.nib"
   install_resource "${BUILT_PRODUCTS_DIR}/A1IOSLib/A1IOSLib.framework/DebugTextCell.nib"

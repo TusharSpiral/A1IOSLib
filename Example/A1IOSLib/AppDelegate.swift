@@ -126,8 +126,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         } onError: { error in
                         }
                     } else {
-                        let splashViewController = AppOpenSplashViewController.buildViewController(imageName: "welcome", delegate: rootViewController)
-                        vc.presentVC(splashViewController, animated: false)
                     }
                 }
             }

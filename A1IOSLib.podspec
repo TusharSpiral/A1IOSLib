@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "A1IOSLib"
-  spec.version      = "1.1.28"
+  spec.version      = "1.1.29"
   spec.summary      = "Private common A1IOSLib."
   spec.description  = "Private common SDK to personal use A1IOSLib."
   spec.homepage         = 'https://github.com/TusharSpiral/A1IOSLib'
@@ -22,10 +22,8 @@ Pod::Spec.new do |spec|
   spec.resources = ["A1IOSLib/**/*.{storyboard}", "A1IOSLib/**/*.{xib}"]
   spec.source_files = ["A1IOSLib/**/*.{swift}", "A1IOSLib/**/*.{strings}"]
   spec.dependency 'Alamofire', '5.9.0'
-  spec.dependency 'Purchasely', '4.2.0'
   spec.dependency 'FirebaseAnalytics', '10.25.0'
   spec.dependency 'Firebase', '10.25.0'
-  spec.dependency 'Mixpanel-swift', '4.2.0'
   spec.dependency 'FBSDKCoreKit'
   spec.dependency 'YandexMobileMetrica', '4.5.2'
   spec.dependency 'Beacon', '3.0.0'

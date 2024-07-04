@@ -8,6 +8,14 @@
 
 import UIKit
 import GoogleMobileAds
+import Alamofire
+
+public var isReachable: Bool {
+    guard (NetworkReachabilityManager()?.isReachable)! else {
+        return false
+    }
+    return true
+}
 
 public class AdsHandler {
     public var a1Ads = Ads.shared

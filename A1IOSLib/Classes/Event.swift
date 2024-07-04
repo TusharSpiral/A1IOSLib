@@ -10,7 +10,6 @@ import UIKit
 import YandexMobileMetrica
 import FBSDKCoreKit
 import FirebaseAnalytics
-import Mixpanel
 import FirebaseCore
 
 public enum PurchaselyKey: String {
@@ -91,14 +90,12 @@ public enum GDPRKeys:String {
 public class EventManager: NSObject {
     let proOpenFromKey = "pro_opened_from"
     public static var shared = EventManager()
-    private var mixPanelKey = ""
     private var appMetricaKey = ""
     private var firebase = true
     private var facebook = true
     
-    public func configureEventManager(appMetricaKey: String = "", mixPanelKey: String = "",userId: String = "", firebase: Bool = true, facebook: Bool = true) {
+    public func configureEventManager(appMetricaKey: String = "",userId: String = "", firebase: Bool = true, facebook: Bool = true) {
         self.appMetricaKey = appMetricaKey
-        self.mixPanelKey = mixPanelKey
         self.firebase = firebase
         self.facebook = facebook
         if !appMetricaKey.isEmpty {
@@ -107,18 +104,12 @@ public class EventManager: NSObject {
             configuration?.userProfileID = userId
             YMMYandexMetrica.activate(with: configuration!)
         }
-        if !mixPanelKey.isEmpty {
-            Mixpanel.initialize(token: mixPanelKey, trackAutomaticEvents: true)
-        }
         logEvent(title: PurchaselyKey.event_app_first_open.rawValue)
     }
 
     public func logEvent(title: String, key: String, value: String) {
         if !appMetricaKey.isEmpty {
             YMMYandexMetrica.reportEvent(title, parameters: [key : value])
-        }
-        if !mixPanelKey.isEmpty {
-            Mixpanel.mainInstance().track(event: title, properties: [key : value])
         }
         if firebase {
             Analytics.logEvent(title, parameters: [key: value])
@@ -131,9 +122,6 @@ public class EventManager: NSObject {
     public func logEvent(title: String, params: [String: String]? = nil) {
         if !appMetricaKey.isEmpty {
             YMMYandexMetrica.reportEvent(title, parameters: params)
-        }
-        if !mixPanelKey.isEmpty {
-            Mixpanel.mainInstance().track(event: title, properties: params)
         }
         if firebase {
             Analytics.logEvent(title, parameters: params)
@@ -154,9 +142,6 @@ public class EventManager: NSObject {
     public func logProOpenedEvent(title: String, from: String) {
         if !appMetricaKey.isEmpty {
             YMMYandexMetrica.reportEvent(title, parameters: [proOpenFromKey: from])
-        }
-        if !mixPanelKey.isEmpty {
-            Mixpanel.mainInstance().track(event: title, properties: [proOpenFromKey: from])
         }
         if firebase {
             Analytics.logEvent(title, parameters: [proOpenFromKey: from])
