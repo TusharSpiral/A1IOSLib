@@ -31,4 +31,5 @@ Pod::Spec.new do |spec|
   spec.dependency 'FirebaseRemoteConfig', '10.25.0'
   spec.dependency 'SwiftyJSON', '5.0.1'
   spec.dependency 'ShimmerSwift', '2.1.1'
+  spec.dependency 'Clarity'
 end

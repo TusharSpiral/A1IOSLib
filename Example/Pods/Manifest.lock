@@ -1,7 +1,8 @@
 PODS:
-  - A1IOSLib (1.1.29):
+  - A1IOSLib (1.1.31):
     - Alamofire (= 5.9.0)
     - Beacon (= 3.0.0)
+    - Clarity
     - FBSDKCoreKit
     - Firebase (= 10.25.0)
     - FirebaseAnalytics (= 10.25.0)
@@ -12,6 +13,7 @@ PODS:
     - YandexMobileMetrica (= 4.5.2)
   - Alamofire (5.9.0)
   - Beacon (3.0.0)
+  - Clarity (1.0.0)
   - FBAEMKit (17.0.2):
     - FBSDKCoreKit_Basics (= 17.0.2)
   - FBSDKCoreKit (17.0.2):
@@ -141,6 +143,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Beacon
+    - Clarity
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
@@ -168,9 +171,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  A1IOSLib: 733236dcc2405c87f9742a7379b437e49ae33d8f
+  A1IOSLib: b30a41546f3f0dd7c6244411d0c809cbbfcf3e75
   Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
   Beacon: 40264b605cb79338f8dfe28b9e07ebd172121deb
+  Clarity: de95bd0bdd987d1bba57a9a4c04c1470b8313e15
   FBAEMKit: 619f96ea65427e8afca240d5b0f4703738dfdf5c
   FBSDKCoreKit: a5f384db2e9ee84e98494fed8f983d2bd79accff
   FBSDKCoreKit_Basics: d35c775aaf243a2d731dfae7be3a74b1987285ab
